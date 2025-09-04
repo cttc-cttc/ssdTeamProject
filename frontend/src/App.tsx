@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Button } from "./components/ui/button";
 import { Input } from "./components/ui/input";
+import SimpleWordcloud from "./wordcloud";
 
 interface testProps {
   id: number;
@@ -50,6 +51,10 @@ function App() {
   return (
     <div className="flex flex-col items-center p-10">
       <div className="text-xl font-bold">홈 화면</div>
+      <div>
+        <SimpleWordcloud />
+      </div>
+
       <p className="p-4">{message}</p>
 
       <div>
