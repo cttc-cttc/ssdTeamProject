@@ -13,8 +13,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private BigInteger id;
 
+    @Column(nullable = false)
     private String userName;
 
+    @Column(nullable = false)
     private String userId;
 
     @Column(nullable = false)
@@ -23,7 +25,6 @@ public class User {
     @Column(nullable = false, unique = true)
     private String userNickname;
 
+    @Column(nullable = false, unique = true)
     private String userEmail;
-
-
 }
