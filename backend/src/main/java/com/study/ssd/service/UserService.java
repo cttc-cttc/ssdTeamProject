@@ -1,6 +1,7 @@
 package com.study.ssd.service;
 
 import com.study.ssd.entity.Comment;
+import com.study.ssd.entity.StudyPost;
 import com.study.ssd.entity.User;
 import com.study.ssd.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -26,17 +27,17 @@ public class UserService {
 
     // 회원가입
     public User registerUser(User user){
-        // userId 중복 체크
+        // 아이디 중복 체크
         if (userRepository.existsByUserId(user.getUserId())){
             throw new RuntimeException("이미 존재하는 아이디입니다.");
         }
 
-        // userNickname 중복 체크
+        // 닉네임 중복 체크
         if (userRepository.existsByUserNickname(user.getUserNickname())){
             throw new RuntimeException("이미 존재하는 닉네임입니다.");
         }
 
-        // userEmail 중복 체크
+        // 이메일 중복 체크
         if (userRepository.existsByUserEmail(user.getUserEmail())){
             throw new RuntimeException("이미 존재하는 이메일입니다.");
         }
@@ -61,18 +62,6 @@ public class UserService {
 
         return user;
     }
-//   public User loginUser(String userId, String userPassword){
-//        Optional<User> userCheck = userRepository.findByUserId(userId);
-//
-//        if (userCheck.isEmpty()){
-//            throw new RuntimeException("사용자를 찾을 수 없습니다.");
-//        }
-//
-//        User user = userCheck.get();
-//
-//        // 비밀번호 확인
-//
-//    }
 
     // 로그아웃
     public void logoutUser(String userId){
@@ -94,9 +83,14 @@ public class UserService {
 
         // 닉네임 변경 (30일 제한)
         if (userInfo.getUserNickname() != null && !userInfo.getUserNickname().isEmpty()){
+            // 닉네임 중복 체크
+            if (userRepository.existsByUserNickname(userInfo.getUserNickname()))
+                throw new RuntimeException("이미 존재하는 닉네임입니다.");
+
             LocalDate now = LocalDate.now();
 
             if (user.getUserNicknameUpdatedAt() == null || user.getUserNicknameUpdatedAt().plusDays(30).isBefore(now)){
+                user.setUserNickname(userInfo.getUserNickname()); // 닉네임 변경
                 user.setUserNicknameUpdatedAt(now); // 닉네임 변경 날짜 저장
             } else {
                 throw new RuntimeException("닉네임은 30일에 한 번만 변경할 수 있습니다.");
@@ -115,29 +109,15 @@ public class UserService {
             throw new RuntimeException("비밀번호가 일치하지 않습니다.");
         }
 
-//        List<Comment> use
+        // 닉네임 강제변경
+        user.setUserNickname("탈퇴회원");
+        userRepository.save(user);
 
         // 사용자 삭제
         userRepository.deleteById(user.getId());
 
         return true;
     }
-
-//    // 연관된 댓글 작성자 익명 처리
-//    List<Comment> userComments = commentService.getCommentsByUserId(pid);
-//    for (Comment comment : userComments) {
-//        comment.setAuthorName("탈퇴회원"); // 작성자 이름 변경
-//        comment.setUser(null);            // User 객체 연결 해제
-//        commentService.saveComment(comment); // 변경 저장
-//    }
-//
-//    // 연관된 게시글 작성자 익명 처리
-//    List<Post> userPosts = postService.getPostsByUserId(pid);
-//    for (Post post : userPosts) {
-//        post.setAuthorName("탈퇴회원"); // 작성자 이름 변경
-//        post.setUser(null);            // User 객체 연결 해제
-//        postService.savePost(post);    // 변경 저장
-//    }
 }
 
 
