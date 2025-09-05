@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
@@ -29,11 +31,19 @@ public class StudyPost {
     @Column(nullable = false)
     private String category;
 
-    @CreatedDate
+    @CreationTimestamp
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
+    @UpdateTimestamp
     @Column(nullable = false)
     private LocalDateTime updatedAt;
-    
+
+    private LocalDateTime deadline;
+
+    private int currentCont = 0;
+    private int maxCount;
+
+    private int wishCount = 0;
+
 }
