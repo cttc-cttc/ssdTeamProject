@@ -1,5 +1,6 @@
 package com.study.ssd.service;
 
+import com.study.ssd.entity.Comment;
 import com.study.ssd.entity.User;
 import com.study.ssd.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -30,12 +32,12 @@ public class UserService {
         }
 
         // userNickname 중복 체크
-        if (userRepository.existsByNickname(user.getUserNickname())){
+        if (userRepository.existsByUserNickname(user.getUserNickname())){
             throw new RuntimeException("이미 존재하는 닉네임입니다.");
         }
 
         // userEmail 중복 체크
-        if (userRepository.existsByEmail(user.getUserEmail())){
+        if (userRepository.existsByUserEmail(user.getUserEmail())){
             throw new RuntimeException("이미 존재하는 이메일입니다.");
         }
 
@@ -112,6 +114,8 @@ public class UserService {
         if (!password.equals(user.getUserPassword())){
             throw new RuntimeException("비밀번호가 일치하지 않습니다.");
         }
+
+//        List<Comment> use
 
         // 사용자 삭제
         userRepository.deleteById(user.getId());
