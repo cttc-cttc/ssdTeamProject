@@ -2,9 +2,7 @@ package com.study.ssd.entity;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
@@ -13,14 +11,15 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "study_post")
-@Data
+@Data @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class StudyPost {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  int id;
+    private Long id;
 
     @Column(length = 100, nullable = false)
     private  String title;
@@ -44,5 +43,36 @@ public class StudyPost {
     private int maxCount;
 
     private int wishCount = 0;
+
+    @PrePersist
+    public void prePersist() {
+        if (deadline == null) {
+            this.deadline = LocalDateTime.now().plusDays(30);
+        }
+    }
+
+    public void increaseCurrentCont() {
+        if (currentCont < maxCount) {
+            this.currentCont++;
+        } else {
+            throw new IllegalStateException("최대 인원 초과");
+        }
+    }
+
+    public void decreaseCurrentCont() {
+        if (currentCont > 0) {
+            this.currentCont--;
+        }
+    }
+
+    public  void increaseWishCount() {
+        this.wishCount++;
+    }
+
+    public  void decreaseWishCount() {
+        if (wishCount > 0) {
+            this.wishCount--;
+        }
+    }
 
 }
