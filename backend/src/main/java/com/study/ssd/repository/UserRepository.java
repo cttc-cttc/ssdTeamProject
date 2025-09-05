@@ -12,10 +12,10 @@ public interface UserRepository extends JpaRepository<User,Long> {
     boolean existsByUserId(String userId);
 
     // userNickname 중복체크
-    boolean existsByNickname(String nickname);
+    boolean existsByUserNickname(String userNickname);
     
     // userEmail 중복체크
-    boolean existsByEmail(String email);
+    boolean existsByUserEmail(String userEmail);
 
     // userId 로그인 처리
     Optional<User> findByUserId(String userId);
