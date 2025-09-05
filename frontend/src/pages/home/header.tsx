@@ -39,7 +39,7 @@ export default function Header() {
         {/* 일단 글쓰기 버튼 임시 표시 */}
         {/* 나중에 로그인 후 표시하도록 변경 필요 */}
         <Button asChild variant="default">
-          <Link to="/">
+          <Link to="/write">
             <span className="flex">
               <Plus />
               <Pencil />
