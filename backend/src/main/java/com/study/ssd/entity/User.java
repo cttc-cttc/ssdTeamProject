@@ -11,12 +11,12 @@ import java.math.BigInteger;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private BigInteger id;
+    private Long id;
 
     @Column(nullable = false)
     private String userName;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String userId;
 
     @Column(nullable = false)
