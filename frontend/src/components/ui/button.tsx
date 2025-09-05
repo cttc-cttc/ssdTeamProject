@@ -19,10 +19,9 @@ const buttonVariants = cva(
         link: "text-primary underline-offset-4 hover:underline",
 
         // 프로젝트 전용 커스텀 버튼
-        // ssd_default: "bg-[#3d6647] text-[#fff] shadow-xs hover:bg-[#3d6647]/90",
-        // ssd_outline:
-        //   "border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
         ssd_nav: "text-2xl font-bold text-[#2c3e50] underline-offset-4 hover:underline",
+        ssd_tag:
+          "rounded-3xl bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",
