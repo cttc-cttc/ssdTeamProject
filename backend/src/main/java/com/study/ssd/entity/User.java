@@ -3,7 +3,6 @@ package com.study.ssd.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.math.BigInteger;
 import java.time.LocalDate;
 
 @Entity
@@ -39,3 +38,8 @@ public class User {
     @Column
     private LocalDate userNicknameUpdatedAt;
 }
+/*
+* @Data = Lombok 라이브러리에서 제공하는 어노테이션
+*   이걸 클래스 위에 붙이면 자동으로 다음과 같은 메서드들을 만들어준다.
+*   getter, setter, toString(), equals(), hashCode() 등
+* */

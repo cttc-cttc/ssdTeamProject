@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/users")
-// @CrossOrigin(origins = "*")
+// @CrossOrigin(origins = "*") 나중에 하자
 public class UserController {
 
     @Autowired
@@ -116,7 +116,12 @@ public class UserController {
         }
     }
 }
-
+/*
+* @Controller: 요청과 응답을 처리하는 곳
+* @RestController: API를 주고 받을 때 사용하는 어노테이션
+* @RestController = @Controller + @ResponseBody
+* @RequestMapping: 클라이언트 요청 URL을 컨트롤러 메서드(혹은 클래스)의 매핑하는 역할
+*/
 
 
 

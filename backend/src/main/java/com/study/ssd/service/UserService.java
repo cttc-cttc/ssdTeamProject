@@ -1,7 +1,5 @@
 package com.study.ssd.service;
 
-import com.study.ssd.entity.Comment;
-import com.study.ssd.entity.StudyPost;
 import com.study.ssd.entity.User;
 import com.study.ssd.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -9,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -42,6 +39,7 @@ public class UserService {
             throw new RuntimeException("이미 존재하는 이메일입니다.");
         }
 
+        // 없으면 DB 저장
         return userRepository.save(user);
     }
 
@@ -120,7 +118,13 @@ public class UserService {
     }
 }
 
-
+/*
+* @Service = 이 클래스를 서비스 컴포넌트로 적용시킨다. 이제 다른 곳에서도 주입될 수 있다.
+* @Transactional = method 실행 도중 문제가 발생하면 DB변경을 취소하고 롤백시킨다.
+* != null && !userInfo.getUserPassword().isEmpty()
+*   != null -> 값이 아예 없는 경우 차단
+*   != isEmpty() -> 빈 문자열 차단
+ */
 
 
 
