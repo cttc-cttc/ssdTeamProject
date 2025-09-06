@@ -19,6 +19,10 @@ public class User {
     @Column(nullable = false)
     private String userName;
 
+    // 유저 닉네임
+    @Column(nullable = false, unique = true)
+    private String userNickname;
+
     // 유저 아이디
     @Column(nullable = false, unique = true)
     private String userId;
@@ -26,10 +30,6 @@ public class User {
     // 유저 비밀번호
     @Column(nullable = false)
     private String userPassword;
-
-    // 유저 닉네임
-    @Column(nullable = false, unique = true)
-    private String userNickname;
 
     // 유저 이메일
     @Column(nullable = false, unique = true)

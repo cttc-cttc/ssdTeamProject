@@ -26,7 +26,7 @@ public class UserService {
     }
 
     // 회원가입
-    public User registerUser(User user){
+    public User signInUser(User user){
         // 아이디 중복 체크
         if (userRepository.existsByUserId(user.getUserId())){
             throw new RuntimeException("이미 존재하는 아이디입니다.");
