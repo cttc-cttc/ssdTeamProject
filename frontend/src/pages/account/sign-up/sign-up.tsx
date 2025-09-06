@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-export default function Signin() {
+export default function SignUp() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({

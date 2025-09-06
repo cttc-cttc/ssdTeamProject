@@ -1,8 +1,8 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/home/home";
 import HomeMain from "./pages/home/main/home-main";
-import Signin from "./pages/home/signIn";
-import PageNotFound from "./pages/home/page-not-found";
+import SignUp from "./pages/account/sign-up/sign-up";
+import Page404 from "./pages/etc/page-404";
 
 function App() {
   return (
@@ -10,8 +10,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />}>
           <Route index element={<HomeMain />} />
-          <Route path="signIn" element={<Signin />} />
-          <Route path="/*" element={<PageNotFound />} />
+          <Route path="sign-up" element={<SignUp />} />
+
+          <Route path="/*" element={<Page404 />} />
         </Route>
       </Routes>
     </BrowserRouter>

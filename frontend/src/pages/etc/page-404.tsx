@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
-export default function PageNotFound() {
+export default function Page404() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-[#fdfaf6] text-center p-8">
       <div className="w-6xl flex justify-center bg-[#466b52] mb-8 rounded-lg">

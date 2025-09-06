@@ -27,12 +27,12 @@ export default function Header() {
       </div>
       <div className="flex justify-end flex-1 gap-2 pr-16">
         <Button asChild variant="outline">
-          <Link to="/signIn">
+          <Link to="/sign-up">
             <span className="w-16 text-xs text-center">회원가입</span>
           </Link>
         </Button>
         <Button asChild variant="default">
-          <Link to="/login">
+          <Link to="/log-in">
             <span className="w-16 text-xs text-center">로그인</span>
           </Link>
         </Button>
