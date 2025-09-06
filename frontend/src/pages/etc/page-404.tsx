@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export default function Page404() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-[#fdfaf6] text-center p-8">
+    <div className="flex flex-col items-center justify-center min-h-screen text-center p-8">
       <div className="w-6xl flex justify-center bg-[#466b52] mb-8 rounded-lg">
         <img src="/images/home/404page.png" alt="404 illustration" className="max-w-96" />
       </div>
