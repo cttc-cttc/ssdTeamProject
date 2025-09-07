@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import axios from "axios";
@@ -255,13 +255,9 @@ export default function SignUp() {
 
           <div className="text-center">
             이미 계정이 있으신가요?{" "}
-            <button
-              type="button"
-              onClick={() => navigate("/login")}
-              className="text-blue-600 hover:text-blue-800"
-            >
+            <Link to="/login" className="text-blue-600 hover:text-blue-800">
               로그인하기
-            </button>
+            </Link>
           </div>
         </form>
       </div>
