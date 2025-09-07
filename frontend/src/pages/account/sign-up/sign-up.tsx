@@ -19,7 +19,7 @@ export default function SignUp() {
   // 해당 필드별 에러 메시지를 저장
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
-  // 회원 가입 로딩 상태 추가 -> 유저의 복수 클릭을 방지
+  // 회원 가입 로딩 상태 -> 유저의 복수 클릭을 방지
   const [loading, setLoading] = useState(false);
 
   // 입력 필드에 값을 입력할 때마다 실행되는 함수
@@ -39,6 +39,7 @@ export default function SignUp() {
     }
   };
 
+  // 유효성 검사 폼
   const validateForm = () => {
     const checkErrors: { [key: string]: string } = {};
 
@@ -91,7 +92,7 @@ export default function SignUp() {
     return Object.keys(checkErrors).length === 0;
   };
 
-  // 화원가입 폼이 제출될 때 실행되는 함수
+  // 로그인 폼이 제출될 때 실행되는 함수
   const handleSubmit = async (e: React.FormEvent) => {
     // 크롬 기본 폼을 막아야한다. 그래야 새로고침이 안된다. 그래야 우리 스타일이 유지된다.
     e.preventDefault();
@@ -101,7 +102,7 @@ export default function SignUp() {
       return;
     }
 
-    // 로딩 상태를 true로 설정하여 중복 제출 방지
+    // 회원가입 처리 시작
     setLoading(true);
 
     try {
@@ -116,15 +117,13 @@ export default function SignUp() {
         navigate("/login");
       }
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        if (error.response?.status === 400) {
-          alert(error.response.data || "회원가입 중 오류가 발생했습니다. 다시 시도해주세요.");
-        } else {
-          alert("네트워크 오류가 발생했습니다. 다시 시도해주세요.");
-        }
+      if (axios.isAxiosError(error) && error.response?.status === 400) {
+        alert(error.response.data || "회원가입 중 오류가 발생했습니다. 다시 시도해주세요.");
+      } else {
+        alert("네트워크 오류가 발생했습니다. 다시 시도해주세요.");
       }
     } finally {
-      // 요청이 끝나면 로딩 상태를 false로 다시 전환
+      // 회원가입 처리 종료
       setLoading(false);
     }
   };
@@ -249,13 +248,13 @@ export default function SignUp() {
 
           <div>
             <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? "가입 중..." : "회원가입"}
+              {loading ? "가입 중..." : "SSD와 함께하기!"}
             </Button>
           </div>
 
           <div className="text-center">
             이미 계정이 있으신가요?{" "}
-            <Link to="/login" className="text-blue-600 hover:text-blue-800">
+            <Link to="/log-in" className="text-blue-600 hover:text-blue-800">
               로그인하기
             </Link>
           </div>

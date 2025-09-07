@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/home/home";
 import HomeMain from "./pages/home/main/home-main";
 import SignUp from "./pages/account/sign-up/sign-up";
+import LogIn from "./pages/account/log-in/log-in";
 import Page404 from "./pages/etc/page-404";
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
         <Route path="/" element={<Home />}>
           <Route index element={<HomeMain />} />
           <Route path="sign-up" element={<SignUp />} />
+          <Route path="log-in" element={<LogIn />} />
 
           <Route path="/*" element={<Page404 />} />
         </Route>
