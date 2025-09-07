@@ -23,7 +23,7 @@ public class UserService {
     }
 
     // 회원가입
-    public User signInUser(User user){
+    public User signUpUser(User user){
         // 아이디 중복 체크
         if (userRepository.existsByUserId(user.getUserId())){
             throw new RuntimeException("이미 존재하는 아이디입니다.");
@@ -124,7 +124,7 @@ public class UserService {
 * != null && !userInfo.getUserPassword().isEmpty()
 *   != null -> 값이 아예 없는 경우 차단
 *   != isEmpty() -> 빈 문자열 차단
- */
+*/
 
 
 

@@ -5,7 +5,7 @@ import java.time.LocalDate;
 public class UserDTO {
 
     // 회원가입 DTO
-    public static class SignInRequest {
+    public static class SignUpRequest {
         private String userName;
         private String userNickname;
         private String userId;
@@ -13,10 +13,10 @@ public class UserDTO {
         private String userEmail;
 
         // 기본 생성자
-        public SignInRequest() {}
+        public SignUpRequest() {}
 
         // 생성자
-        public SignInRequest(String userName, String userNickname, String userId, String userPassword, String userEmail) {
+        public SignUpRequest(String userName, String userNickname, String userId, String userPassword, String userEmail) {
             this.userName = userName;
             this.userNickname = userNickname;
             this.userId = userId;

@@ -16,17 +16,17 @@ public class UserController {
     private UserService userService;
 
     // 회원가입
-    @PostMapping("/signIn")
-    public ResponseEntity<?> signInUser(@RequestBody UserDTO.SignInRequest signInRequest){
+    @PostMapping("/signUp")
+    public ResponseEntity<?> signUpUser(@RequestBody UserDTO.SignUpRequest signUpRequest){
         try {
             User user = new User();
-            user.setUserName(signInRequest.getUserName());
-            user.setUserNickname(signInRequest.getUserNickname());
-            user.setUserId(signInRequest.getUserId());
-            user.setUserPassword(signInRequest.getUserPassword());
-            user.setUserEmail(signInRequest.getUserEmail());
+            user.setUserName(signUpRequest.getUserName());
+            user.setUserNickname(signUpRequest.getUserNickname());
+            user.setUserId(signUpRequest.getUserId());
+            user.setUserPassword(signUpRequest.getUserPassword());
+            user.setUserEmail(signUpRequest.getUserEmail());
 
-            User saveUser = userService.signInUser(user);
+            User saveUser = userService.signUpUser(user);
         
 
             // UserResponse로 변환해주어야 한다 - 추후 보안 유지(비밀번호만 제외 하자)와 API 연계를 쉽게하기 위해 만듦
