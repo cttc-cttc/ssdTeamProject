@@ -4,6 +4,7 @@ import HomeMain from "./pages/home/main/home-main";
 import SignUp from "./pages/account/sign-up/sign-up";
 import Page404 from "./pages/etc/page-404";
 import LogIn from "./pages/account/log-in/log-in";
+import FindPassword from "./pages/account/find-password/find-password";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Route index element={<HomeMain />} />
           <Route path="sign-up" element={<SignUp />} />
           <Route path="log-in" element={<LogIn />} />
+          <Route path="find-password" element={<FindPassword />} />
 
           <Route path="/*" element={<Page404 />} />
         </Route>
