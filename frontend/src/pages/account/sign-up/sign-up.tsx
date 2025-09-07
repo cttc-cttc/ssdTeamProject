@@ -222,7 +222,7 @@ export default function SignUp() {
               )}
             </div>
 
-            <div>
+            <div> 
               <label htmlFor="userEmail" className="block text-sm font-medium text-gray-700">
                 이메일 <span className="text-red-500">*</span>
               </label>
