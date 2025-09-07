@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import axios from "axios";
 
 export default function Signin() {
   const navigate = useNavigate();
@@ -18,6 +19,10 @@ export default function Signin() {
   // 해당 필드별 에러 메시지를 저장
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
+  // 회원 가입 로딩 상태 추가 -> 유저의 복수 클릭을 방지
+  const [loading, setLoading] = useState(false);
+
+  // 입력 필드에 값을 입력할 때마다 실행되는 함수
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -86,19 +91,47 @@ export default function Signin() {
     return Object.keys(checkErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // 화원가입 폼이 제출될 때 실행되는 함수
+  const handleSubmit = async (e: React.FormEvent) => {
+    // 크롬 기본 폼을 막아야한다. 그래야 새로고침이 안된다. 그래야 우리 스타일이 유지된다.
     e.preventDefault();
 
+    // 유효성 검사다. 실패하면 에러메세지가 출력된다. 모든 검사가 통과해야만 다음 단계로 넘어간다.
     if (!validateForm()) {
       return;
     }
 
-    // API 호출이 이 자리에 들어가야한다.
+    // 로딩 상태를 true로 설정하여 중복 제출 방지
+    setLoading(true);
+
+    try {
+      // API로 호출할 데이터를 준비 - 구조분해할당 사용 -> a만 별도로 분리 ...a 제외한 나머지 속성 모드 가져오기
+      // 의도적으로 사용하지 않는 변수는 무시하자.
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { confirmPassword, ...signinData } = formData;
+      const apiResponse = await axios.post("/api/users/signIn", signinData);
+
+      if (apiResponse.status === 200) {
+        alert("회원가입의 성공했습니다. 로그인 페이지로 이동합니다.");
+        navigate("/login");
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 400) {
+          alert(error.response.data || "회원가입 중 오류가 발생했습니다. 다시 시도해주세요.");
+        } else {
+          alert("네트워크 오류가 발생했습니다. 다시 시도해주세요.");
+        }
+      }
+    } finally {
+      // 요청이 끝나면 로딩 상태를 false로 다시 전환
+      setLoading(false);
+    }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
+      <div className="max-w-md w-full space-y-8 border-2 border-[#2c5536] rounded-lg p-6 shadow-2xl bg-[#ecf0f1]">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">회원가입</h2>
           <p className="mt-2 text-center text-sm text-gray-600">
@@ -215,8 +248,8 @@ export default function Signin() {
           </div>
 
           <div>
-            <Button type="submit" className="w-full">
-              회원가입
+            <Button type="submit" className="w-full" disabled={loading}>
+              {loading ? "가입 중..." : "회원가입"}
             </Button>
           </div>
 
