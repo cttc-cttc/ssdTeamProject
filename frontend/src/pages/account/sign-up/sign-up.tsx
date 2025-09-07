@@ -108,8 +108,8 @@ export default function SignUp() {
       // API로 호출할 데이터를 준비 - 구조분해할당 사용 -> a만 별도로 분리 ...a 제외한 나머지 속성 모드 가져오기
       // 의도적으로 사용하지 않는 변수는 무시하자.
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { confirmPassword, ...signinData } = formData;
-      const apiResponse = await axios.post("/api/users/signIn", signinData);
+      const { confirmPassword, ...signUpData } = formData;
+      const apiResponse = await axios.post("/api/users/signUp", signUpData);
 
       if (apiResponse.status === 200) {
         alert("회원가입의 성공했습니다. 로그인 페이지로 이동합니다.");
