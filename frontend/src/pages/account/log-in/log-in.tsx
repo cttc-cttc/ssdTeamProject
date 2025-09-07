@@ -39,7 +39,7 @@ export default function LogIn() {
     setLoading(true);
 
     try {
-      const response = await axios.post("/api/users/logIn", formData);
+      const response = await axios.post("/api/users/login", formData);
 
       if (response.status === 200) {
         alert("로그인 성공!");
