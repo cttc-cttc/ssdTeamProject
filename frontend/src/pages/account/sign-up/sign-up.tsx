@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import axios from "axios";
@@ -39,6 +39,7 @@ export default function SignUp() {
     }
   };
 
+  // 유효성 검사 폼
   const validateForm = () => {
     const checkErrors: { [key: string]: string } = {};
 
@@ -91,53 +92,48 @@ export default function SignUp() {
     return Object.keys(checkErrors).length === 0;
   };
 
-  // 화원가입 폼이 제출될 때 실행되는 함수
+  // 회원가입 폼이 제출될 때 실행되는 함수
   const handleSubmit = async (e: React.FormEvent) => {
     // 크롬 기본 폼을 막아야한다. 그래야 새로고침이 안된다. 그래야 우리 스타일이 유지된다.
     e.preventDefault();
 
-    // 유효성 검사다. 실패하면 에러메세지가 출력된다. 모든 검사가 통과해야만 다음 단계로 넘어간다.
+    // 유효성 검사 실행
     if (!validateForm()) {
       return;
     }
 
-    // 로딩 상태를 true로 설정하여 중복 제출 방지
+    // 회원가입 처리 시작
     setLoading(true);
 
     try {
-      // API로 호출할 데이터를 준비 - 구조분해할당 사용 -> a만 별도로 분리 ...a 제외한 나머지 속성 모드 가져오기
-      // 의도적으로 사용하지 않는 변수는 무시하자.
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { confirmPassword, ...signUpData } = formData;
-      const apiResponse = await axios.post("/api/users/signUp", signUpData);
+      const response = await axios.post("/api/users/signUp", formData);
 
-      if (apiResponse.status === 200) {
-        alert("회원가입의 성공했습니다. 로그인 페이지로 이동합니다.");
-        navigate("/login");
+      if (response.status === 200) {
+        alert("회원가입 성공!");
+        navigate("/log-in");
       }
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        if (error.response?.status === 400) {
-          alert(error.response.data || "회원가입 중 오류가 발생했습니다. 다시 시도해주세요.");
-        } else {
-          alert("네트워크 오류가 발생했습니다. 다시 시도해주세요.");
-        }
+      if (axios.isAxiosError(error) && error.response?.status === 400) {
+        alert(error.response.data || "회원가입 중 오류가 발생했습니다. 다시 시도해주세요.");
+      } else {
+        alert("네트워크 오류가 발생했습니다. 다시 시도해주세요.");
       }
     } finally {
-      // 요청이 끝나면 로딩 상태를 false로 다시 전환
+      // 회원가입 처리 종료
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="flex items-center justify-center min-h-screen px-4 py-12 bg-gray-50 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8 border-2 border-[#2c5536] rounded-lg p-6 shadow-2xl bg-[#ecf0f1]">
         <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">회원가입</h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
-            SSD에 가입하고 즐거운 스터디 생활을 즐겨보세요!
+          <h2 className="mt-6 text-3xl font-extrabold text-center text-gray-900">회원가입</h2>
+          <p className="mt-2 text-sm text-center text-gray-600">
+            SSD에 가입하고 다양한 스터디를 경험해보세요!
           </p>
         </div>
+
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="space-y-4">
             <div>
@@ -153,9 +149,7 @@ export default function SignUp() {
                 placeholder="이름을 입력해주세요."
                 className="mt-1"
               />
-              {errors.userName && (
-                <span className="text-red-500 text-sm mt-1">{errors.userName}</span>
-              )}
+              {errors.userName && <p className="text-red-500 text-sm mt-1">{errors.userName}</p>}
             </div>
 
             <div>
@@ -172,7 +166,7 @@ export default function SignUp() {
                 className="mt-1"
               />
               {errors.userNickname && (
-                <span className="text-red-500 text-sm mt-1">{errors.userNickname}</span>
+                <p className="text-red-500 text-sm mt-1">{errors.userNickname}</p>
               )}
             </div>
 
@@ -186,10 +180,10 @@ export default function SignUp() {
                 type="text"
                 value={formData.userId}
                 onChange={handleInputChange}
-                placeholder="5자 이상 15자 이하의 아이디를 입력해주세요."
+                placeholder="아이디를 입력해주세요."
                 className="mt-1"
               />
-              {errors.userId && <span className="text-red-500 text-sm mt-1">{errors.userId}</span>}
+              {errors.userId && <p className="text-red-500 text-sm mt-1">{errors.userId}</p>}
             </div>
 
             <div>
@@ -202,11 +196,11 @@ export default function SignUp() {
                 type="password"
                 value={formData.userPassword}
                 onChange={handleInputChange}
-                placeholder="8자 이상 18자 이하의 비밀번호를 입력해주세요."
+                placeholder="비밀번호를 입력해주세요."
                 className="mt-1"
               />
               {errors.userPassword && (
-                <span className="text-red-500 text-sm mt-1">{errors.userPassword}</span>
+                <p className="text-red-500 text-sm mt-1">{errors.userPassword}</p>
               )}
             </div>
 
@@ -220,11 +214,11 @@ export default function SignUp() {
                 type="password"
                 value={formData.confirmPassword}
                 onChange={handleInputChange}
-                placeholder="비밀번호를 다시 한 번 입력해주세요."
+                placeholder="비밀번호를 다시 입력해주세요."
                 className="mt-1"
               />
               {errors.confirmPassword && (
-                <span className="text-red-500 text-sm mt-1">{errors.confirmPassword}</span>
+                <p className="text-red-500 text-sm mt-1">{errors.confirmPassword}</p>
               )}
             </div>
 
@@ -238,12 +232,10 @@ export default function SignUp() {
                 type="email"
                 value={formData.userEmail}
                 onChange={handleInputChange}
-                placeholder="example@email.com"
+                placeholder="이메일을 입력해주세요."
                 className="mt-1"
               />
-              {errors.userEmail && (
-                <span className="text-red-500 text-sm mt-1">{errors.userEmail}</span>
-              )}
+              {errors.userEmail && <p className="text-red-500 text-sm mt-1">{errors.userEmail}</p>}
             </div>
           </div>
 
@@ -255,13 +247,9 @@ export default function SignUp() {
 
           <div className="text-center">
             이미 계정이 있으신가요?{" "}
-            <button
-              type="button"
-              onClick={() => navigate("/login")}
-              className="text-blue-600 hover:text-blue-800"
-            >
+            <Link to="/log-in" className="text-blue-600 hover:text-blue-800">
               로그인하기
-            </button>
+            </Link>
           </div>
         </form>
       </div>
