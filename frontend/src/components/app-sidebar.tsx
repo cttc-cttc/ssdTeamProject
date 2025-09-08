@@ -1,26 +1,3 @@
-// import {
-//   Sidebar,
-//   SidebarContent,
-//   SidebarFooter,
-//   SidebarGroup,
-//   SidebarHeader,
-// } from "@/components/ui/sidebar";
-
-// export function AppSidebar() {
-//   return (
-//     <Sidebar>
-//       <SidebarHeader />
-//       <SidebarContent>
-//         <SidebarGroup />
-//         <SidebarGroup />
-//       </SidebarContent>
-//       <SidebarFooter />
-//     </Sidebar>
-//   );
-// }
-
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
-
 import {
   Sidebar,
   SidebarContent,
@@ -31,42 +8,14 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import type { SidebarItem } from "./sidebar-layout";
 
-// Menu items.
-const items = [
-  {
-    title: "Home",
-    url: "#",
-    icon: Home,
-  },
-  {
-    title: "Inbox",
-    url: "#",
-    icon: Inbox,
-  },
-  {
-    title: "Calendar",
-    url: "#",
-    icon: Calendar,
-  },
-  {
-    title: "Search",
-    url: "#",
-    icon: Search,
-  },
-  {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
-  },
-];
-
-export function AppSidebar() {
+export function AppSidebar({ items }: { items: SidebarItem[] }) {
   return (
-    <Sidebar className="fixed top-40 -z-50">
+    <Sidebar className="sticky top-40 h-fit">
       <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
+        <SidebarGroup className="transition-colors duration-500 ease-out">
+          <SidebarGroupLabel>스터디</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map(item => (

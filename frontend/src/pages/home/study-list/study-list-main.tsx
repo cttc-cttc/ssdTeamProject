@@ -1,3 +1,4 @@
+import { studyCategory } from "@/components/common/sidebar-menu-data";
 import SidebarLayout from "@/components/sidebar-layout";
 
 const tempData = [
@@ -41,8 +42,8 @@ export default function StudyListMain() {
   };
 
   return (
-    <div className="transition-colors duration-500 ease-in-out">
-      <SidebarLayout children={page()} />
+    <div>
+      <SidebarLayout children={page()} items={studyCategory} />
     </div>
   );
 }
