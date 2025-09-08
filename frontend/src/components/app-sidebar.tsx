@@ -11,11 +11,11 @@ import {
 import type { SidebarItem } from "./sidebar-layout";
 
 interface AppSidebarProps {
-  categories: SidebarItem[];
   categoryName: string;
+  categories: SidebarItem[];
 }
 
-export function AppSidebar({ categories, categoryName }: AppSidebarProps) {
+export function AppSidebar({ categoryName, categories }: AppSidebarProps) {
   return (
     <Sidebar className="sticky top-40 h-fit">
       <SidebarContent>

@@ -44,9 +44,9 @@ export default function StudyListMain() {
   return (
     <div>
       <SidebarLayout
-        children={page()}
-        categories={studyCategory}
         categoryName={studyCategoryName}
+        categories={studyCategory}
+        children={page()}
       />
     </div>
   );
