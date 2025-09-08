@@ -2,10 +2,12 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useInfoStore } from "../info-store";
 import axios from "axios";
 
 export default function LogIn() {
   const navigate = useNavigate();
+  const { setInfoStore } = useInfoStore();
 
   const [formData, setFormData] = useState({
     userId: "",
@@ -42,6 +44,15 @@ export default function LogIn() {
       const response = await axios.post("/api/users/login", formData);
 
       if (response.status === 200) {
+        const data = response.data;
+
+        // 로그인 성공 시, 전역 상태에 사용자 정보 저장
+        setInfoStore({
+          userName: data.userName,
+          userId: data.userId,
+          userNickname: data.userNickname,
+          userEmail: data.userEmail,
+        });
         alert("로그인 성공!");
         navigate("/");
       }
