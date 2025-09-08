@@ -64,7 +64,10 @@ export default function FindPassword() {
     setLoading(true);
 
     try {
-      const response = await axios.post("/api/users/findPassword", formData);
+      const response = await axios.post(
+        "http://localhost:8080/api/users/password-reset/request",
+        formData
+      );
 
       if (response.status === 200) {
         alert("비밀번호 재설정 링크가 이메일로 전송되었습니다. 이메일을 확인해주세요.");
