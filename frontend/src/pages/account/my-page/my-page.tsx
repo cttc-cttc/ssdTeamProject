@@ -112,8 +112,10 @@ export default function MyPage() {
     setWithdrawError("");
     setLoadingWithdraw(true);
     try {
-      await axios.post(`/api/users/${userId}/withdraw`, {
-        password: withdrawPassword,
+      await axios.delete(`/api/users/${userId}`, {
+        data: {
+          password: withdrawPassword,
+        },
       });
       alert("회원탈퇴가 완료되었습니다.");
       clearInfoStore();
@@ -208,7 +210,7 @@ export default function MyPage() {
 
               {/* 이메일 */}
               <div>
-                <label className="block text-sm font-mediummb-2">이메일</label>
+                <label className="block text-sm font-medium mb-2">이메일</label>
                 <p>{userEmail}</p>
                 <p className="text-xs mt-1">이메일은 변경할 수 없습니다.</p>
               </div>
@@ -247,9 +249,7 @@ export default function MyPage() {
                   SSD에는 수많은 스터디가 모여 있습니다!
                 </p>
                 <div>
-                  <label className="block text-sm font-medium mb-2">
-                    비밀번호 확인
-                  </label>
+                  <label className="block text-sm font-medium mb-2">비밀번호 확인</label>
                   <input
                     type="password"
                     value={withdrawPassword}
