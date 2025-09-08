@@ -84,9 +84,7 @@ public class UserService {
         // 비밀번호 변경
         if (userInfo.getUserPassword() != null && !userInfo.getUserPassword().isEmpty()){
             user.setUserPassword(userInfo.getUserPassword()); // 단순한 평문 저장
-        } else {
-            throw new RuntimeException("비밀번호를 입력해주세요.");
-        }
+        } 
 
         // 닉네임 변경 (30일 제한)
         if (userInfo.getUserNickname() != null && !userInfo.getUserNickname().isEmpty()){
