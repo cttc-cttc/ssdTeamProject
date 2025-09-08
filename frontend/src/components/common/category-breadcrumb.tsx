@@ -6,7 +6,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 
-export default function CategoryBreadcrumb() {
+export default function CategoryBreadcrumb({ catTitle }: { catTitle: string }) {
   return (
     <Breadcrumb>
       <BreadcrumbList>
@@ -15,7 +15,7 @@ export default function CategoryBreadcrumb() {
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbPage className="text-base">전체</BreadcrumbPage>
+          <BreadcrumbPage className="text-base text-muted-foreground">{catTitle}</BreadcrumbPage>
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>

@@ -3,6 +3,7 @@ import SidebarLayout from "@/components/sidebar-layout";
 import { Button } from "@/components/ui/button";
 import { ImageFrame } from "./image-frame";
 import CategoryBreadcrumb from "@/components/common/category-breadcrumb";
+import { Navigate, useParams } from "react-router-dom";
 
 const tempData = [
   {
@@ -198,15 +199,28 @@ const tempData = [
 ];
 
 export default function StudyListMain() {
+  const { cat } = useParams<{ cat: string }>();
+
+  // studyCategory의 url 목록
+  const validUrls = studyCategory.map(c => c.url);
+
+  // cat이 없거나 잘못된 값이면 all로 리다이렉트
+  if (!cat || !validUrls.includes(cat)) {
+    return <Navigate to="/study/all" replace />;
+  }
+
+  const catParam = cat;
+  const catTitle = studyCategory.find(cat => cat.url === catParam)?.title ?? "전체";
+
   const page = () => {
     return (
-      <div className="container flex flex-col items-center mt-10 gap-6">
+      <div className="container flex flex-col items-center mt-10 gap-8">
         <div className="flex w-full max-w-7xl justify-start py-4">
-          <CategoryBreadcrumb />
+          <CategoryBreadcrumb catTitle={catTitle} />
         </div>
-        {tempData.map(posts => (
-          <div key={posts.id} className="flex w-full max-w-6xl shadow-xl">
-            <div className="flex-5 flex border-1 border-accent bg-white dark:bg-border p-4">
+        {tempData.map((posts, index) => (
+          <div key={index} className="flex w-full max-w-6xl shadow-xl">
+            <div className="flex-5 flex border-1 border-accent bg-white dark:bg-muted/50 p-4">
               <div className="flex-4 flex flex-col gap-2">
                 <div className="text-[#2c3e50] dark:text-accent-foreground text-xl font-bold">
                   {posts.title}
@@ -241,6 +255,7 @@ export default function StudyListMain() {
   return (
     <div>
       <SidebarLayout
+        catParam={catParam}
         categoryName={studyCategoryName}
         categories={studyCategory}
         children={page()}

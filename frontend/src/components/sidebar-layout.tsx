@@ -9,15 +9,21 @@ export interface SidebarItem {
 }
 
 interface SidebarLayoutProps {
+  catParam: string;
   categoryName: string;
   categories: SidebarItem[];
   children: React.ReactNode;
 }
 
-export default function SidebarLayout({ categoryName, categories, children }: SidebarLayoutProps) {
+export default function SidebarLayout({
+  catParam,
+  categoryName,
+  categories,
+  children,
+}: SidebarLayoutProps) {
   return (
     <SidebarProvider>
-      <AppSidebar categoryName={categoryName} categories={categories} />
+      <AppSidebar catParam={catParam} categoryName={categoryName} categories={categories} />
       <main className="flex-1">{children}</main>
     </SidebarProvider>
   );
