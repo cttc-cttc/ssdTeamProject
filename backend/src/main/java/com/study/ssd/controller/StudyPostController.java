@@ -2,7 +2,6 @@ package com.study.ssd.controller;
 
 import com.study.ssd.dto.StudyPostRequest;
 import com.study.ssd.dto.StudyPostResponse;
-import com.study.ssd.repository.StudyPostRepository;
 import com.study.ssd.service.StudyPostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,10 +17,11 @@ public class StudyPostController {
 
     private  final StudyPostService  studyPostService;
 
-    /*@PostMapping
-    public ResponseEntity<StudyPostResponse> createPost (@RequestBody StudyPostRequest studyPostRequest) {
-
-        StudyPostResponse studyPostResponse = studyPostService.crea(studyPostRequest);
+    @PostMapping
+    public ResponseEntity<StudyPostResponse> createPost (
+            @RequestBody StudyPostRequest studyPostRequest
+    ) {
+        StudyPostResponse studyPostResponse = studyPostService.createPost(studyPostRequest);
         return ResponseEntity.ok(studyPostResponse);
-    }*/
+    }
 }
