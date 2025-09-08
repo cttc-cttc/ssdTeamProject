@@ -105,7 +105,7 @@ export default function PasswordReset() {
         alert("비밀번호가 성공적으로 변경되었습니다!");
         setTimeout(() => {
           navigate("/log-in");
-        }, 2000);
+        }, 1000);
       }
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
