@@ -10,13 +10,14 @@ export interface SidebarItem {
 
 interface SidebarLayoutProps {
   children: React.ReactNode;
-  items: SidebarItem[];
+  categories: SidebarItem[];
+  categoryName: string;
 }
 
-export default function SidebarLayout({ children, items }: SidebarLayoutProps) {
+export default function SidebarLayout({ children, categories, categoryName }: SidebarLayoutProps) {
   return (
     <SidebarProvider>
-      <AppSidebar items={items} />
+      <AppSidebar categories={categories} categoryName={categoryName} />
       <main className="flex-1">{children}</main>
     </SidebarProvider>
   );

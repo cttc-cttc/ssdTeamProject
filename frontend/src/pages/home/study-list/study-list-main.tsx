@@ -1,4 +1,4 @@
-import { studyCategory } from "@/components/common/sidebar-menu-data";
+import { studyCategory, studyCategoryName } from "@/components/common/sidebar-menu-data";
 import SidebarLayout from "@/components/sidebar-layout";
 
 const tempData = [
@@ -43,7 +43,11 @@ export default function StudyListMain() {
 
   return (
     <div>
-      <SidebarLayout children={page()} items={studyCategory} />
+      <SidebarLayout
+        children={page()}
+        categories={studyCategory}
+        categoryName={studyCategoryName}
+      />
     </div>
   );
 }

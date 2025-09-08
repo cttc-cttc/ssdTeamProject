@@ -10,15 +10,20 @@ import {
 } from "@/components/ui/sidebar";
 import type { SidebarItem } from "./sidebar-layout";
 
-export function AppSidebar({ items }: { items: SidebarItem[] }) {
+interface AppSidebarProps {
+  categories: SidebarItem[];
+  categoryName: string;
+}
+
+export function AppSidebar({ categories, categoryName }: AppSidebarProps) {
   return (
     <Sidebar className="sticky top-40 h-fit">
       <SidebarContent>
         <SidebarGroup className="transition-colors duration-500 ease-out">
-          <SidebarGroupLabel>스터디</SidebarGroupLabel>
+          <SidebarGroupLabel>{categoryName}</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {items.map(item => (
+              {categories.map(item => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
                     <a href={item.url}>
