@@ -223,4 +223,58 @@ public class UserDTO {
             this.userNicknameUpdatedAt = userNicknameUpdatedAt;
         }
     }
+    
+    // 비밀번호 재설정 요청 DTO
+    public static class PasswordResetRequest {
+        private String userEmail;
+        
+        // 기본 생성자
+        public PasswordResetRequest() {}
+        
+        // 생성자
+        public PasswordResetRequest(String userEmail) {
+            this.userEmail = userEmail;
+        }
+        
+        // 게터, 세터
+        public String getUserEmail() {
+            return userEmail;
+        }
+        
+        public void setUserEmail(String userEmail) {
+            this.userEmail = userEmail;
+        }
+    }
+    
+    // 비밀번호 재설정 확인 DTO
+    public static class PasswordResetConfirmRequest {
+        private String token;
+        private String newPassword;
+        
+        // 기본 생성자
+        public PasswordResetConfirmRequest() {}
+        
+        // 생성자
+        public PasswordResetConfirmRequest(String token, String newPassword) {
+            this.token = token;
+            this.newPassword = newPassword;
+        }
+        
+        // 게터, 세터
+        public String getToken() {
+            return token;
+        }
+        
+        public void setToken(String token) {
+            this.token = token;
+        }
+        
+        public String getNewPassword() {
+            return newPassword;
+        }
+        
+        public void setNewPassword(String newPassword) {
+            this.newPassword = newPassword;
+        }
+    }
 }

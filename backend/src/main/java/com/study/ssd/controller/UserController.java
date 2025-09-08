@@ -45,7 +45,7 @@ public class UserController {
     }
 
     // 로그인
-    @PostMapping("/logIn")
+    @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody UserDTO.LoginRequest loginRequest){
         try {
             User user = userService.loginUser(loginRequest.getUserId(), loginRequest.getUserPassword());
@@ -115,6 +115,28 @@ public class UserController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    
+    // 비밀번호 재설정 요청
+    @PostMapping("/password-reset/request")
+    public ResponseEntity<?> requestPasswordReset(@RequestBody UserDTO.PasswordResetRequest request) {
+        try {
+            userService.requestPasswordReset(request.getUserEmail());
+            return ResponseEntity.ok("비밀번호 재설정 이메일이 전송되었습니다.");
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    
+    // 비밀번호 재설정 처리
+    @PostMapping("/password-reset/confirm")
+    public ResponseEntity<?> resetPassword(@RequestBody UserDTO.PasswordResetConfirmRequest request) {
+        try {
+            userService.resetPassword(request.getToken(), request.getNewPassword());
+            return ResponseEntity.ok("비밀번호가 성공적으로 변경되었습니다.");
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }
 /*
 * @Controller: 요청과 응답을 처리하는 곳
@@ -122,17 +144,3 @@ public class UserController {
 * @RestController = @Controller + @ResponseBody
 * @RequestMapping: 클라이언트 요청 URL을 컨트롤러 메서드(혹은 클래스)의 매핑하는 역할
 */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
