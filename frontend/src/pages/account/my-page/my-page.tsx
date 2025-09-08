@@ -237,7 +237,7 @@ export default function MyPage() {
           {/* 회원 탈퇴 모달 */}
           {withdrawModal && (
             <div className="fixed inset-0 bg-amber-50/60 flex items-center justify-center z-50 dark:bg-amber-50/10">
-              <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md dark:bg-black">
+              <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md dark:bg-[#0f1216]">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-lg font-semibold">회원탈퇴</h3>
                 </div>
@@ -247,7 +247,7 @@ export default function MyPage() {
                   SSD에는 수많은 스터디가 모여 있습니다!
                 </p>
                 <div>
-                  <label className="block text-sm font-medium mb-2 dark:text-black">
+                  <label className="block text-sm font-medium mb-2">
                     비밀번호 확인
                   </label>
                   <input
