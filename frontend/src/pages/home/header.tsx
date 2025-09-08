@@ -48,6 +48,9 @@ export default function Header() {
               <span className="flex items-center">
                 {userNickname || userId}님 스터디할 시간입니다!
               </span>
+              <Button asChild variant="outline">
+                <Link to="/mypage">마이페이지</Link>
+              </Button>
               <Button onClick={clearInfoStore} variant="outline">
                 로그아웃
               </Button>

@@ -6,6 +6,7 @@ import Page404 from "./pages/etc/page-404";
 import LogIn from "./pages/account/log-in/log-in";
 import FindPassword from "./pages/account/find-password/find-password";
 import PasswordReset from "./pages/account/password-reset/password-reset";
+import MyPage from "./pages/account/my-page/my-page";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="log-in" element={<LogIn />} />
           <Route path="find-password" element={<FindPassword />} />
           <Route path="password-reset" element={<PasswordReset />} />
+          <Route path="mypage" element={<MyPage />} />
 
           <Route path="/*" element={<Page404 />} />
         </Route>
