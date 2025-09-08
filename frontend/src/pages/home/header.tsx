@@ -49,10 +49,13 @@ export default function Header() {
         {/* 우측: 사용자 영역 */}
         <div className="flex items-center gap-2">
           {userId ? (
-            <div className="flex flex-col gap-4">
-              <span className="hidden sm:flex items-center whitespace-nowrap">
-                {userNickname || userId}님 스터디할 시간입니다!
-              </span>
+            <div className="flex flex-col gap-4 items-end">
+              <div className="flex gap-2">
+                <span className="hidden sm:flex items-center whitespace-nowrap">
+                  {userNickname || userId}님 스터디할 시간입니다!
+                </span>
+                <ModeToggle />
+              </div>
               <div className="flex gap-2 justify-end">
                 <Button asChild variant="outline" size="sm">
                   <Link to="/mypage">마이페이지</Link>
@@ -68,14 +71,16 @@ export default function Header() {
                     </span>
                   </Link>
                 </Button>
-                <ModeToggle />
               </div>
             </div>
           ) : (
-            <div className="flex flex-col gap-4">
-              <span className="hidden sm:flex items-center whitespace-nowrap">
-                로그인 후 다양한 스터디를 경험해보세요!
-              </span>
+            <div className="flex flex-col gap-4 items-end">
+              <div className="flex gap-2">
+                <span className="hidden sm:flex items-center whitespace-nowrap">
+                  로그인 후 다양한 스터디를 경험해보세요!
+                </span>
+                <ModeToggle />
+              </div>
               <div className="flex gap-2 justify-end">
                 <Button asChild variant="outline" size="sm">
                   <Link to="/sign-up">회원가입</Link>
@@ -83,7 +88,6 @@ export default function Header() {
                 <Button asChild variant="default" size="sm">
                   <Link to="/log-in">로그인</Link>
                 </Button>
-                <ModeToggle />
               </div>
             </div>
           )}
