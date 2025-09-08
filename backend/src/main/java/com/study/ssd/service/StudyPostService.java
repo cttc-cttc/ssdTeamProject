@@ -35,6 +35,7 @@ public class StudyPostService {
                 .content(saved.getContent())
                 .category(saved.getCategory())
                 .deadline(saved.getDeadline())
+                .created(saved.getCreatedAt())
                 .updated(saved.getUpdatedAt())
                 .currentCont(saved.getCurrentCont())
                 .maxCount(saved.getMaxCount())
