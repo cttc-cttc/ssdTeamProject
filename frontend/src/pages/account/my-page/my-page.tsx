@@ -95,6 +95,7 @@ export default function MyPage() {
         setIsEditing(false);
       }
     } catch (error) {
+      console.error("프로필 수정 실패:", error);
       alert("프로필 수정에 실패했습니다. 다시 시도해주세요.");
     } finally {
       setLoading(false);

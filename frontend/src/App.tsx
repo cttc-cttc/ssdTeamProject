@@ -7,6 +7,7 @@ import LogIn from "./pages/account/log-in/log-in";
 import FindPassword from "./pages/account/find-password/find-password";
 import PasswordReset from "./pages/account/password-reset/password-reset";
 import MyPage from "./pages/account/my-page/my-page";
+import StudyListMain from "./pages/home/study-list/study-list-main";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />}>
           <Route index element={<HomeMain />} />
+          <Route path="study" element={<StudyListMain />} />
           <Route path="sign-up" element={<SignUp />} />
           <Route path="log-in" element={<LogIn />} />
           <Route path="find-password" element={<FindPassword />} />
