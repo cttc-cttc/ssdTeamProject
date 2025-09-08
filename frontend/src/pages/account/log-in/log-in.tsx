@@ -69,11 +69,11 @@ export default function LogIn() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen px-4 py-12 bg-gray-50 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8 border-2 border-[#2c5536] rounded-lg p-6 shadow-2xl bg-[#ecf0f1]">
+    <div className="flex items-center justify-center min-h-screen px-4 py-12">
+      <div className="max-w-md w-full space-y-8 border-2 border-[#2c5536] rounded-lg p-6 shadow-2xl">
         <div>
-          <h2 className="mt-6 text-3xl font-extrabold text-center text-gray-900">로그인</h2>
-          <p className="mt-2 text-sm text-center text-gray-600">
+          <h2 className="mt-6 text-3xl font-extrabold text-center">로그인</h2>
+          <p className="mt-2 text-sm text-center">
             SSD에 로그인하고 다양한 스터디를 경험해보세요!
           </p>
         </div>
@@ -81,7 +81,7 @@ export default function LogIn() {
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="space-y-4">
             <div>
-              <label htmlFor="userId" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="userId" className="block text-sm font-medium">
                 아이디 <span className="text-red-500">*</span>
               </label>
               <Input
@@ -96,7 +96,7 @@ export default function LogIn() {
             </div>
 
             <div>
-              <label htmlFor="userPassword" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="userPassword" className="block text-sm font-medium">
                 비밀번호 <span className="text-red-500">*</span>
               </label>
               <Input
@@ -119,14 +119,14 @@ export default function LogIn() {
 
           <div className="text-center">
             계정이 없으신가요?{" "}
-            <Link to="/sign-up" className="text-blue-600 hover:text-blue-800">
+            <Link to="/sign-up" className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600">
               회원가입하기
             </Link>
           </div>
 
           <div className="text-center">
             혹시 비밀번호를 잊으셨나요?{" "}
-            <Link to="/find-password" className="text-blue-600 hover:text-blue-800">
+            <Link to="/find-password" className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600">
               비밀번호찾기
             </Link>
           </div>

@@ -86,11 +86,11 @@ export default function FindPassword() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen px-4 py-12 bg-gray-50 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8 border-2 border-[#2c5536] rounded-lg p-6 shadow-2xl bg-[#ecf0f1]">
+    <div className="flex items-center justify-center min-h-screen px-4 py-12">
+      <div className="max-w-md w-full space-y-8 border-2 border-[#2c5536] rounded-lg p-6 shadow-2xl">
         <div>
-          <h2 className="mt-6 text-3xl font-extrabold text-center text-gray-900">비밀번호 찾기</h2>
-          <p className="mt-2 text-sm text-center text-gray-600">
+          <h2 className="mt-6 text-3xl font-extrabold text-center">비밀번호 찾기</h2>
+          <p className="mt-2 text-sm text-center ">
             가입하신 이메일 주소를 입력해주세요. <br /> 비밀번호 재설정 링크를 보내드립니다.
           </p>
         </div>
@@ -98,7 +98,7 @@ export default function FindPassword() {
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="space-y-4">
             <div>
-              <label htmlFor="userEmail" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="userEmail" className="block text-sm font-medium">
                 이메일 <span className="text-red-500">*</span>
               </label>
               <Input
@@ -122,14 +122,20 @@ export default function FindPassword() {
 
           <div className="text-center">
             비밀번호를 기억하셨나요?{" "}
-            <Link to="/log-in" className="text-blue-600 hover:text-blue-800">
+            <Link
+              to="/log-in"
+              className="text-blue-600 hover:text-blue-800  dark:text-blue-400 dark:hover:text-blue-600"
+            >
               로그인하기
             </Link>
           </div>
 
           <div className="text-center">
             계정이 없으신가요?{" "}
-            <Link to="/sign-up" className="text-blue-600 hover:text-blue-800">
+            <Link
+              to="/sign-up"
+              className="text-blue-600 hover:text-blue-800  dark:text-blue-400 dark:hover:text-blue-600"
+            >
               회원가입하기
             </Link>
           </div>

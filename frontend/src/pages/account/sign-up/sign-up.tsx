@@ -125,19 +125,17 @@ export default function SignUp() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen px-4 py-12 bg-gray-50 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8 border-2 border-[#2c5536] rounded-lg p-6 shadow-2xl bg-[#ecf0f1]">
+    <div className="flex items-center justify-center min-h-screen px-4 py-12">
+      <div className="max-w-md w-full space-y-8 border-2 border-[#2c5536] rounded-lg p-6 shadow-2xl">
         <div>
-          <h2 className="mt-6 text-3xl font-extrabold text-center text-gray-900">회원가입</h2>
-          <p className="mt-2 text-sm text-center text-gray-600">
-            SSD에 가입하고 다양한 스터디를 경험해보세요!
-          </p>
+          <h2 className="mt-6 text-3xl font-extrabold text-center">회원가입</h2>
+          <p className="mt-2 text-sm text-center ">SSD에 가입하고 다양한 스터디를 경험해보세요!</p>
         </div>
 
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="space-y-4">
             <div>
-              <label htmlFor="userName" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="userName" className="block text-sm font-medium">
                 이름 <span className="text-red-500">*</span>
               </label>
               <Input
@@ -153,7 +151,7 @@ export default function SignUp() {
             </div>
 
             <div>
-              <label htmlFor="userNickname" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="userNickname" className="block text-sm font-medium">
                 닉네임 <span className="text-red-500">*</span>
               </label>
               <Input
@@ -171,7 +169,7 @@ export default function SignUp() {
             </div>
 
             <div>
-              <label htmlFor="userId" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="userId" className="block text-sm font-medium">
                 아이디 <span className="text-red-500">*</span>
               </label>
               <Input
@@ -187,7 +185,7 @@ export default function SignUp() {
             </div>
 
             <div>
-              <label htmlFor="userPassword" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="userPassword" className="block text-sm font-medium">
                 비밀번호 <span className="text-red-500">*</span>
               </label>
               <Input
@@ -205,7 +203,7 @@ export default function SignUp() {
             </div>
 
             <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="confirmPassword" className="block text-sm font-medium">
                 비밀번호 확인 <span className="text-red-500">*</span>
               </label>
               <Input
@@ -222,8 +220,8 @@ export default function SignUp() {
               )}
             </div>
 
-            <div> 
-              <label htmlFor="userEmail" className="block text-sm font-medium text-gray-700">
+            <div>
+              <label htmlFor="userEmail" className="block text-sm font-medium">
                 이메일 <span className="text-red-500">*</span>
               </label>
               <Input
@@ -247,7 +245,10 @@ export default function SignUp() {
 
           <div className="text-center">
             이미 계정이 있으신가요?{" "}
-            <Link to="/log-in" className="text-blue-600 hover:text-blue-800">
+            <Link
+              to="/log-in"
+              className="text-blue-600 hover:text-blue-800  dark:text-blue-400 dark:hover:text-blue-600"
+            >
               로그인하기
             </Link>
           </div>
