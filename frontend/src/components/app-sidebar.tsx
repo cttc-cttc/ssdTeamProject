@@ -21,7 +21,7 @@ export function AppSidebar({ catParam, categoryName, categories }: AppSidebarPro
     <Sidebar className="sticky top-40 h-fit">
       <SidebarContent>
         <SidebarGroup className="transition-colors duration-500 ease-out">
-          <SidebarGroupLabel>{categoryName}</SidebarGroupLabel>
+          <SidebarGroupLabel className="my-2">{categoryName}</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {categories.map(item => (

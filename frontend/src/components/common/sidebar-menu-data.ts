@@ -25,7 +25,7 @@ export const studyCategory = [
     icon: Languages,
   },
   {
-    title: "IT개발",
+    title: "IT/개발",
     url: "it-dev", // it-development
     icon: Monitor,
   },
