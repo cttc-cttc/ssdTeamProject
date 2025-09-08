@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Pencil } from "lucide-react";
 import { Plus } from "lucide-react";
 import { ModeToggle } from "@/components/mode-toggle";
@@ -9,8 +9,17 @@ import { useInfoStore } from "../account/info-store";
 export default function Header() {
   const { theme } = useTheme();
   const { userId, userNickname, clearInfoStore } = useInfoStore();
+  const navigate = useNavigate();
 
   const isSystemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+  const handleLogout = () => {
+    clearInfoStore();
+    if (confirm("로그아웃 하시겠습니까?")) {
+      clearInfoStore();
+      navigate("/");
+    }
+  };
 
   return (
     <div className="w-full sticky top-0 z-50 bg-background transition-colors duration-500 ease-in-out">
@@ -57,7 +66,7 @@ export default function Header() {
                 <Button asChild variant="outline" size="sm">
                   <Link to="/mypage">마이페이지</Link>
                 </Button>
-                <Button onClick={clearInfoStore} variant="outline" size="sm">
+                <Button onClick={handleLogout} variant="outline" size="sm">
                   로그아웃
                 </Button>
                 <Button asChild variant="default" size="sm">

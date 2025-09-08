@@ -127,8 +127,8 @@ export default function PasswordReset() {
   // 토큰이 없으면 에러 메시지 표시
   if (!token) {
     return (
-      <div className="flex items-center justify-center min-h-screen px-4 py-12 bg-gray-50 sm:px-6 lg:px-8">
-        <div className="max-w-md w-full space-y-8 border-2 border-[#2c5536] rounded-lg p-6 shadow-2xl bg-[#ecf0f1]">
+      <div className="flex items-center justify-center min-h-screen px-4 py-12 sm:px-6 lg:px-8">
+        <div className="max-w-md w-full space-y-8 border-2 border-[#2c5536] rounded-lg p-6 shadow-2xl ">
           <div className="text-center">
             <h2 className="text-3xl font-extrabold text-red-600 mb-4">오류</h2>
             <p className="text-gray-700 mb-6">유효하지 않은 링크입니다.</p>
@@ -142,19 +142,17 @@ export default function PasswordReset() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen px-4 py-12 bg-gray-50 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8 border-2 border-[#2c5536] rounded-lg p-6 shadow-2xl bg-[#ecf0f1]">
+    <div className="flex items-center justify-center min-h-screen px-4 py-12">
+      <div className="max-w-md w-full space-y-8 border-2 border-[#2c5536] rounded-lg p-6 shadow-2xl ">
         <div>
-          <h2 className="mt-6 text-3xl font-extrabold text-center text-gray-900">
-            새 비밀번호 설정
-          </h2>
-          <p className="mt-2 text-sm text-center text-gray-600">새로운 비밀번호를 입력해주세요.</p>
+          <h2 className="mt-6 text-3xl font-extrabold text-center">새 비밀번호 설정</h2>
+          <p className="mt-2 text-sm text-center">새로운 비밀번호를 입력해주세요.</p>
         </div>
 
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="space-y-4">
             <div>
-              <label htmlFor="newPassword" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="newPassword" className="block text-sm font-medium">
                 새 비밀번호 <span className="text-red-500">*</span>
               </label>
               <Input
@@ -173,7 +171,7 @@ export default function PasswordReset() {
             </div>
 
             <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="confirmPassword" className="block text-sm font-medium">
                 비밀번호 확인 <span className="text-red-500">*</span>
               </label>
               <Input
@@ -203,7 +201,7 @@ export default function PasswordReset() {
             <Button
               variant="link"
               onClick={() => navigate("/log-in")}
-              className="text-blue-600 hover:text-blue-800 p-0 h-auto"
+              className="text-blue-600 hover:text-blue-800 p-0 h-auto  dark:text-blue-400 dark:hover:text-blue-600"
             >
               로그인하기
             </Button>
