@@ -30,8 +30,11 @@ export default function MyPage() {
       const response = await axios.get("/api/users/profile");
       setUserInfo(response.data);
     } catch (error) {
-      console.error("사용자 정보 로드 실패:", error);
-      // 임시 데이터 (실제로는 로그인 상태 확인 필요)
+      if (axios.isAxiosError(error) && error.response?.status === 400) {
+        alert(error.response.data || "로그인에 실패했습니다.");
+      } else {
+        alert("네트워크 오류가 발생했습니다.");
+      }
       setUserInfo({
         userName: "홍길동",
         userNickname: "길동이",
@@ -253,7 +256,7 @@ export default function MyPage() {
               </div>
               <div className="bg-gray-50 p-4 rounded-lg text-center">
                 <p className="text-2xl font-bold text-[#2c5536]">8</p>
-                <p className="text-sm text-gray-600">참여</p>
+                <p className="text-sm text-gray-600">참여예정 스터디</p>
               </div>
             </div>
           </div>
