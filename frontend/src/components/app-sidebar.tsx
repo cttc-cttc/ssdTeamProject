@@ -11,11 +11,12 @@ import {
 import type { SidebarItem } from "./sidebar-layout";
 
 interface AppSidebarProps {
+  catParam: string;
   categoryName: string;
   categories: SidebarItem[];
 }
 
-export function AppSidebar({ categoryName, categories }: AppSidebarProps) {
+export function AppSidebar({ catParam, categoryName, categories }: AppSidebarProps) {
   return (
     <Sidebar className="sticky top-40 h-fit">
       <SidebarContent>
@@ -25,7 +26,7 @@ export function AppSidebar({ categoryName, categories }: AppSidebarProps) {
             <SidebarMenu>
               {categories.map(item => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton asChild isActive={catParam === item.url}>
                     <a href={item.url}>
                       <item.icon />
                       <span>{item.title}</span>

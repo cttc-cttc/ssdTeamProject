@@ -45,7 +45,7 @@ export default function Header() {
             <Link to="/guide">이용가이드</Link>
           </Button>
           <Button asChild variant="ssd_nav">
-            <Link to="/study">스터디</Link>
+            <Link to="/study/all">스터디</Link>
           </Button>
           <Button asChild variant="ssd_nav">
             <Link to="/notice">공지사항</Link>

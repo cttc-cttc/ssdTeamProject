@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Home from "./pages/home/home";
 import HomeMain from "./pages/home/main/home-main";
 import SignUp from "./pages/account/sign-up/sign-up";
@@ -15,7 +15,12 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />}>
           <Route index element={<HomeMain />} />
-          <Route path="study" element={<StudyListMain />} />
+          {/* 홈 스터디 리스트 진입 시 비정상적인 url을 전부 /study/all 로 변경 */}
+          <Route path="/study">
+            <Route index element={<Navigate to="all" replace />} />
+            <Route path=":cat" element={<StudyListMain />} />
+          </Route>
+
           <Route path="sign-up" element={<SignUp />} />
           <Route path="log-in" element={<LogIn />} />
           <Route path="find-password" element={<FindPassword />} />

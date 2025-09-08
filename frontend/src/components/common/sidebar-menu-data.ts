@@ -16,27 +16,27 @@ export const studyCategoryName = "스터디 카테고리";
 export const studyCategory = [
   {
     title: "전체",
-    url: "#",
+    url: "all",
     icon: ScrollText,
   },
   {
     title: "어학/자격증",
-    url: "#",
+    url: "language-cert", // language-certificates
     icon: Languages,
   },
   {
     title: "IT개발",
-    url: "#",
+    url: "it-dev", // it-development
     icon: Monitor,
   },
   {
     title: "취업",
-    url: "#",
+    url: "career",
     icon: BriefcaseBusiness,
   },
   {
     title: "기타",
-    url: "#",
+    url: "etc",
     icon: CircleEllipsis,
   },
 ];
