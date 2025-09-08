@@ -87,7 +87,7 @@ export default function SignUp() {
       checkErrors.userEmail = "올바른 이메일 형식을 입력하세요.";
     }
 
-    // 동시 에러 저장
+    // 동시 에러 저장 
     setErrors(checkErrors);
     return Object.keys(checkErrors).length === 0;
   };

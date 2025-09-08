@@ -54,7 +54,7 @@ export default function Header() {
             <Link to="/inquiry">문의하기</Link>
           </Button>
         </nav>
-
+              
         {/* 우측: 사용자 영역 */}
         <div className="flex items-center gap-2">
           {userId ? (

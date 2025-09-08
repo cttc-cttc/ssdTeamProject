@@ -62,7 +62,7 @@ export default function MyPage() {
     setLoading(true);
 
     try {
-      // 닉네임 변경을 서버에 요청 (비밀번호 없이)
+      // 닉네임 변경을 서버에 요청
       await axios.put(`/api/users/${userId}`, {
         userNickname: formData.userNickname,
       });
@@ -91,7 +91,7 @@ export default function MyPage() {
     }
   };
 
-  // 회원탈퇴 모달 제어 및 제출
+  // 회원탈퇴 모달
   const openWithdrawModal = () => {
     setWithdrawError("");
     setWithdrawPassword("");
