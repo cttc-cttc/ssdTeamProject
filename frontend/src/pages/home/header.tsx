@@ -13,7 +13,7 @@ export default function Header() {
     <div className="w-full sticky top-0 z-50 bg-background transition-colors duration-500 ease-in-out">
       <div className="relative flex items-center h-40 border-b-1 border-primary dark:border-foreground/30">
         <div className="flex flex-1 shrink-0">
-          <Link to="/" className="w-80 h-35 flex items-center justify-center overflow-hidden ml-16">
+          <Link to="/" className="w-80 h-35 flex items-center justify-center ml-16">
             <img
               src={
                 theme === "dark" || (theme === "system" && isSystemDark)
