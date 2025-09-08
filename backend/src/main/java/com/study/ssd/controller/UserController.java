@@ -3,17 +3,19 @@ package com.study.ssd.controller;
 import com.study.ssd.dto.UserDTO;
 import com.study.ssd.entity.User;
 import com.study.ssd.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/users")
+@RequiredArgsConstructor
 // @CrossOrigin(origins = "*") 나중에 하자
+
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     // 회원가입
     @PostMapping("/signUp")
