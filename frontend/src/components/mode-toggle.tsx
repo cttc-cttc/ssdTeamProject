@@ -10,7 +10,7 @@ export function ModeToggle() {
   };
 
   return (
-    <Button variant="outline" size="icon" onClick={toggleTheme} className="hover:cursor-pointer">
+    <Button variant="outline" size="icon" onClick={toggleTheme} className="border-1">
       <Sun className="h-[1.2rem] w-[1.2rem] transition-all dark:hidden" />
       <Moon className="h-[1.2rem] w-[1.2rem] hidden dark:block" />
       <span className="sr-only">Toggle theme</span>
