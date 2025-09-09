@@ -48,13 +48,13 @@ export default function Header() {
             <Link to="/study/all">스터디</Link>
           </Button>
           <Button asChild variant="ssd_nav">
-            <Link to="/notice">공지사항</Link>
+            <Link to="/notices">공지사항</Link>
           </Button>
           <Button asChild variant="ssd_nav">
             <Link to="/inquiry">문의하기</Link>
           </Button>
         </nav>
-              
+
         {/* 우측: 사용자 영역 */}
         <div className="flex items-center gap-2">
           {userId ? (
