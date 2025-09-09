@@ -2,14 +2,14 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 
-interface WithdrawModalProps {
+interface WithdrawProcessProps {
   isOpen: boolean;
   onClose: () => void;
   userId: string;
   onSuccess: () => void;
 }
 
-export default function WithdrawModal({ isOpen, onClose, userId, onSuccess }: WithdrawModalProps) {
+export default function WithdrawProcess({ isOpen, onClose, userId, onSuccess }: WithdrawProcessProps) {
   const [withdrawPassword, setWithdrawPassword] = useState("");
   const [loadingWithdraw, setLoadingWithdraw] = useState(false);
   const [withdrawError, setWithdrawError] = useState<string>("");
