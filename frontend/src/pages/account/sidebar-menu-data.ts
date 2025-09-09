@@ -1,4 +1,4 @@
-import { Monitor, BriefcaseBusiness, UserRoundPen } from "lucide-react";
+import { UserRoundPen, Book, BookPlus, BookMarked } from "lucide-react";
 
 export const mypageSidebarName = "마이 페이지 사이드바";
 export const mypageSidebar = [
@@ -10,16 +10,16 @@ export const mypageSidebar = [
   {
     title: "참여 스터디",
     url: "party-study",
-    icon: UserRoundPen,
+    icon: Book,
   },
   {
     title: "개설 스터디",
     url: "open-study",
-    icon: Monitor,
+    icon: BookPlus,
   },
   {
     title: "위시 스터디",
     url: "wish-study",
-    icon: BriefcaseBusiness,
+    icon: BookMarked,
   },
 ];

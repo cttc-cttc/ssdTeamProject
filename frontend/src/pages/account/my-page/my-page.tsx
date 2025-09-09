@@ -151,7 +151,7 @@ export default function MyPage() {
 
   const page = () => {
     return (
-      <div className="min-h-screen py-8 ">
+      <div className="container items-center py-8 m-10 mt-0">
         <div className="flex w-full max-w-7xl justify-start py-4">
           <CategoryBreadcrumb catTitle={sidebarTitle} />
         </div>
@@ -308,15 +308,15 @@ export default function MyPage() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 ">
                 <div className="text-center bg-[#f5f5dc] p-4 rounded-lg dark:bg-[#2c3e50]">
                   <p>12</p>
-                  <p>참여중인 스터디</p>
+                  <p>참여 스터디</p>
                 </div>
                 <div className="text-center bg-[#f5f5dc] p-4 rounded-lg dark:bg-[#2c3e50]">
                   <p>45</p>
-                  <p>참여했던 스터디</p>
+                  <p>개설 스터디</p>
                 </div>
                 <div className="text-center bg-[#f5f5dc] p-4 rounded-lg dark:bg-[#2c3e50]">
                   <p>8</p>
-                  <p>참여예정 스터디</p>
+                  <p>위시 스터디</p>
                 </div>
               </div>
             </div>
