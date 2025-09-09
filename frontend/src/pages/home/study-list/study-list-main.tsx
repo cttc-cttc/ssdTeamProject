@@ -4,221 +4,48 @@ import { Button } from "@/components/ui/button";
 import { ImageFrame } from "./image-frame";
 import CategoryBreadcrumb from "@/components/common/category-breadcrumb";
 import { Navigate, useParams } from "react-router-dom";
-
-const tempData = [
-  {
-    userId: "사용자1",
-    id: 1,
-    title: "글 제목",
-    content:
-      "0월 0일 부산 00역 앞 000카페에서 일본어 n2 문법 스터디를 진행합니다. " +
-      "음료는 개인별 주문하셔야 하며 스터디 시간은 최대 4시간으로 진행할 계획입니다.",
-    createdAt: "2025-05-05",
-    deadline: "2025-05-05",
-  },
-  {
-    userId: "사용자1",
-    id: 1,
-    title: "글 제목",
-    content:
-      "0월 0일 서울 00역 앞 000카페에서 spring security 스터디를 진행합니다. " +
-      "음료는 개인별 주문하셔야 하며 스터디 시간은 최대 4시간으로 진행할 계획입니다.",
-    createdAt: "2025-05-05",
-    deadline: "2025-05-05",
-  },
-  {
-    userId: "사용자1",
-    id: 1,
-    title: "글 제목",
-    content:
-      "0월 0일 서울 00역 앞 000카페에서 spring security 스터디를 진행합니다. " +
-      "음료는 개인별 주문하셔야 하며 스터디 시간은 최대 4시간으로 진행할 계획입니다.",
-    createdAt: "2025-05-05",
-    deadline: "2025-05-05",
-  },
-  {
-    userId: "사용자1",
-    id: 1,
-    title: "글 제목",
-    content: "글 내용",
-    createdAt: "2025-05-05",
-    deadline: "2025-05-05",
-  },
-  {
-    userId: "사용자1",
-    id: 1,
-    title: "글 제목",
-    content: "글 내용",
-    createdAt: "2025-05-05",
-    deadline: "2025-05-05",
-  },
-  {
-    userId: "사용자1",
-    id: 1,
-    title: "글 제목",
-    content: "글 내용",
-    createdAt: "2025-05-05",
-    deadline: "2025-05-05",
-  },
-  {
-    userId: "사용자1",
-    id: 1,
-    title: "글 제목",
-    content: "글 내용",
-    createdAt: "2025-05-05",
-    deadline: "2025-05-05",
-  },
-  {
-    userId: "사용자1",
-    id: 1,
-    title: "글 제목",
-    content: "글 내용",
-    createdAt: "2025-05-05",
-    deadline: "2025-05-05",
-  },
-  {
-    userId: "사용자1",
-    id: 1,
-    title: "글 제목",
-    content: "글 내용",
-    createdAt: "2025-05-05",
-    deadline: "2025-05-05",
-  },
-  {
-    userId: "사용자1",
-    id: 1,
-    title: "글 제목",
-    content: "글 내용",
-    createdAt: "2025-05-05",
-    deadline: "2025-05-05",
-  },
-  {
-    userId: "사용자1",
-    id: 1,
-    title: "글 제목",
-    content: "글 내용",
-    createdAt: "2025-05-05",
-    deadline: "2025-05-05",
-  },
-  {
-    userId: "사용자1",
-    id: 1,
-    title: "글 제목",
-    content: "글 내용",
-    createdAt: "2025-05-05",
-    deadline: "2025-05-05",
-  },
-  {
-    userId: "사용자1",
-    id: 1,
-    title: "글 제목",
-    content: "글 내용",
-    createdAt: "2025-05-05",
-    deadline: "2025-05-05",
-  },
-  {
-    userId: "사용자1",
-    id: 1,
-    title: "글 제목",
-    content: "글 내용",
-    createdAt: "2025-05-05",
-    deadline: "2025-05-05",
-  },
-  {
-    userId: "사용자1",
-    id: 1,
-    title: "글 제목",
-    content: "글 내용",
-    createdAt: "2025-05-05",
-    deadline: "2025-05-05",
-  },
-  {
-    userId: "사용자1",
-    id: 1,
-    title: "글 제목",
-    content: "글 내용",
-    createdAt: "2025-05-05",
-    deadline: "2025-05-05",
-  },
-  {
-    userId: "사용자1",
-    id: 1,
-    title: "글 제목",
-    content: "글 내용",
-    createdAt: "2025-05-05",
-    deadline: "2025-05-05",
-  },
-  {
-    userId: "사용자1",
-    id: 1,
-    title: "글 제목",
-    content: "글 내용",
-    createdAt: "2025-05-05",
-    deadline: "2025-05-05",
-  },
-  {
-    userId: "사용자1",
-    id: 1,
-    title: "글 제목",
-    content: "글 내용",
-    createdAt: "2025-05-05",
-    deadline: "2025-05-05",
-  },
-  {
-    userId: "사용자1",
-    id: 1,
-    title: "글 제목",
-    content: "글 내용",
-    createdAt: "2025-05-05",
-    deadline: "2025-05-05",
-  },
-  {
-    userId: "사용자1",
-    id: 1,
-    title: "글 제목",
-    content: "글 내용",
-    createdAt: "2025-05-05",
-    deadline: "2025-05-05",
-  },
-  {
-    userId: "사용자1",
-    id: 1,
-    title: "글 제목",
-    content: "글 내용",
-    createdAt: "2025-05-05",
-    deadline: "2025-05-05",
-  },
-  {
-    userId: "사용자1",
-    id: 1,
-    title: "글 제목",
-    content: "글 내용",
-    createdAt: "2025-05-05",
-    deadline: "2025-05-05",
-  },
-];
+import { tempDataStudyList } from "./study-list-mock-data";
+import { useEffect, useState } from "react";
+import CommonPagination from "./common-pagination";
 
 export default function StudyListMain() {
-  const { cat } = useParams<{ cat: string }>();
+  const { cat, page } = useParams<{ cat: string; page?: string }>();
+  const [currentPage, setCurrentPage] = useState(1);
 
   // studyCategory의 url 목록
   const validUrls = studyCategory.map(c => c.url);
 
-  // cat이 없거나 잘못된 값이면 all로 리다이렉트
-  if (!cat || !validUrls.includes(cat)) {
-    return <Navigate to="/study/all" replace />;
+  // page 파라미터가 변할 때만 currentPage 업데이트
+  useEffect(() => {
+    setCurrentPage(parseInt(page ?? "1", 10));
+  }, [page]);
+
+  // cat이 없거나 잘못된 값이면 all의 1페이지로 리다이렉트
+  if (!cat || !validUrls.includes(cat) || isNaN(currentPage) || currentPage < 1) {
+    return <Navigate to="/study/all/1" replace />;
   }
+
+  // 한 페이지에 보여줄 게시글 수
+  const itemsPerPage = 10;
+
+  // 전체 페이지 수
+  const totalPages = Math.ceil(tempDataStudyList.length / itemsPerPage);
+
+  // 현재 페이지에 해당하는 데이터 추출
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentItems = tempDataStudyList.slice(startIndex, endIndex);
 
   const catParam = cat;
   const catTitle = studyCategory.find(cat => cat.url === catParam)?.title ?? "전체";
 
-  const page = () => {
+  const pageComponent = () => {
     return (
       <div className="container flex flex-col items-center mt-10 gap-8">
         <div className="flex w-full max-w-7xl justify-start py-4">
           <CategoryBreadcrumb catTitle={catTitle} />
         </div>
-        {tempData.map((posts, index) => (
+        {currentItems.map((posts, index) => (
           <div key={index} className="flex w-full max-w-6xl shadow-xl">
             <div className="flex-5 flex border-1 border-accent bg-white dark:bg-muted/50 p-4">
               <div className="flex-4 flex flex-col gap-2">
@@ -248,6 +75,15 @@ export default function StudyListMain() {
             </div>
           </div>
         ))}
+
+        {/* 페이지네이션 */}
+        <div className="mb-8">
+          <CommonPagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+          />
+        </div>
       </div>
     );
   };
@@ -258,7 +94,7 @@ export default function StudyListMain() {
         catParam={catParam}
         categoryName={studyCategoryName}
         categories={studyCategory}
-        children={page()}
+        children={pageComponent()}
       />
     </div>
   );

@@ -19,6 +19,7 @@ function App() {
           <Route path="/study">
             <Route index element={<Navigate to="all" replace />} />
             <Route path=":cat" element={<StudyListMain />} />
+            <Route path=":cat/:page" element={<StudyListMain />} />
           </Route>
 
           <Route path="sign-up" element={<SignUp />} />
