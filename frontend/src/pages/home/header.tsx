@@ -67,7 +67,7 @@ export default function Header() {
               </div>
               <div className="flex gap-2 justify-end">
                 <Button asChild variant="outline" size="sm">
-                  <Link to="/mypage">마이페이지</Link>
+                  <Link to="/my-page">마이페이지</Link>
                 </Button>
                 <Button onClick={handleLogout} variant="outline" size="sm">
                   로그아웃

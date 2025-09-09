@@ -24,11 +24,15 @@ function App() {
             <Route path=":cat" element={<StudyListMain />} />
           </Route>
 
-          <Route path="sign-up" element={<SignUp />} />
-          <Route path="log-in" element={<LogIn />} />
-          <Route path="find-password" element={<FindPassword />} />
-          <Route path="password-reset" element={<PasswordReset />} />
-          <Route path="mypage" element={<MyPage />} />
+          <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/log-in" element={<LogIn />} />
+          <Route path="/find-password" element={<FindPassword />} />
+          <Route path="/password-reset" element={<PasswordReset />} />
+
+          <Route path="/my-page">
+            <Route index element={<Navigate to="manage-profile" replace />} />
+            <Route path=":sidebar" element={<MyPage />} />
+          </Route>
 
           <Route element={<RootLayout />}>
             <Route path="/notices" element={<NoticeList />} />
