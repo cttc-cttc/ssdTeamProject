@@ -11,7 +11,7 @@ import StudyListMain from "./pages/home/study-list/study-list-main";
 import RootLayout from "./layouts/RootLayout";
 import NoticeList from "./pages/NoticeList";
 import NoticeDetail from "./pages/NoticeDetail";
-import PostingPage from "./pages/studyPost/posting-page";
+import PostingPage from "./pages/study-post/posting-page";
 
 function App() {
   return (
