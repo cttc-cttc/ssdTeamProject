@@ -40,6 +40,7 @@ function App() {
             <Route path="/notices" element={<NoticeList />} />
             <Route path="/notices/:id" element={<NoticeDetail />} />
           </Route>
+
           <Route path="posting-page" element={<PostingPage />} />
 
           <Route path="/*" element={<Page404 />} />
