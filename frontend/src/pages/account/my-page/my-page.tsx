@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useInfoStore } from "../info-store";
+import { format } from "date-fns";
 import axios from "axios";
 
 export default function MyPage() {
@@ -147,7 +148,7 @@ export default function MyPage() {
               <h2 className="text-lg font-semibold ">프로필 정보</h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-[#f5f5dc] p-3 rounded-lg dark:bg-[#2c3e50]">
               {/* 이름 */}
               <div>
                 <label className="block text-sm font-medium mb-2">이름</label>
@@ -169,6 +170,9 @@ export default function MyPage() {
                     {errors.userNickname && (
                       <p className="text-red-500 text-sm mt-1">{errors.userNickname}</p>
                     )}
+                    <p className="text-xs text-gray-500 mt-1">
+                      닉네임은 30일에 한 번만 변경할 수 있습니다.
+                    </p>
                   </div>
                 ) : (
                   <div className="flex items-center justify-between gap-3">
@@ -220,16 +224,16 @@ export default function MyPage() {
           {/* 계정 관리 */}
           <div className="px-6 py-6 border-t">
             <h2 className="text-lg font-semibold mb-4">계정 관리</h2>
-            <div className="space-y-3">
+            <div className="space-y-3 bg-[#f5f5dc] p-4 rounded-lg dark:bg-[#2c3e50]">
               <Link
                 to="/find-password"
-                className="block w-full text-left px-4 py-3 text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-md transition-colors"
+                className="block w-full text-left font-semibold px-4 py-3 text-blue-600 hover:text-blue-900 hover:bg-blue-50 rounded-md transition-colors"
               >
                 비밀번호 변경
               </Link>
               <button
                 onClick={openWithdrawModal}
-                className="block w-full text-left px-4 py-3 text-red-600 hover:text-red-800 hover:bg-red-50 rounded-md transition-colors cursor-pointer"
+                className="block w-full text-left font-semibold px-4 py-3 text-red-600 hover:text-red-900 hover:bg-red-50 rounded-md transition-colors cursor-pointer"
               >
                 회원탈퇴
               </button>
@@ -281,18 +285,18 @@ export default function MyPage() {
           {/* 통계 정보 */}
           <div className="px-6 py-6 border-t">
             <h2 className="text-lg font-semibold mb-4">활동 통계</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="bg-gray-50 p-4 rounded-lg text-center dark:bg-gray-800">
-                <p className="text-2xl font-bold text-[#2c5536]">12</p>
-                <p className="text-sm text-gray-600">참여중인 스터디</p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 ">
+              <div className="text-center bg-[#f5f5dc] p-4 rounded-lg dark:bg-[#2c3e50]">
+                <p>12</p>
+                <p>참여중인 스터디</p>
               </div>
-              <div className="bg-gray-50 p-4 rounded-lg text-center dark:bg-gray-800">
-                <p className="text-2xl font-bold text-[#2c5536]">45</p>
-                <p className="text-sm text-gray-600">참여했던 스터디</p>
+              <div className="text-center bg-[#f5f5dc] p-4 rounded-lg dark:bg-[#2c3e50]">
+                <p>45</p>
+                <p>참여했던 스터디</p>
               </div>
-              <div className="bg-gray-50 p-4 rounded-lg text-center dark:bg-gray-800">
-                <p className="text-2xl font-bold text-[#2c5536]">8</p>
-                <p className="text-sm text-gray-600">참여예정 스터디</p>
+              <div className="text-center bg-[#f5f5dc] p-4 rounded-lg dark:bg-[#2c3e50]">
+                <p>8</p>
+                <p>참여예정 스터디</p>
               </div>
             </div>
           </div>
