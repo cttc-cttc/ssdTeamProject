@@ -2,9 +2,9 @@ import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import { Pencil } from "lucide-react";
 import { Plus } from "lucide-react";
-import { ModeToggle } from "@/components/mode-toggle";
-import { useTheme } from "@/components/theme-provider";
 import { useInfoStore } from "../account/info-store";
+import { ModeToggle } from "@/components/common/mode-toggle";
+import { useTheme } from "@/components/theme-provider";
 
 export default function Header() {
   const { theme } = useTheme();

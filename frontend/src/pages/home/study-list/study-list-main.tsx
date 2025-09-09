@@ -1,5 +1,8 @@
-import { studyCategory, studyCategoryName } from "@/components/common/sidebar-menu-data";
-import SidebarLayout from "@/components/sidebar-layout";
+import {
+  studyCategory,
+  studyCategoryName,
+  studyPageName,
+} from "@/components/common/sidebar-menu-data";
 import { Button } from "@/components/ui/button";
 import { ImageFrame } from "./image-frame";
 import CategoryBreadcrumb from "@/components/common/category-breadcrumb";
@@ -7,6 +10,7 @@ import { Navigate, useParams } from "react-router-dom";
 import { tempDataStudyList } from "./study-list-mock-data";
 import { useEffect, useState } from "react";
 import CommonPagination from "./common-pagination";
+import SidebarLayout from "@/components/common/sidebar-layout";
 
 export default function StudyListMain() {
   const { cat, page } = useParams<{ cat: string; page?: string }>();
@@ -43,7 +47,7 @@ export default function StudyListMain() {
     return (
       <div className="container flex flex-col items-center mt-10 gap-8">
         <div className="flex w-full max-w-7xl justify-start py-4">
-          <CategoryBreadcrumb catTitle={catTitle} />
+          <CategoryBreadcrumb pageTitle={studyPageName} catTitle={catTitle} />
         </div>
         {currentItems.map((posts, index) => (
           <div key={index} className="flex w-full max-w-6xl shadow-xl">

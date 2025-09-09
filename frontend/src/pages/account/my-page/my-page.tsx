@@ -5,8 +5,8 @@ import { Input } from "@/components/ui/input";
 import { useInfoStore } from "../info-store";
 import axios from "axios";
 import { mypageSidebar, mypageSidebarName } from "../sidebar-menu-data";
-import SidebarLayout from "@/components/sidebar-layout";
 import CategoryBreadcrumb from "@/components/common/category-breadcrumb";
+import SidebarLayout from "@/components/common/sidebar-layout";
 
 export default function MyPage() {
   const navigate = useNavigate();

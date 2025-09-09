@@ -13,6 +13,7 @@ import { Monitor, ScrollText, Languages, BriefcaseBusiness, CircleEllipsis } fro
  * 다른 파일에서 불러와야 하니 const 앞에 export를 붙여주세요
  */
 export const studyCategoryName = "스터디 카테고리";
+export const studyPageName = "최신 스터디";
 export const studyCategory = [
   {
     title: "전체",

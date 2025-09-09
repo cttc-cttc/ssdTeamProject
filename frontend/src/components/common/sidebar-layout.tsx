@@ -1,6 +1,6 @@
 import { SidebarProvider } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/app-sidebar";
 import { type LucideIcon } from "lucide-react";
+import { AppSidebar } from "./app-sidebar";
 
 export interface SidebarItem {
   title: string;
