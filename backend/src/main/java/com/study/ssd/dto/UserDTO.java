@@ -160,18 +160,20 @@ public class UserDTO {
         private String userId;
         private String userEmail;
         private LocalDate userNicknameUpdatedAt;
+        private LocalDate nextNicknameChangedAt;
 
         // 기본 생성자
         public UserResponse() {}
 
         // 생성자
-        public UserResponse(Long id, String userName, String userNickname, String userId, String userEmail, LocalDate userNicknameUpdatedAt) {
+        public UserResponse(Long id, String userName, String userNickname, String userId, String userEmail, LocalDate userNicknameUpdatedAt, LocalDate nextNicknameChangedAt) {
             this.id = id;
             this.userName = userName;
             this.userNickname = userNickname;
             this.userId = userId;
             this.userEmail = userEmail;
             this.userNicknameUpdatedAt = userNicknameUpdatedAt;
+            this.nextNicknameChangedAt = nextNicknameChangedAt;
         }
 
         // 게터, 세터
@@ -221,6 +223,14 @@ public class UserDTO {
 
         public void setUserNicknameUpdatedAt(LocalDate userNicknameUpdatedAt) {
             this.userNicknameUpdatedAt = userNicknameUpdatedAt;
+        }
+
+        public LocalDate getNextNicknameChangedAt() {
+            return nextNicknameChangedAt;
+        }
+
+        public void setNextNicknameChangedAt(LocalDate nextNicknameChangedAt) {
+            this.nextNicknameChangedAt = nextNicknameChangedAt;
         }
     }
     

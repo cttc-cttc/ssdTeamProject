@@ -38,7 +38,8 @@ public class UserController {
                     saveUser.getUserNickname(),
                     saveUser.getUserId(),
                     saveUser.getUserEmail(),
-                    saveUser.getUserNicknameUpdatedAt()
+                    saveUser.getLastNicknameChangedAt(),
+                    saveUser.getNextNicknameChangedAt()
             );
             return ResponseEntity.ok(response);
         } catch (RuntimeException e) {
@@ -59,7 +60,8 @@ public class UserController {
                     user.getUserNickname(),
                     user.getUserId(),
                     user.getUserEmail(),
-                    user.getUserNicknameUpdatedAt()
+                    user.getLastNicknameChangedAt(),
+                    user.getNextNicknameChangedAt()
             );
 
             return ResponseEntity.ok(response);
@@ -85,7 +87,8 @@ public class UserController {
                     updateUser.getUserNickname(),
                     updateUser.getUserId(),
                     updateUser.getUserEmail(),
-                    updateUser.getUserNicknameUpdatedAt()
+                    updateUser.getLastNicknameChangedAt(),
+                    updateUser.getNextNicknameChangedAt()
             );
 
             return ResponseEntity.ok(response);

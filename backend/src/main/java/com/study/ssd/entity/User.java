@@ -34,9 +34,13 @@ public class User {
     @Column(nullable = false, unique = true)
     private String userEmail;
 
-    // 유저 닉네임 변경
+    // 유저 닉네임 변경 - 최근 닉네임 수정일
     @Column
-    private LocalDate userNicknameUpdatedAt;
+    private LocalDate lastNicknameChangedAt;
+
+    // 유저 닉네임 변경 - 다음 닉네임 수정일
+    @Column
+    private LocalDate nextNicknameChangedAt;
 }
 /*
 * @Data = Lombok 라이브러리에서 제공하는 어노테이션

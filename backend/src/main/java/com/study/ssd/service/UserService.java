@@ -94,11 +94,16 @@ public class UserService {
 
             LocalDate now = LocalDate.now();
 
-            if (user.getUserNicknameUpdatedAt() == null || user.getUserNicknameUpdatedAt().plusDays(30).isBefore(now)){
+            if (user.getLastNicknameChangedAt() == null || user.getLastNicknameChangedAt().plusDays(30).isBefore(now) || user.getLastNicknameChangedAt().plusDays(30).isEqual(now)){
                 user.setUserNickname(userInfo.getUserNickname()); // 닉네임 변경
-                user.setUserNicknameUpdatedAt(now); // 닉네임 변경 날짜 저장
+                user.setLastNicknameChangedAt(now); // 닉네임 변경 날짜 저장
+                user.setNextNicknameChangedAt(now.plusDays(30)); // 다음 변경 가능 날짜 저장
             } else {
-                throw new RuntimeException("닉네임은 30일에 한 번만 변경할 수 있습니다.");
+                LocalDate nextChangeDate = user.getNextNicknameChangedAt();
+                if (nextChangeDate == null) {
+                    nextChangeDate = user.getLastNicknameChangedAt().plusDays(30);
+                }
+                throw new RuntimeException("닉네임은 30일에 한 번만 변경할 수 있습니다. \n다음 변경 가능 날짜: " + nextChangeDate);
             }
         }
 
