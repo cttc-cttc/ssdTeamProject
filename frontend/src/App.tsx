@@ -11,6 +11,7 @@ import StudyListMain from "./pages/home/study-list/study-list-main";
 import RootLayout from "./layouts/RootLayout";
 import NoticeList from "./pages/NoticeList";
 import NoticeDetail from "./pages/NoticeDetail";
+import PostingPage from "./pages/studyPost/posting-page";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
             <Route path="/notices" element={<NoticeList />} />
             <Route path="/notices/:id" element={<NoticeDetail />} />
           </Route>
+          <Route path="posting-page" element={<PostingPage />} />
 
           <Route path="/*" element={<Page404 />} />
         </Route>
