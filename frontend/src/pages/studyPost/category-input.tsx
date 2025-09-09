@@ -33,10 +33,10 @@ function CategoryInput({ onChange }: { onChange: (main: string, subs: string[]) 
       <label>메인 카테고리</label>
       <select value={mainCategory} onChange={handleMainChange}>
         <option value="">-- 선택 --</option>
-        <option value="Java">Java</option>
-        <option value="Spring">Spring</option>
-        <option value="React">React</option>
-        <option value="Database">Database</option>
+        <option value="language">어학/ 자격증</option>
+        <option value="progrming">IT 개발</option>
+        <option value="job">취업</option>
+        <option value="etc">기타</option>
       </select>
 
       <input

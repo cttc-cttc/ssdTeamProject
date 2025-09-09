@@ -8,6 +8,7 @@ import FindPassword from "./pages/account/find-password/find-password";
 import PasswordReset from "./pages/account/password-reset/password-reset";
 import MyPage from "./pages/account/my-page/my-page";
 import StudyListMain from "./pages/home/study-list/study-list-main";
+import PostingPage from "./pages/studyPost/posting-page";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="find-password" element={<FindPassword />} />
           <Route path="password-reset" element={<PasswordReset />} />
           <Route path="mypage" element={<MyPage />} />
+          <Route path="posting-page" element={<PostingPage />} />
 
           <Route path="/*" element={<Page404 />} />
         </Route>

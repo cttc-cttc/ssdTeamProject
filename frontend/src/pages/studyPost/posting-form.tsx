@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import CategoryInput from "./categoryInput";
+import CategoryInput from "./category-input";
 
 function PostingForm() {
   const [title, setTitle] = useState("");
@@ -64,9 +64,26 @@ function PostingForm() {
           onChange={e => setTitle(e.target.value)}
         />
       </div>
-      <div></div>
-      <div>maxCount</div>
-      <div>content</div>
+      <div>
+        <CategoryInput onChange={handleCategory} />
+      </div>
+      <div>
+        <label>참여인원</label>
+        <input type="number" value={maxCount} onChange={e => setMaxCount(e.target.value)} />
+        <span style={{ color: "red", marginLeft: "8px", fontSize: "13px" }}>
+          * 최대 인원은 50명입니다.
+        </span>
+      </div>
+      <div>
+        <textarea
+          placeholder="내용을 입력하세요."
+          value={content}
+          onChange={e => setContent(e.target.value)}
+        />
+      </div>
+      <button type="submit">작성하기</button>
     </form>
   );
 }
+
+export default PostingForm;
