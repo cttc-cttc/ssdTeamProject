@@ -5,11 +5,18 @@ import { Monitor, ScrollText, Languages, BriefcaseBusiness, CircleEllipsis } fro
  *
  * ~~CategoryName : 카테고리 이름 (string 타입)
  *
- * title : 사이드 바에 표시할 텍스트
- * url : 사이드 바 메뉴를 클릭했을 때 이동할 url
- * icon : lucide icon
+ * ~~PageName : 사이드 바가 있는 페이지의 이름 (BreadCrumb의 첫 번째에 들어감)
+ *
+ * ~~Category = [
+ *   {
+ *     title : 사이드 바에 표시할 텍스트
+ *     url : 사이드 바 메뉴를 클릭했을 때 이동할 url
+ *     icon : lucide icon
+ *   }
+ * ]
  *
  * icon 부분에는 본인이 쓰고 싶은 lucide icon을 지정하시면 됩니다
+ * https://lucide.dev/icons/
  * 다른 파일에서 불러와야 하니 const 앞에 export를 붙여주세요
  */
 export const studyCategoryName = "스터디 카테고리";
