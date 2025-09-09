@@ -29,7 +29,7 @@ export const studyCategory = [
   },
   {
     title: "어학/자격증",
-    url: "language-cert", // language-certificates
+    url: "lang-cert", // language-certificates
     icon: Languages,
   },
   {

@@ -6,6 +6,7 @@ import com.study.ssd.repository.HomeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.stream.Collectors;
@@ -17,21 +18,14 @@ public class HomeService {
     private final HomeRepository homeRepository;
 
     public Page<StudyPostResponse> getStudyList(String category, Pageable pageable) {
-        Page<StudyPost> entityList = homeRepository.findPageByCategory(category, pageable);
-        return entityList
-                .map(entity -> {
-                    new StudyPostResponse();
-                    return StudyPostResponse.builder()
-                            .id(entity.getId())
-                            .title(entity.getTitle())
-                            .category(entity.getCategory())
-                            .content(entity.getContent())
-                            .deadline(entity.getDeadline())
-                            .created(entity.getCreatedAt())
-                            .currentCont(entity.getCurrentCont())
-                            .maxCount(entity.getMaxCount())
-                            .wishCount(entity.getWishCount())
-                            .build();
-                });
+        // category가 공백이면 전체 조회
+        if (category.isBlank()) {
+            return homeRepository.findAllByOrderByIdDesc(pageable)
+                    .map(StudyPostResponse::fromEntity);
+        }
+
+        // 공백이 아니면 해당 카테고리로 조회
+        return homeRepository.findByCategoryOrderByIdDesc(category, pageable)
+                .map(StudyPostResponse::fromEntity);
     }
 }

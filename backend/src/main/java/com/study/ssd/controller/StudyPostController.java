@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/create-post")
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class StudyPostController {
 
-    private  final StudyPostService  studyPostService;
+    private final StudyPostService studyPostService;
 
-    @PostMapping
+    @PostMapping("/create-post")
     public ResponseEntity<StudyPostResponse> createPost (
             @RequestBody StudyPostRequest studyPostRequest
     ) {

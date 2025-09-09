@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
+import { ImageFrame } from "../study-list/image-frame";
 
 interface studyProps {
   id: number;
@@ -21,7 +22,7 @@ export default function HomeStudyList() {
 
   useEffect(() => {
     const query: Record<string, string | number> = {
-      category: "Java",
+      category: "",
       page: 0,
       size: 10,
     };
@@ -39,22 +40,37 @@ export default function HomeStudyList() {
   if (loading) return <div>로딩 중..</div>;
 
   return (
-    <div className="flex flex-col w-full gap-4">
-      <div className="mt-10 py-8">스터디 리스트</div>
-      {list.map(study => (
-        <div key={study.id} className="border-1 border-primary">
-          <div>{study.id}</div>
-          <div>{study.title}</div>
-          <div>{study.content}</div>
-          <div>카테고리: {study.category}</div>
-          <div>작성일: {dayjs(study.created).format("YYYY-MM-DD")}</div>
-          <div>마감일: {dayjs(study.deadline).format("YYYY-MM-DD")}</div>
-          <div>
-            참가 인원 {study.currentCont}/{study.maxCount}
-          </div>
-          <div>찜하기 {study.wishCount}</div>
+    <>
+      <div className="w-full max-w-11/12 mt-6 py-8 text-2xl font-medium dark:text-foreground">
+        최신 스터디
+      </div>
+      <div className="flex max-w-7xl flex-col w-full gap-4 mb-16">
+        <div className="grid grid-cols-3 gap-8">
+          {list.map(study => (
+            <div key={study.id} className="shadow-xl border-1 border-accent">
+              <ImageFrame />
+              <div className="flex flex-col gap-1 p-3 bg-white dark:bg-muted/50">
+                <div className="flex justify-between">
+                  <div className="text-[#2c3e50] dark:text-muted font-bold text-lg">
+                    {study.title}
+                  </div>
+                  <div>
+                    참가 인원 {study.currentCont}/{study.maxCount}
+                  </div>
+                </div>
+                <div className="flex justify-between">
+                  <div>카테고리 {study.category}</div>
+                  <div>찜하기 {study.wishCount}</div>
+                </div>
+                <div>
+                  스터디 기간 {dayjs(study.created).format("YYYY-MM-DD")} ~{" "}
+                  {dayjs(study.deadline).format("YYYY-MM-DD")}
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
-      ))}
-    </div>
+      </div>
+    </>
   );
 }

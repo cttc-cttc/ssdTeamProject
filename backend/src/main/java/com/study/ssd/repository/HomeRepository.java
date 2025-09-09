@@ -9,12 +9,9 @@ import org.springframework.data.repository.query.Param;
 
 public interface HomeRepository extends JpaRepository<StudyPost, Long> {
 
-    @Query("""
-            SELECT s FROM StudyPost s
-            WHERE s.category = :category
-            """)
-    Page<StudyPost> findPageByCategory(
-            @Param("category") String category,
-            Pageable pageable
-    );
+    // 모든 리스트 조회 (id값 내림차순 페이징)
+    Page<StudyPost> findAllByOrderByIdDesc(Pageable pageable);
+
+    // 카테고리로 찾기 (id값 내림차순 페이징)
+    Page<StudyPost> findByCategoryOrderByIdDesc(String category, Pageable pageable);
 }
