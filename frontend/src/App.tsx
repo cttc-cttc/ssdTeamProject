@@ -8,6 +8,9 @@ import FindPassword from "./pages/account/find-password/find-password";
 import PasswordReset from "./pages/account/password-reset/password-reset";
 import MyPage from "./pages/account/my-page/my-page";
 import StudyListMain from "./pages/home/study-list/study-list-main";
+import RootLayout from "./layouts/RootLayout";
+import NoticeList from "./pages/NoticeList";
+import NoticeDetail from "./pages/NoticeDetail";
 
 function App() {
   return (
@@ -26,6 +29,11 @@ function App() {
           <Route path="find-password" element={<FindPassword />} />
           <Route path="password-reset" element={<PasswordReset />} />
           <Route path="mypage" element={<MyPage />} />
+
+          <Route element={<RootLayout />}>
+            <Route path="/notices" element={<NoticeList />} />
+            <Route path="/notices/:id" element={<NoticeDetail />} />
+          </Route>
 
           <Route path="/*" element={<Page404 />} />
         </Route>
