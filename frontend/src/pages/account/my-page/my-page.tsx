@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useInfoStore } from "../info-store";
 import axios from "axios";
-import { mypageSidebar, mypageSidebarName } from "../sidebar-menu-data";
+import { mypagePageName, mypageSidebar, mypageSidebarName } from "../sidebar-menu-data";
 import CategoryBreadcrumb from "@/components/common/category-breadcrumb";
 import SidebarLayout from "@/components/common/sidebar-layout";
 
@@ -153,7 +153,7 @@ export default function MyPage() {
     return (
       <div className="container items-center py-8 m-10 mt-0">
         <div className="flex w-full max-w-7xl justify-start py-4">
-          <CategoryBreadcrumb catTitle={sidebarTitle} />
+          <CategoryBreadcrumb catTitle={sidebarTitle} pageTitle={mypagePageName} />
         </div>
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 ">
           <div className=" shadow rounded-lg border-2 border-[#3d6647] ">

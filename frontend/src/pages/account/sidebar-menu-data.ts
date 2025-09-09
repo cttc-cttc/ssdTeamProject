@@ -1,6 +1,7 @@
 import { UserRoundPen, Book, BookPlus, BookMarked } from "lucide-react";
 
 export const mypageSidebarName = "마이 페이지 사이드바";
+export const mypagePageName = "마이 페이지";
 export const mypageSidebar = [
   {
     title: "프로필 관리",
