@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useInfoStore } from "../info-store";
-import { format } from "date-fns";
 import axios from "axios";
 
 export default function MyPage() {
