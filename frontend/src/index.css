@@ -118,3 +118,25 @@
     @apply bg-background text-foreground;
   }
 }
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* 👇 여기부터 내가 추가한 커스텀 스타일 */
+a:hover {
+  text-decoration: none;
+}
+
+.wrap {
+  max-width: 900px;
+  margin: 24px auto;
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+}
