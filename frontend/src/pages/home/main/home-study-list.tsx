@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { ImageFrame } from "../study-list/image-frame";
+import { categoryNameMap } from "@/components/common/mappings";
 
 interface studyProps {
   id: number;
@@ -59,7 +60,9 @@ export default function HomeStudyList() {
                   </div>
                 </div>
                 <div className="flex justify-between">
-                  <div className="dark:text-muted-foreground">카테고리 {study.category}</div>
+                  <div className="dark:text-muted-foreground">
+                    카테고리 - {categoryNameMap[study.category]}
+                  </div>
                   <div className="dark:text-muted-foreground">찜하기 {study.wishCount}</div>
                 </div>
                 <div className="dark:text-muted-foreground">

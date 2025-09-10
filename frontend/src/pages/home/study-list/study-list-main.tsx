@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import CommonPagination from "../../../components/common/common-pagination";
 import SidebarLayout from "@/components/common/sidebar-layout";
 import SearchStudy, { type listDataType } from "./search-study";
+import { categoryNameMap } from "@/components/common/mappings";
 
 export default function StudyListMain() {
   const { cat, page } = useParams<{ cat: string; page?: string }>();
@@ -83,7 +84,7 @@ export default function StudyListMain() {
               </div>
 
               <div className="flex-1 flex flex-col items-end gap-2">
-                <div>{posts.category}</div>
+                <div>{categoryNameMap[posts.category]}</div>
                 <div>
                   <Button variant="ssd_tag" className="border-1 border-foreground/30 text-sm">
                     #태그
