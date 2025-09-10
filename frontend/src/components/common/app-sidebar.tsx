@@ -20,14 +20,16 @@ export function AppSidebar({ catParam, categoryName, categories }: AppSidebarPro
   return (
     <Sidebar className="sticky top-40 h-fit">
       <SidebarContent>
-        <SidebarGroup className="transition-colors duration-500 ease-out">
+        <SidebarGroup>
           <SidebarGroupLabel className="my-2">{categoryName}</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {categories.map(item => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild isActive={catParam === item.url}>
-                    <a href={item.url}>
+                    <a
+                      href={categoryName === "스터디 카테고리" ? `/study/${item.url}/1` : item.url}
+                    >
                       <item.icon />
                       <span>{item.title}</span>
                     </a>

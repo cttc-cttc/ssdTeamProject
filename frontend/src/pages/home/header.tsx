@@ -22,7 +22,8 @@ export default function Header() {
   };
 
   return (
-    <div className="w-full sticky top-0 z-50 bg-background transition-colors duration-500 ease-in-out">
+    // transition-colors duration-500 ease-in-out
+    <div className="w-full sticky top-0 z-50 bg-background">
       <div className="flex items-center h-40 border-b border-primary dark:border-foreground/30 px-16">
         {/* 좌측: 로고 */}
         <div className="flex-shrink-0">

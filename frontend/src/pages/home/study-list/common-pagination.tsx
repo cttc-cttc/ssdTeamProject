@@ -19,7 +19,7 @@ export default function CommonPagination({
   totalPages,
   onPageChange,
 }: CommonPaginationProps) {
-  // 표시할 페이지 버튼 범위 계산 (예: 현재 기준 ±2)
+  // 표시할 페이지 버튼 범위 계산
   const getPageNumbers = () => {
     const pages: number[] = [];
     const maxVisible = 5;
@@ -46,10 +46,8 @@ export default function CommonPagination({
         {/* 이전 버튼 */}
         <PaginationItem>
           <PaginationPrevious
-            // href={`page=${currentPage}`}
-            href="#"
+            href={`${currentPage}`}
             onClick={() => {
-              // e.preventDefault();
               if (currentPage > 1) onPageChange(currentPage - 1);
             }}
             className={currentPage === 1 ? "pointer-events-none opacity-50" : ""}
@@ -61,9 +59,8 @@ export default function CommonPagination({
           <>
             <PaginationItem>
               <PaginationLink
-                href="#"
+                href="1"
                 onClick={() => {
-                  // e.preventDefault();
                   onPageChange(1);
                 }}
               >
@@ -78,11 +75,10 @@ export default function CommonPagination({
         {getPageNumbers().map(page => (
           <PaginationItem key={page}>
             <PaginationLink
-              href="#"
-              // href={`page=${page}`}
+              href={`${currentPage}`}
               isActive={page === currentPage}
+              className={page === currentPage ? "bg-primary dark:bg-primary/50 text-white" : ""} // 배경색 커스텀
               onClick={() => {
-                // e.preventDefault();
                 onPageChange(page);
               }}
             >
@@ -97,9 +93,8 @@ export default function CommonPagination({
             {getPageNumbers().slice(-1)[0] < totalPages - 1 && <PaginationEllipsis />}
             <PaginationItem>
               <PaginationLink
-                href="#"
+                href={`${totalPages}`}
                 onClick={() => {
-                  // e.preventDefault();
                   onPageChange(totalPages);
                 }}
               >
@@ -112,9 +107,8 @@ export default function CommonPagination({
         {/* 다음 버튼 */}
         <PaginationItem>
           <PaginationNext
-            href="#"
+            href={`${currentPage}`}
             onClick={() => {
-              // e.preventDefault();
               if (currentPage < totalPages) onPageChange(currentPage + 1);
             }}
             className={currentPage === totalPages ? "pointer-events-none opacity-50" : ""}

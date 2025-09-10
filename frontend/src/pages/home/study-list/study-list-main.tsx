@@ -15,30 +15,49 @@ import SidebarLayout from "@/components/common/sidebar-layout";
 export default function StudyListMain() {
   const { cat, page } = useParams<{ cat: string; page?: string }>();
   const [currentPage, setCurrentPage] = useState(1);
+  const [filteredList, setFilteredList] = useState(tempDataStudyList); // ⭐ 필터링된 리스트 상태
 
-  // studyCategory의 url 목록
-  const validUrls = studyCategory.map(c => c.url);
-
-  // page 파라미터가 변할 때만 currentPage 업데이트
+  // page, cat 파라미터가 변할 때 currentPage 업데이트
   useEffect(() => {
     setCurrentPage(parseInt(page ?? "1", 10));
-  }, [page]);
 
-  // cat이 없거나 잘못된 값이면 all의 1페이지로 리다이렉트
-  if (!cat || !validUrls.includes(cat) || isNaN(currentPage) || currentPage < 1) {
-    return <Navigate to="/study/all/1" replace />;
+    if (cat && cat !== "all") {
+      setFilteredList(tempDataStudyList.filter(data => data.category === cat));
+    } else {
+      setFilteredList(tempDataStudyList);
+    }
+  }, [page, cat]);
+
+  if (!page) {
+    return <Navigate to="/study/all/1" />;
   }
 
   // 한 페이지에 보여줄 게시글 수
   const itemsPerPage = 10;
 
   // 전체 페이지 수
-  const totalPages = Math.ceil(tempDataStudyList.length / itemsPerPage);
+  const totalPages = Math.ceil(filteredList.length / itemsPerPage);
+
+  // studyCategory의 url 목록
+  const validUrls = studyCategory.map(c => c.url);
+
+  // cat이 없거나 잘못된 값이면 all의 1페이지로 리다이렉트
+  // cat이 있으면 cat의 1페이지로 리다이렉트
+  if (
+    !cat ||
+    !validUrls.includes(cat) ||
+    isNaN(currentPage) ||
+    currentPage < 1 ||
+    currentPage > totalPages
+  ) {
+    if (!cat) return <Navigate to="/study/all/1" />;
+    else return <Navigate to={`/study/${cat}/1`} />;
+  }
 
   // 현재 페이지에 해당하는 데이터 추출
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentItems = tempDataStudyList.slice(startIndex, endIndex);
+  const currentItems = filteredList.slice(startIndex, endIndex);
 
   const catParam = cat;
   const catTitle = studyCategory.find(cat => cat.url === catParam)?.title ?? "전체";
@@ -64,7 +83,7 @@ export default function StudyListMain() {
               </div>
 
               <div className="flex-1 flex flex-col items-end gap-2">
-                <div>카테고리: 어학/자격증</div>
+                <div>{posts.category}</div>
                 <div>
                   <Button variant="ssd_tag" className="border-1 border-foreground/30 text-sm">
                     #태그
