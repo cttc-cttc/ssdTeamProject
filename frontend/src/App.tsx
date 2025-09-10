@@ -12,6 +12,7 @@ import RootLayout from "./layouts/RootLayout";
 import NoticeList from "./pages/NoticeList";
 import NoticeDetail from "./pages/NoticeDetail";
 import PostingPage from "./pages/study-post/posting-page";
+import PostDetail from "./pages/study-post/post-detail";
 
 function App() {
   return (
@@ -41,7 +42,8 @@ function App() {
             <Route path="/notices/:id" element={<NoticeDetail />} />
           </Route>
 
-          <Route path="posting-page" element={<PostingPage />} />
+          <Route path="/posting-page" element={<PostingPage />} />
+          <Route path="/posts/:id" element={<PostDetail />} />
 
           <Route path="/*" element={<Page404 />} />
         </Route>
