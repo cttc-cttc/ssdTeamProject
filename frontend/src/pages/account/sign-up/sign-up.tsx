@@ -5,8 +5,6 @@ import { Input } from "@/components/ui/input";
 import axios from "axios";
 
 export default function SignUp() {
-  const navigate = useNavigate();
-
   const [formData, setFormData] = useState({
     userName: "",
     userNickname: "",
@@ -18,9 +16,6 @@ export default function SignUp() {
 
   // 해당 필드별 에러 메시지를 저장
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
-
-  // 회원 가입 로딩 상태 추가 -> 유저의 복수 클릭을 방지
-  const [loading, setLoading] = useState(false);
 
   // 입력 필드에 값을 입력할 때마다 실행되는 함수
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -87,10 +82,16 @@ export default function SignUp() {
       checkErrors.userEmail = "올바른 이메일 형식을 입력하세요.";
     }
 
-    // 동시 에러 저장 
+    // 동시 에러 저장
     setErrors(checkErrors);
     return Object.keys(checkErrors).length === 0;
   };
+
+  // 회원 가입 로딩 상태 추가 -> 유저의 복수 클릭을 방지
+  const [loading, setLoading] = useState(false);
+
+  // 페이지 이동
+  const navigate = useNavigate();
 
   // 회원가입 폼이 제출될 때 실행되는 함수
   const handleSubmit = async (e: React.FormEvent) => {
