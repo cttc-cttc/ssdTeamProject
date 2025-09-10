@@ -1313,7 +1313,7 @@ export const tempDataStudyList = [
   {
     userId: "사용자1",
     id: 1,
-    title: "글 제목",
+    title: "Study",
     category: "etc",
     content: "글 내용",
     createdAt: "2025-05-05",
@@ -1322,7 +1322,7 @@ export const tempDataStudyList = [
   {
     userId: "사용자1",
     id: 1,
-    title: "글 제목",
+    title: "study",
     category: "etc",
     content: "글 내용",
     createdAt: "2025-05-05",
@@ -1331,7 +1331,7 @@ export const tempDataStudyList = [
   {
     userId: "사용자1",
     id: 1,
-    title: "글 제목",
+    title: "스터디",
     category: "etc",
     content: "글 내용",
     createdAt: "2025-05-05",
@@ -1340,7 +1340,7 @@ export const tempDataStudyList = [
   {
     userId: "사용자1",
     id: 1,
-    title: "글 제목",
+    title: "스터디",
     category: "lang-cert",
     content: "글 내용",
     createdAt: "2025-05-05",
