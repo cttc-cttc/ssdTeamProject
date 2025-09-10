@@ -9,7 +9,7 @@ import CategoryBreadcrumb from "@/components/common/category-breadcrumb";
 import { Navigate, useParams } from "react-router-dom";
 import { tempDataStudyList } from "./study-list-mock-data";
 import { useEffect, useState } from "react";
-import CommonPagination from "./common-pagination";
+import CommonPagination from "../../../components/common/common-pagination";
 import SidebarLayout from "@/components/common/sidebar-layout";
 
 export default function StudyListMain() {

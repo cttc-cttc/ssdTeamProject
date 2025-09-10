@@ -24,7 +24,7 @@ export default function HomeStudyList() {
     const query: Record<string, string | number> = {
       category: "",
       page: 0,
-      size: 10,
+      size: 9,
     };
 
     axios
