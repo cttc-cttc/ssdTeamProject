@@ -46,8 +46,9 @@ export default function CommonPagination({
         {/* 이전 버튼 */}
         <PaginationItem>
           <PaginationPrevious
-            href={`${currentPage}`}
-            onClick={() => {
+            href="#"
+            onClick={e => {
+              e.preventDefault();
               if (currentPage > 1) onPageChange(currentPage - 1);
             }}
             className={currentPage === 1 ? "pointer-events-none opacity-50" : ""}
@@ -59,8 +60,9 @@ export default function CommonPagination({
           <>
             <PaginationItem>
               <PaginationLink
-                href="1"
-                onClick={() => {
+                href="#"
+                onClick={e => {
+                  e.preventDefault();
                   onPageChange(1);
                 }}
               >
@@ -75,11 +77,12 @@ export default function CommonPagination({
         {getPageNumbers().map(page => (
           <PaginationItem key={page}>
             <PaginationLink
-              href={`${currentPage}`}
+              href="#"
               isActive={page === currentPage}
               className={page === currentPage ? "bg-primary dark:bg-primary/50 text-white" : ""} // 배경색 커스텀
-              onClick={() => {
-                onPageChange(page);
+              onClick={e => {
+                e.preventDefault();
+                if (page !== currentPage) onPageChange(page);
               }}
             >
               {page}
@@ -93,8 +96,9 @@ export default function CommonPagination({
             {getPageNumbers().slice(-1)[0] < totalPages - 1 && <PaginationEllipsis />}
             <PaginationItem>
               <PaginationLink
-                href={`${totalPages}`}
-                onClick={() => {
+                href="#"
+                onClick={e => {
+                  e.preventDefault();
                   onPageChange(totalPages);
                 }}
               >
@@ -107,8 +111,9 @@ export default function CommonPagination({
         {/* 다음 버튼 */}
         <PaginationItem>
           <PaginationNext
-            href={`${currentPage}`}
-            onClick={() => {
+            href="#"
+            onClick={e => {
+              e.preventDefault();
               if (currentPage < totalPages) onPageChange(currentPage + 1);
             }}
             className={currentPage === totalPages ? "pointer-events-none opacity-50" : ""}
