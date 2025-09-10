@@ -88,34 +88,19 @@ export default function PasswordReset() {
     setLoading(true);
 
     try {
-      const response = await axios.post(
-        "http://localhost:8080/api/users/password-reset/confirm",
-        {
-          token: token,
-          newPassword: formData.newPassword,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await axios.post("http://localhost:8080/api/users/password-reset/confirm", {
+        token: token,
+        newPassword: formData.newPassword,
+      });
 
       if (response.status === 200) {
         alert("비밀번호가 성공적으로 변경되었습니다!");
-        setTimeout(() => {
-          navigate("/log-in");
-        }, 1000);
+        navigate("/log-in");
       }
     } catch (error) {
-      if (axios.isAxiosError(error) && error.response) {
-        // 서버에서 응답을 받았지만 오류 상태
+      if (axios.isAxiosError(error) && error.response?.status === 400) {
         alert(`비밀번호 재설정에 실패했습니다: ${error.response.data}`);
-      } else if (axios.isAxiosError(error) && error.request) {
-        // 요청이 전송되었지만 응답을 받지 못함
-        alert("서버에 연결할 수 없습니다. 네트워크를 확인해주세요.");
       } else {
-        // 요청 설정 중 오류 발생
         alert("오류가 발생했습니다. 다시 시도해주세요.");
       }
     } finally {
