@@ -79,7 +79,12 @@ export default function CommonPagination({
             <PaginationLink
               href="#"
               isActive={page === currentPage}
-              className={page === currentPage ? "bg-primary dark:bg-primary/50 text-white" : ""} // 배경색 커스텀
+              className={
+                // 배경색 커스텀
+                page === currentPage
+                  ? "bg-primary hover:bg-primary/80 dark:bg-primary/50 text-white"
+                  : ""
+              }
               onClick={e => {
                 e.preventDefault();
                 if (page !== currentPage) onPageChange(page);
