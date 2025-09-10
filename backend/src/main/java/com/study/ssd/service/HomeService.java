@@ -18,13 +18,13 @@ public class HomeService {
     private final HomeRepository homeRepository;
 
     public Page<StudyPostResponse> getStudyList(String category, Pageable pageable) {
-        // category가 공백이면 전체 조회
-        if (category.isBlank()) {
+        // category가 all 이면 전체 조회
+        if (category.equals("all")) {
             return homeRepository.findAllByOrderByIdDesc(pageable)
                     .map(StudyPostResponse::fromEntity);
         }
 
-        // 공백이 아니면 해당 카테고리로 조회
+        // all 이 아니면 해당 카테고리로 조회
         return homeRepository.findByCategoryOrderByIdDesc(category, pageable)
                 .map(StudyPostResponse::fromEntity);
     }

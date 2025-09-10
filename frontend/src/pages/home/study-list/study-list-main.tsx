@@ -6,30 +6,46 @@ import {
 import { Button } from "@/components/ui/button";
 import { ImageFrame } from "./image-frame";
 import CategoryBreadcrumb from "@/components/common/category-breadcrumb";
-import { Navigate, useParams } from "react-router-dom";
-import { tempDataStudyList } from "./study-list-mock-data";
-import { useEffect, useState } from "react";
+import { Link, Navigate, useParams } from "react-router-dom";
+import { useCallback, useEffect, useState } from "react";
 import CommonPagination from "../../../components/common/common-pagination";
 import SidebarLayout from "@/components/common/sidebar-layout";
 import SearchStudy, { type listDataType } from "./search-study";
 import { categoryNameMap } from "@/components/common/mappings";
+import axios from "axios";
+import dayjs from "dayjs";
 
 export default function StudyListMain() {
   const { cat, page } = useParams<{ cat: string; page?: string }>();
   const [currentPage, setCurrentPage] = useState(1);
-  const [filteredList, setFilteredList] = useState(tempDataStudyList); // ⭐ 필터링된 리스트 상태
+  const [filteredList, setFilteredList] = useState<listDataType[]>([]);
   const [searchedResultList, setSearchedResultList] = useState<listDataType[] | null>(null);
+
+  const getPosts = useCallback(() => {
+    const fetchData = async () => {
+      const query: Record<string, string | number> = {
+        category: cat ?? "all",
+        page: 0,
+        size: 10,
+      };
+
+      try {
+        const response = await axios.get("/api/studyList", { params: query });
+        // console.log(response.data);
+        setFilteredList(response.data.content);
+      } catch (err) {
+        console.error("게시글 불러오기 실패: ", err);
+      }
+    };
+
+    fetchData();
+  }, [cat]);
 
   // page, cat 파라미터가 변할 때 currentPage 업데이트
   useEffect(() => {
     setCurrentPage(parseInt(page ?? "1", 10));
-
-    if (cat && cat !== "all") {
-      setFilteredList(tempDataStudyList.filter(data => data.category === cat));
-    } else {
-      setFilteredList(tempDataStudyList);
-    }
-  }, [page, cat]);
+    getPosts();
+  }, [page, getPosts]);
 
   if (!page) {
     return <Navigate to="/study/all/1" />;
@@ -58,9 +74,9 @@ export default function StudyListMain() {
   }
 
   // 현재 페이지에 해당하는 데이터 추출
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const currentItems = filteredList.slice(startIndex, endIndex);
+  // const startIndex = (currentPage - 1) * itemsPerPage;
+  // const endIndex = startIndex + itemsPerPage;
+  // const currentItems = filteredList.slice(startIndex, endIndex);
 
   const catParam = cat;
   const catTitle = studyCategory.find(cat => cat.url === catParam)?.title ?? "전체";
@@ -69,35 +85,42 @@ export default function StudyListMain() {
   const renderList = (list: listDataType[]) => {
     return (
       <>
-        {list.map((posts, index) => (
-          <div key={index} className="flex w-full max-w-6xl shadow-xl">
-            <div className="flex-5 flex border-1 border-accent bg-white dark:bg-muted/50 p-4">
-              <div className="flex-4 flex flex-col gap-2">
-                <div className="text-[#2c3e50] dark:text-accent-foreground text-xl font-bold">
-                  {posts.title}
+        {list.map(posts => (
+          <Link
+            key={posts.id}
+            to={`/posts/${posts.id}`}
+            className="w-full max-w-6xl hover:ring-3 ring-ring/50 transition-all duration-200 ease-in-out"
+          >
+            <div className="flex shadow-xl">
+              <div className="flex-5 flex border-1 border-accent bg-white dark:bg-muted/50 p-4">
+                <div className="flex-4 flex flex-col gap-2">
+                  <div className="text-[#2c3e50] dark:text-accent-foreground text-xl font-bold">
+                    {posts.title}
+                  </div>
+                  <div>
+                    스터디 기간: {dayjs(posts.createdAt).format("YYYY-MM-DD")} ~{" "}
+                    {dayjs(posts.deadline).format("YYYY-MM-DD")}
+                  </div>
+                  <div className="mb-10 text-muted-foreground">작성자: {posts.userId}</div>
+                  <div>{posts.content}</div>
                 </div>
-                <div>
-                  스터디 기간: {posts.createdAt} ~ {posts.deadline}
+
+                <div className="flex-1 flex flex-col items-end gap-2">
+                  <div>{categoryNameMap[posts.category]}</div>
+                  <div>
+                    <Button variant="ssd_tag" className="border-1 border-foreground/30 text-sm">
+                      #태그
+                    </Button>
+                  </div>
+                  <div className="text-sm">모집 인원: 1/5</div>
                 </div>
-                <div className="mb-10 text-muted-foreground">작성자: {posts.userId}</div>
-                <div>{posts.content}</div>
               </div>
 
-              <div className="flex-1 flex flex-col items-end gap-2">
-                <div>{categoryNameMap[posts.category]}</div>
-                <div>
-                  <Button variant="ssd_tag" className="border-1 border-foreground/30 text-sm">
-                    #태그
-                  </Button>
-                </div>
-                <div className="text-sm">모집 인원: 1/5</div>
+              <div className="flex-2 flex">
+                <ImageFrame />
               </div>
             </div>
-
-            <div className="flex-2 flex">
-              <ImageFrame />
-            </div>
-          </div>
+          </Link>
         ))}
       </>
     );
@@ -113,7 +136,7 @@ export default function StudyListMain() {
         </div>
         {searchedResultList === null ? (
           // 검색 전 → 전체 목록
-          renderList(currentItems)
+          renderList(filteredList)
         ) : searchedResultList.length === 0 ? (
           // 검색했지만 결과 없음
           <div>검색 결과가 없습니다.</div>

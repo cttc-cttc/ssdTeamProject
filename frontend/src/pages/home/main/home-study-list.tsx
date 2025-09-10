@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { ImageFrame } from "../study-list/image-frame";
 import { categoryNameMap } from "@/components/common/mappings";
+import { Link } from "react-router-dom";
 
 interface studyProps {
   id: number;
@@ -23,7 +24,7 @@ export default function HomeStudyList() {
 
   useEffect(() => {
     const query: Record<string, string | number> = {
-      category: "",
+      category: "all",
       page: 0,
       size: 9,
     };
@@ -48,29 +49,35 @@ export default function HomeStudyList() {
       <div className="flex max-w-7xl flex-col w-full gap-4 mb-16">
         <div className="grid grid-cols-3 gap-8">
           {list.map(study => (
-            <div key={study.id} className="shadow-xl border-1 border-accent">
-              <ImageFrame />
-              <div className="flex flex-col gap-1 p-3 bg-white dark:bg-muted/50">
-                <div className="flex justify-between">
-                  <div className="text-[#2c3e50] dark:text-accent-foreground font-bold text-lg">
-                    {study.title}
+            <Link
+              key={study.id}
+              to={`/posts/${study.id}`}
+              className="hover:ring-3 ring-ring/50 transition-all duration-200 ease-in-out"
+            >
+              <div className="shadow-xl border-1 border-accent">
+                <ImageFrame />
+                <div className="flex flex-col gap-1 p-3 bg-white dark:bg-muted/50">
+                  <div className="flex justify-between">
+                    <div className="text-[#2c3e50] dark:text-accent-foreground font-bold text-lg">
+                      {study.title}
+                    </div>
+                    <div>
+                      참가 인원 {study.currentCont}/{study.maxCount}
+                    </div>
                   </div>
-                  <div>
-                    참가 인원 {study.currentCont}/{study.maxCount}
+                  <div className="flex justify-between">
+                    <div className="dark:text-muted-foreground">
+                      카테고리 - {categoryNameMap[study.category]}
+                    </div>
+                    <div className="dark:text-muted-foreground">찜하기 {study.wishCount}</div>
                   </div>
-                </div>
-                <div className="flex justify-between">
                   <div className="dark:text-muted-foreground">
-                    카테고리 - {categoryNameMap[study.category]}
+                    스터디 기간 {dayjs(study.created).format("YYYY-MM-DD")} ~{" "}
+                    {dayjs(study.deadline).format("YYYY-MM-DD")}
                   </div>
-                  <div className="dark:text-muted-foreground">찜하기 {study.wishCount}</div>
-                </div>
-                <div className="dark:text-muted-foreground">
-                  스터디 기간 {dayjs(study.created).format("YYYY-MM-DD")} ~{" "}
-                  {dayjs(study.deadline).format("YYYY-MM-DD")}
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
