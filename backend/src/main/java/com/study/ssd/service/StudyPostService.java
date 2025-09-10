@@ -5,8 +5,10 @@ import com.study.ssd.dto.StudyPostResponse;
 import com.study.ssd.entity.StudyPost;
 import com.study.ssd.repository.StudyPostRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 
@@ -40,6 +42,25 @@ public class StudyPostService {
                 .currentCont(saved.getCurrentCont())
                 .maxCount(saved.getMaxCount())
                 .wishCount(saved.getWishCount())
+                .build();
+    }
+
+    public StudyPostResponse getPost(Long id) {
+        StudyPost post = studyPostRepository.findById(id)
+                .orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "게시글을 찾을 수 없습니다."));
+
+        // 여기에 마감일 넣는지?
+        return StudyPostResponse.builder()
+                .id(post.getId())
+                .title(post.getTitle())
+                .content(post.getContent())
+                .category(post.getCategory())
+                .deadline(post.getDeadline())
+                .created(post.getCreatedAt())
+                .updated(post.getUpdatedAt())
+                .currentCont(post.getCurrentCont())
+                .maxCount(post.getMaxCount())
+                .wishCount(post.getWishCount())
                 .build();
     }
 }
