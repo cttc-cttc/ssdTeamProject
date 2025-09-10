@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import CategoryInput from "./category-input";
+import { useNavigate } from "react-router-dom";
 
 function PostingForm() {
   const [title, setTitle] = useState("");
@@ -8,6 +9,8 @@ function PostingForm() {
   const [mainCategory, setMainCategory] = useState("");
   const [subCategories, setSubCategories] = useState<string[]>([]);
   const [maxCount, setMaxCount] = useState("");
+
+  const navigate = useNavigate();
 
   const handleCategory = (main: string, subs: string[]) => {
     setMainCategory(main);
@@ -48,8 +51,9 @@ function PostingForm() {
 
       const newPost = res.data;
 
-      window.location.href = `/posts/${newPost.id}`;
+      navigate(`/posts/${newPost.id}`);
     } catch (error) {
+      console.error(error);
       alert("게시글 작성에 실패했습니다.");
     }
   };
