@@ -42,13 +42,13 @@ function CategoryInput({ onChange }: { onChange: (main: string, subs: string[]) 
         }}
       >
         <option value="">-- 선택 --</option>
-        <option value="language">어학/ 자격증</option>
-        <option value="progrming">IT 개발</option>
-        <option value="job">취업</option>
+        <option value="lang-cert">어학/자격증</option>
+        <option value="it-dev">IT/개발</option>
+        <option value="career">취업</option>
         <option value="etc">기타</option>
       </select>
 
-      <div style={{ marginBottom: "8px" }}>
+      <div className="mb-8">
         <label style={{ display: "inline-block", width: "100px", fontWeight: 500 }}>
           서브 카테고리
         </label>
