@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import ReactMarkdown from "react-markdown";
 
 interface Post {
   id: number;
@@ -36,7 +37,7 @@ export default function PostDetail() {
           </span>
         </div>
         <div className="border border-gray-300 rounded-md p-6 mb-6 h-72">
-          <p className="text-gray-700">{post.content}</p>
+          <ReactMarkdown>{post.content}</ReactMarkdown>
         </div>
       </div>
     </div>

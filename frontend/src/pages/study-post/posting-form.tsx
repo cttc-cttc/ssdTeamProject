@@ -1,24 +1,46 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import CategoryInput from "./category-input";
 import { useNavigate } from "react-router-dom";
+import { Editor } from "@toast-ui/react-editor";
+import "@toast-ui/editor/dist/toastui-editor.css";
 
 function PostingForm() {
   const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
   const [mainCategory, setMainCategory] = useState("");
   const [subCategories, setSubCategories] = useState<string[]>([]);
   const [maxCount, setMaxCount] = useState("");
 
   const navigate = useNavigate();
+  const editorRef = useRef<Editor>(null);
 
   const handleCategory = (main: string, subs: string[]) => {
     setMainCategory(main);
     setSubCategories(subs);
   };
 
+  const onUploadImage = async (blob: File, callback: (Url: string, altText: string) => void) => {
+    try {
+      const formData = new FormData();
+      formData.append("file", blob);
+
+      const res = await axios.post("/api/upload-image", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      const imageUrl = res.data.url;
+      callback(imageUrl, "image");
+    } catch (error) {
+      console.log("이미지 업로드 실패: ", error);
+      alert("이미지 업로드에 실패했습니다.");
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const editorInstance = editorRef.current?.getInstance();
+    const content = editorInstance?.getMarkdown() || "";
 
     if (!title.trim()) {
       alert("제목을 입력하세요.");
@@ -104,17 +126,16 @@ function PostingForm() {
         </span>
       </div>
       <div style={{ marginBottom: "20px" }}>
-        <textarea
-          placeholder="내용을 입력하세요."
-          value={content}
-          onChange={e => setContent(e.target.value)}
-          style={{
-            width: "100%",
-            minHeight: "200px",
-            padding: "10px",
-            border: "1px solid #ccc",
-            borderRadius: "6px",
-            resize: "vertical",
+        <Editor
+          ref={editorRef}
+          previewStyle="vertical"
+          height="400px"
+          initialEditType="wysiwyg"
+          useCommandShortcut={false}
+          hideModeSwitch={true}
+          toolbarItems={[["bold"], ["image"], ["ul", "ol"], ["link"]]}
+          hooks={{
+            addImageBlobHook: onUploadImage,
           }}
         />
       </div>
