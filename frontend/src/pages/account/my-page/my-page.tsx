@@ -18,7 +18,7 @@ export default function MyPage() {
     useInfoStore();
 
   // 회원탈퇴 모달 상태
-  const [withdrawModal, setShowWithdrawModal] = useState(false);
+  const [withdrawModal, setShowWithdrawModal] = useState(false);  
 
   // 회원탈퇴 모달 핸들러
   const openWithdrawModal = () => {
