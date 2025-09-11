@@ -1,4 +1,31 @@
 package com.study.ssd.service;
 
+import com.study.ssd.dto.NoticeRequest;
+import com.study.ssd.dto.NoticeResponse;
+import com.study.ssd.entity.Notice;
+import com.study.ssd.repository.NoticeRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+@RequiredArgsConstructor
 public class NoticeService {
+
+    private final NoticeRepository noticeRepository;
+
+    // 전체 공지사항 조회 → DTO 변환
+    public List<NoticeResponse> getAllNotices() {
+        return noticeRepository.findAll()
+                .stream()
+                .map(NoticeResponse::new) // Notice → NoticeResponse 변환
+                .collect(Collectors.toList()).reversed();
+    }
+
+    public NoticeResponse createNotice(NoticeRequest request) {
+        Notice notice = request.toEntity();
+        Notice savedNotice = noticeRepository.save(notice);
+        return new NoticeResponse(savedNotice);
+    }
 }
