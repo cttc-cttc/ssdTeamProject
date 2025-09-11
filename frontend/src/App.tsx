@@ -8,7 +8,7 @@ import FindPassword from "./pages/account/find-password/find-password";
 import PasswordReset from "./pages/account/password-reset/password-reset";
 import MyPage from "./pages/account/my-page/my-page";
 import StudyListMain from "./pages/home/study-list/study-list-main";
-import RootLayout from "./layouts/RootLayout";
+import RootLayout from "./pages/notices/RootLayout";
 import NoticeList from "./pages/notices/NoticeList";
 import NoticeDetail from "./pages/notices/NoticeDetail";
 import NoticeCreate from "./pages/notices/NoticeCreate";
