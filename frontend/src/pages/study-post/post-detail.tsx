@@ -1,7 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import ReactMarkdown from "react-markdown";
+// import ReactMarkdown from "react-markdown";
+import CustomViewer from "./custom-viewer";
+import "./post-detail.css";
 
 interface Post {
   id: number;
@@ -36,8 +38,9 @@ export default function PostDetail() {
             현재 참여 인원: {post.currentCount} / {post.maxCount}
           </span>
         </div>
-        <div className="border border-gray-300 rounded-md p-6 mb-6 h-72">
-          <ReactMarkdown>{post.content}</ReactMarkdown>
+        <div className="border border-gray-300 rounded-md p-6 mb-6">
+          {/* <ReactMarkdown>{post.content}</ReactMarkdown> */}
+          <CustomViewer contents={post.content} />
         </div>
       </div>
     </div>

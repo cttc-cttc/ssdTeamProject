@@ -1,15 +1,24 @@
 import axios from "axios";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import CategoryInput from "./category-input";
 import { useNavigate } from "react-router-dom";
 import { Editor } from "@toast-ui/react-editor";
-import "@toast-ui/editor/dist/toastui-editor.css";
+import { useTheme } from "@/components/theme-provider";
 
 function PostingForm() {
+  const { theme } = useTheme();
   const [title, setTitle] = useState("");
   const [mainCategory, setMainCategory] = useState("");
   const [subCategories, setSubCategories] = useState<string[]>([]);
   const [maxCount, setMaxCount] = useState("");
+  const [content, setContent] = useState("");
+
+  useEffect(() => {
+    if (editorRef.current) {
+      const instance = editorRef.current.getInstance();
+      instance.setMarkdown(content); // or setMarkdown(content)
+    }
+  }, [theme]); // 테마 바뀔 때마다 복구 content 값 넣으면 제대로 동작 안함
 
   const navigate = useNavigate();
   const editorRef = useRef<Editor>(null);
@@ -127,6 +136,13 @@ function PostingForm() {
       </div>
       <div style={{ marginBottom: "20px" }}>
         <Editor
+          key={theme}
+          initialValue={content}
+          onChange={() => {
+            const instance = editorRef.current?.getInstance();
+            setContent(instance.getMarkdown()); // or getHTML()
+          }}
+          theme={theme === "dark" ? "dark" : "light"}
           ref={editorRef}
           previewStyle="vertical"
           height="400px"

@@ -24,10 +24,10 @@ public class StudyPost {
     @Column(length = 100, nullable = false)
     private  String title;
 
-    @Column(length = 100, nullable = false)
+    @Column(length = 4000, nullable = false)
     private  String content;
 
-    @Column(nullable = false)
+    @Column(length = 20, nullable = false)
     private String category;
 
     @CreationTimestamp
@@ -39,10 +39,10 @@ public class StudyPost {
 
     private LocalDateTime deadline;
 
-    private int currentCont = 0;
+    @Builder.Default private int currentCont = 0;
     private int maxCount;
 
-    private int wishCount = 0;
+    @Builder.Default private int wishCount = 0;
 
     @PrePersist
     public void prePersist() {

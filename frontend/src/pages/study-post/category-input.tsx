@@ -34,6 +34,7 @@ function CategoryInput({ onChange }: { onChange: (main: string, subs: string[]) 
       <select
         value={mainCategory}
         onChange={handleMainChange}
+        className="bg-muted"
         style={{
           width: "calc(100% - 110px)",
           padding: "10px",

@@ -1,0 +1,7 @@
+.toastui-editor-contents img {
+  display: block !important;
+  margin: 0 auto !important;
+  max-width: 70% !important; /* 가로가 긴 경우 폭 제한 */
+  max-height: 500px !important; /* 세로가 긴 경우 높이 제한 */
+  height: auto !important;
+}

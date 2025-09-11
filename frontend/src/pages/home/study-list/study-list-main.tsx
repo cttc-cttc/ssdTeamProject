@@ -20,42 +20,45 @@ export default function StudyListMain() {
   const [currentPage, setCurrentPage] = useState(1);
   const [filteredList, setFilteredList] = useState<listDataType[]>([]);
   const [searchedResultList, setSearchedResultList] = useState<listDataType[] | null>(null);
+  const [totalPages, setTotalPages] = useState(1); // 전체 페이지 수
 
-  const getPosts = useCallback(() => {
-    const fetchData = async () => {
-      const query: Record<string, string | number> = {
-        category: cat ?? "all",
-        page: 0,
-        size: 10,
-      };
+  // const currentPage = parseInt(page ?? "1", 10);
 
-      try {
-        const response = await axios.get("/api/studyList", { params: query });
-        // console.log(response.data);
-        setFilteredList(response.data.content);
-      } catch (err) {
-        console.error("게시글 불러오기 실패: ", err);
-      }
+  useEffect(() => {
+    setCurrentPage(parseInt(page ?? "1", 10));
+  }, [page]);
+
+  const fetchData = useCallback(() => {
+    console.log(page);
+    // setCurrentPage(parseInt(page ?? "1", 10));
+
+    const query: Record<string, string | number> = {
+      category: cat ?? "all",
+      page: currentPage - 1,
+      size: 10,
     };
 
-    fetchData();
-  }, [cat]);
+    axios
+      .get("/api/studyList", { params: query })
+      .then(res => {
+        // console.log(response.data);
+        setFilteredList(res.data.content);
+        setTotalPages(res.data.totalPages);
+      })
+      .catch(err => console.error(err));
+  }, [cat, page, currentPage]);
 
   // page, cat 파라미터가 변할 때 currentPage 업데이트
   useEffect(() => {
-    setCurrentPage(parseInt(page ?? "1", 10));
-    getPosts();
-  }, [page, getPosts]);
+    fetchData();
+  }, [fetchData]);
 
   if (!page) {
     return <Navigate to="/study/all/1" />;
   }
 
   // 한 페이지에 보여줄 게시글 수
-  const itemsPerPage = 10;
-
-  // 전체 페이지 수
-  const totalPages = Math.ceil(filteredList.length / itemsPerPage);
+  // const itemsPerPage = 10;
 
   // studyCategory의 url 목록
   const validUrls = studyCategory.map(c => c.url);

@@ -14,6 +14,9 @@ import NoticeDetail from "./pages/NoticeDetail";
 import PostingPage from "./pages/study-post/posting-page";
 import PostDetail from "./pages/study-post/post-detail";
 
+import "@toast-ui/editor/dist/toastui-editor.css";
+import "@toast-ui/editor/dist/theme/toastui-editor-dark.css";
+
 function App() {
   return (
     <BrowserRouter>
