@@ -44,7 +44,7 @@ function WordCloudRows() {
   const wordsPerRow = Math.ceil(words.length / rows);
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col items-center gap-2">
       {Array.from({ length: rows }).map((_, rowIdx) => (
         <div key={rowIdx} className="flex gap-2 flex-wrap">
           {words.slice(rowIdx * wordsPerRow, (rowIdx + 1) * wordsPerRow).map((word, idx) => (
