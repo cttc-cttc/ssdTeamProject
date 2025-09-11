@@ -25,7 +25,7 @@ const buttonVariants = cva(
         ssd_nav:
           "text-2xl font-bold text-[#2c3e50] dark:text-foreground underline-offset-4 hover:underline hover:cursor-pointer",
         ssd_tag:
-          "rounded-3xl bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80 hover:cursor-pointer",
+          "rounded-3xl bg-[#B9A5D4]/80 text-secondary-foreground border border-muted-foreground shadow-xs hover:bg-[#B9A5D4]/50 hover:cursor-pointer",
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",
