@@ -9,8 +9,9 @@ import PasswordReset from "./pages/account/password-reset/password-reset";
 import MyPage from "./pages/account/my-page/my-page";
 import StudyListMain from "./pages/home/study-list/study-list-main";
 import RootLayout from "./layouts/RootLayout";
-import NoticeList from "./pages/NoticeList";
-import NoticeDetail from "./pages/NoticeDetail";
+import NoticeList from "./pages/notices/NoticeList";
+import NoticeDetail from "./pages/notices/NoticeDetail";
+import NoticeCreate from "./pages/notices/NoticeCreate";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           <Route element={<RootLayout />}>
             <Route path="/notices" element={<NoticeList />} />
             <Route path="/notices/:id" element={<NoticeDetail />} />
+            <Route path="/notices/create" element={<NoticeCreate />} />
           </Route>
 
           <Route path="/*" element={<Page404 />} />

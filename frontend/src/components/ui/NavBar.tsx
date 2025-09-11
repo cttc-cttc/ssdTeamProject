@@ -8,8 +8,6 @@ export default function NavBar() {
   return (
     <header className="w-full border-b bg-white/60 backdrop-blur">
       <nav className="max-w-5xl mx-auto px-4 h-14 flex items-center gap-2">
-        <div className="font-bold mr-4">🏷️ Sorbet</div>
-
         <NavLink to="/" end className={({ isActive }) => `${base} ${isActive ? active : idle}`}>
           Home
         </NavLink>
