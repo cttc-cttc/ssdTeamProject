@@ -27,6 +27,7 @@ export default function HomeStudyList() {
       category: "all",
       page: 0,
       size: 9,
+      keyword: "",
     };
 
     axios

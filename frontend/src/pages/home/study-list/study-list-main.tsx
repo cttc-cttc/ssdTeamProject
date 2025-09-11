@@ -18,37 +18,36 @@ import dayjs from "dayjs";
 export default function StudyListMain() {
   const { cat, page } = useParams<{ cat: string; page?: string }>();
   const [currentPage, setCurrentPage] = useState(1);
-  const [filteredList, setFilteredList] = useState<listDataType[]>([]);
-  const [searchedResultList, setSearchedResultList] = useState<listDataType[] | null>(null);
+  const [studyList, setStudyList] = useState<listDataType[] | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
   const [totalPages, setTotalPages] = useState(1); // 전체 페이지 수
 
-  // const currentPage = parseInt(page ?? "1", 10);
-
+  // page가 변할 때 currentPage 업데이트
   useEffect(() => {
     setCurrentPage(parseInt(page ?? "1", 10));
   }, [page]);
 
+  // 카테고리, 페이지, 검색값이 변할 때마다 api 리스트 조회 처리
   const fetchData = useCallback(() => {
-    console.log(page);
-    // setCurrentPage(parseInt(page ?? "1", 10));
-
     const query: Record<string, string | number> = {
       category: cat ?? "all",
+      keyword: searchQuery,
       page: currentPage - 1,
-      size: 10,
+      size: 10, // 한 페이지에 보여줄 게시글 수
     };
+
+    console.log("검색값:", searchQuery);
 
     axios
       .get("/api/studyList", { params: query })
       .then(res => {
-        // console.log(response.data);
-        setFilteredList(res.data.content);
+        // console.log(res.data.content.length);
+        setStudyList(res.data.content);
         setTotalPages(res.data.totalPages);
       })
       .catch(err => console.error(err));
-  }, [cat, page, currentPage]);
+  }, [cat, currentPage, searchQuery]);
 
-  // page, cat 파라미터가 변할 때 currentPage 업데이트
   useEffect(() => {
     fetchData();
   }, [fetchData]);
@@ -56,9 +55,6 @@ export default function StudyListMain() {
   if (!page) {
     return <Navigate to="/study/all/1" />;
   }
-
-  // 한 페이지에 보여줄 게시글 수
-  // const itemsPerPage = 10;
 
   // studyCategory의 url 목록
   const validUrls = studyCategory.map(c => c.url);
@@ -70,16 +66,11 @@ export default function StudyListMain() {
     !validUrls.includes(cat) ||
     isNaN(currentPage) ||
     currentPage < 1 ||
-    currentPage > totalPages
+    (totalPages > 0 && currentPage > totalPages) // ⭐️ totalPages가 0일 때는 무시
   ) {
     if (!cat) return <Navigate to="/study/all/1" />;
     else return <Navigate to={`/study/${cat}/1`} />;
   }
-
-  // 현재 페이지에 해당하는 데이터 추출
-  // const startIndex = (currentPage - 1) * itemsPerPage;
-  // const endIndex = startIndex + itemsPerPage;
-  // const currentItems = filteredList.slice(startIndex, endIndex);
 
   const catParam = cat;
   const catTitle = studyCategory.find(cat => cat.url === catParam)?.title ?? "전체";
@@ -135,27 +126,25 @@ export default function StudyListMain() {
       <div className="container flex flex-col items-center mt-10 gap-8">
         <div className="flex w-full max-w-7xl justify-between py-4">
           <CategoryBreadcrumb pageTitle={studyPageName} catTitle={catTitle} />
-          <SearchStudy list={filteredList} onSearch={setSearchedResultList} />
+          <SearchStudy onSearch={setSearchQuery} />
         </div>
-        {searchedResultList === null ? (
-          // 검색 전 → 전체 목록
-          renderList(filteredList)
-        ) : searchedResultList.length === 0 ? (
-          // 검색했지만 결과 없음
+        {studyList === null ? (
+          <div>로딩 중..</div>
+        ) : studyList.length === 0 ? (
           <div>검색 결과가 없습니다.</div>
         ) : (
-          // 검색 결과 있음
-          renderList(searchedResultList)
+          <>
+            {renderList(studyList)}
+            {/* 페이지네이션 */}
+            <div className="mb-8">
+              <CommonPagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={setCurrentPage}
+              />
+            </div>
+          </>
         )}
-
-        {/* 페이지네이션 */}
-        <div className="mb-8">
-          <CommonPagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={setCurrentPage}
-          />
-        </div>
       </div>
     );
   };

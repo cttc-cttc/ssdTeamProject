@@ -13,20 +13,12 @@ export interface listDataType {
 }
 
 interface SearchStudyProps {
-  list: listDataType[];
-  onSearch: (result: listDataType[]) => void;
+  onSearch: (result: string) => void;
 }
 
-export default function SearchStudy({ list, onSearch }: SearchStudyProps) {
+export default function SearchStudy({ onSearch }: SearchStudyProps) {
   const [query, setQuery] = useState("");
   const searchRef = useRef<HTMLInputElement>(null);
-
-  const searchLogic = () => {
-    const searchedResultList = list.filter(study =>
-      study.title.toLowerCase().includes(query.trim().toLowerCase())
-    );
-    onSearch(searchedResultList);
-  };
 
   // 엔터 키 입력 후 검색창 초기화
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -38,11 +30,12 @@ export default function SearchStudy({ list, onSearch }: SearchStudyProps) {
         return;
       }
 
+      // 검색어를 상위 컴포넌트로 보냄
+      onSearch(query);
+
       if (searchRef.current) {
         searchRef.current.value = "";
       }
-
-      searchLogic();
     }
   };
 

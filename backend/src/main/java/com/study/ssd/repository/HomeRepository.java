@@ -14,4 +14,10 @@ public interface HomeRepository extends JpaRepository<StudyPost, Long> {
 
     // 카테고리로 찾기 (id값 내림차순 페이징)
     Page<StudyPost> findByCategoryOrderByIdDesc(String category, Pageable pageable);
+
+    // 모든 리스트에서 검색 키워드로 찾기 (id값 내림차순 페이징)
+    Page<StudyPost> findByTitleContainingIgnoreCase(String keyword, Pageable pageable);
+
+    // 특정 카테고리에서 검색 키워드로 찾기 (id값 내림차순 페이징)
+    Page<StudyPost> findByCategoryAndTitleContainingIgnoreCase(String category, String keyword, Pageable pageable);
 }
