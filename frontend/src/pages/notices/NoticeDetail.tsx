@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import axios from "../lib/api";
+import axios from "../../lib/api";
 
 type Notice = {
   id: number;

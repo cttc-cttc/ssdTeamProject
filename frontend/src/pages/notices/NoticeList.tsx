@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "../lib/api";
+import axios from "../../lib/api";
 
 type Notice = {
   id: number;
@@ -12,7 +12,6 @@ type Notice = {
   createdAt: string;
   updatedAt: string;
 };
-type Page<T> = { content: T[]; number: number; totalPages: number };
 
 const fmt = (iso?: string) => {
   if (!iso) return "";
@@ -24,14 +23,15 @@ const fmt = (iso?: string) => {
 export default function NoticeList() {
   const [q, setQ] = useState("");
   const [page, setPage] = useState(0);
-  const [data, setData] = useState<Page<Notice> | null>(null);
+  const [data, setData] = useState<Notice[]>([]);
 
   const load = async () => {
     const params = new URLSearchParams({ page: String(page), size: "10" });
     params.append("sort", "pinned,desc");
     params.append("sort", "createdAt,desc");
     if (q.trim()) params.set("q", q.trim());
-    const res = await axios.get<Page<Notice>>(`/api/notices?${params.toString()}`);
+    const res = await axios.get(`/api/notices/list?${params.toString()}`);
+    console.log(res.data);
     setData(res.data);
   };
 
@@ -63,11 +63,18 @@ export default function NoticeList() {
         >
           검색
         </button>
+
+        <Link
+          to="/notices/create"
+          className="ml-2 bg-blue-500 text-white px-4 rounded hover:bg-blue-600"
+        >
+          공지 등록
+        </Link>
       </div>
 
       <ul className="divide-y">
-        {data?.content?.length ? (
-          data.content.map(n => (
+        {data &&
+          data.map(n => (
             <li key={n.id} className="py-3 flex items-center gap-3">
               {n.pinned ? (
                 <span className="text-amber-600 text-xs border px-2 py-0.5 rounded-full">
@@ -83,29 +90,9 @@ export default function NoticeList() {
                 조회 {n.viewCount} · {fmt(n.createdAt)}
               </span>
             </li>
-          ))
-        ) : (
-          <li className="py-6 text-center text-gray-500">목록이 비었습니다.</li>
-        )}
+          ))}
+        <li className="py-6 text-center text-gray-500">목록이 비었습니다.</li>
       </ul>
-
-      <div className="flex items-center gap-3 justify-center mt-4">
-        <button
-          className="border rounded px-3 py-1"
-          disabled={!data || data.number === 0}
-          onClick={() => setPage(p => Math.max(0, p - 1))}
-        >
-          이전
-        </button>
-        <span>{data ? `${data.number + 1} / ${data.totalPages || 1}` : "-"}</span>
-        <button
-          className="border rounded px-3 py-1"
-          disabled={!data || data.number + 1 >= (data.totalPages || 1)}
-          onClick={() => setPage(p => p + 1)}
-        >
-          다음
-        </button>
-      </div>
     </div>
   );
 }
