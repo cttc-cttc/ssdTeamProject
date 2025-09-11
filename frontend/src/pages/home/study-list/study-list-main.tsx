@@ -4,13 +4,13 @@ import {
   studyPageName,
 } from "@/components/common/sidebar-menu-data";
 import CategoryBreadcrumb from "@/components/common/category-breadcrumb";
-import { Link, Navigate, useParams } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
-import CommonPagination from "../../../components/common/common-pagination";
 import SidebarLayout from "@/components/common/sidebar-layout";
 import SearchStudy, { type listDataType } from "./search-study";
 import axios from "axios";
 import ListThumbnailFlex from "../components/list-thumbnail-flex";
+import StudyListPagination from "../components/study-list-pagination";
 
 export default function StudyListMain() {
   const { cat, page } = useParams<{ cat: string; page?: string }>();
@@ -18,11 +18,12 @@ export default function StudyListMain() {
   const [studyList, setStudyList] = useState<listDataType[] | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [totalPages, setTotalPages] = useState(1); // 전체 페이지 수
+  const navigate = useNavigate();
 
-  // page가 변할 때 currentPage 업데이트
-  useEffect(() => {
-    setCurrentPage(parseInt(page ?? "1", 10));
-  }, [page]);
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    navigate(`/study/${cat ?? "all"}/${page}`); // URL도 변경
+  };
 
   // 카테고리, 페이지, 검색값이 변할 때마다 api 리스트 조회 처리
   const fetchData = useCallback(() => {
@@ -36,11 +37,13 @@ export default function StudyListMain() {
     axios
       .get("/api/studyList", { params: query })
       .then(res => {
-        // console.log(res.data.content.length);
-        setStudyList(res.data.content);
+        setStudyList(res.data.content || []); // 결과 없으면 빈 배열
         setTotalPages(res.data.totalPages);
       })
-      .catch(err => console.error(err));
+      .catch(err => {
+        console.error(err);
+        setStudyList([]); // 에러 시에도 빈 배열로
+      });
   }, [cat, currentPage, searchQuery]);
 
   useEffect(() => {
@@ -70,6 +73,13 @@ export default function StudyListMain() {
   const catParam = cat;
   const catTitle = studyCategory.find(cat => cat.url === catParam)?.title ?? "전체";
 
+  // 검색 시 처리
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+    setCurrentPage(1); // 검색할 때 1페이지로 이동
+    setStudyList([]); // 기존 데이터 제거
+  };
+
   // 리스트 랜더링
   const renderList = (list: listDataType[]) => {
     return (
@@ -93,7 +103,7 @@ export default function StudyListMain() {
       <div className="container flex flex-col items-center mt-10 gap-8">
         <div className="flex w-full max-w-7xl justify-between py-4">
           <CategoryBreadcrumb pageTitle={studyPageName} catTitle={catTitle} />
-          <SearchStudy onSearch={setSearchQuery} />
+          <SearchStudy onSearch={handleSearch} />
         </div>
         {studyList === null ? (
           <div>로딩 중..</div>
@@ -104,10 +114,10 @@ export default function StudyListMain() {
             {renderList(studyList)}
             {/* 페이지네이션 */}
             <div className="mb-8">
-              <CommonPagination
+              <StudyListPagination
                 currentPage={currentPage}
                 totalPages={totalPages}
-                onPageChange={setCurrentPage}
+                onPageChange={handlePageChange}
               />
             </div>
           </>
