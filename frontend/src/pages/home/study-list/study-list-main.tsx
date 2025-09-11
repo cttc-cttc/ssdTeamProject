@@ -3,17 +3,14 @@ import {
   studyCategoryName,
   studyPageName,
 } from "@/components/common/sidebar-menu-data";
-import { Button } from "@/components/ui/button";
-import { ImageFrame } from "./image-frame";
 import CategoryBreadcrumb from "@/components/common/category-breadcrumb";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
 import CommonPagination from "../../../components/common/common-pagination";
 import SidebarLayout from "@/components/common/sidebar-layout";
 import SearchStudy, { type listDataType } from "./search-study";
-import { categoryNameMap } from "@/components/common/mappings";
 import axios from "axios";
-import dayjs from "dayjs";
+import ListThumbnailFlex from "../components/list-thumbnail-flex";
 
 export default function StudyListMain() {
   const { cat, page } = useParams<{ cat: string; page?: string }>();
@@ -35,8 +32,6 @@ export default function StudyListMain() {
       page: currentPage - 1,
       size: 10, // 한 페이지에 보여줄 게시글 수
     };
-
-    console.log("검색값:", searchQuery);
 
     axios
       .get("/api/studyList", { params: query })
@@ -85,35 +80,7 @@ export default function StudyListMain() {
             to={`/posts/${posts.id}`}
             className="w-full max-w-6xl hover:ring-3 ring-ring/50 transition-all duration-200 ease-in-out"
           >
-            <div className="flex shadow-xl">
-              <div className="flex-5 flex border-1 border-accent bg-white dark:bg-muted/50 p-4">
-                <div className="flex-4 flex flex-col gap-2">
-                  <div className="text-[#2c3e50] dark:text-accent-foreground text-xl font-bold">
-                    {posts.title}
-                  </div>
-                  <div>
-                    스터디 기간: {dayjs(posts.createdAt).format("YYYY-MM-DD")} ~{" "}
-                    {dayjs(posts.deadline).format("YYYY-MM-DD")}
-                  </div>
-                  <div className="mb-10 text-muted-foreground">작성자: {posts.userId}</div>
-                  <div>{posts.content}</div>
-                </div>
-
-                <div className="flex-1 flex flex-col items-end gap-2">
-                  <div>{categoryNameMap[posts.category]}</div>
-                  <div>
-                    <Button variant="ssd_tag" className="border-1 border-foreground/30 text-sm">
-                      #태그
-                    </Button>
-                  </div>
-                  <div className="text-sm">모집 인원: 1/5</div>
-                </div>
-              </div>
-
-              <div className="flex-2 flex">
-                <ImageFrame />
-              </div>
-            </div>
+            <ListThumbnailFlex posts={posts} />
           </Link>
         ))}
       </>
