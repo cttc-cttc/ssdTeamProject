@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "../../lib/api";
+import { Button } from "@/components/ui/button";
 
 type Notice = {
   id: number;
@@ -26,9 +27,11 @@ export default function NoticeList() {
   const [data, setData] = useState<Notice[]>([]);
 
   const load = async () => {
+    // 페이지 표시에 필요한 파라미터 설정
     const params = new URLSearchParams({ page: String(page), size: "10" });
     params.append("sort", "pinned,desc");
     params.append("sort", "createdAt,desc");
+
     if (q.trim()) params.set("q", q.trim());
     const res = await axios.get(`/api/notices/list?${params.toString()}`);
     console.log(res.data);
@@ -40,7 +43,7 @@ export default function NoticeList() {
   }, [page]); // page 바뀔 때 로드
 
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-white rounded-xl shadow">
+    <div className="max-w-3xl mx-auto p-6 bg-accent rounded-xl shadow">
       <div className="flex gap-2 mb-3">
         <input
           className="flex-1 border rounded px-3 py-2"
@@ -64,12 +67,9 @@ export default function NoticeList() {
           검색
         </button>
 
-        <Link
-          to="/notices/create"
-          className="ml-2 bg-blue-500 text-white px-4 rounded hover:bg-blue-600"
-        >
-          공지 등록
-        </Link>
+        <Button className="bg-blue-500 text-white px-4 rounded hover:bg-blue-600" asChild>
+          <Link to="/notices/create">공지 등록</Link>
+        </Button>
       </div>
 
       <ul className="divide-y">
