@@ -23,6 +23,9 @@ public class StudyPost {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, unique = true)
+    private String userNickname;
+
     @Column(length = 100, nullable = false)
     private  String title;
 
@@ -47,7 +50,7 @@ public class StudyPost {
 
     private LocalDateTime deadline;
 
-    @Builder.Default private int currentCont = 0;
+    @Builder.Default private int currentCount = 0;
     private int maxCount;
 
     @Builder.Default private int wishCount = 0;
@@ -60,16 +63,16 @@ public class StudyPost {
     }
 
     public void increaseCurrentCont() {
-        if (currentCont < maxCount) {
-            this.currentCont++;
+        if (currentCount < maxCount) {
+            this.currentCount++;
         } else {
             throw new IllegalStateException("최대 인원 초과");
         }
     }
 
     public void decreaseCurrentCont() {
-        if (currentCont > 0) {
-            this.currentCont--;
+        if (currentCount > 0) {
+            this.currentCount--;
         }
     }
 

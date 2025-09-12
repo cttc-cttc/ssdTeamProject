@@ -4,9 +4,11 @@ import CategoryInput from "./category-input";
 import { useNavigate } from "react-router-dom";
 import { Editor } from "@toast-ui/react-editor";
 import { useTheme } from "@/components/theme-provider";
+import { useInfoStore } from "../account/info-store";
 
 function PostingForm() {
   const { theme } = useTheme();
+  const { userNickname } = useInfoStore();
   const [title, setTitle] = useState("");
   const [mainCategory, setMainCategory] = useState("");
   const [subCategories, setSubCategories] = useState<string[]>([]);
@@ -73,6 +75,7 @@ function PostingForm() {
 
     try {
       const res = await axios.post("/api/create-post", {
+        userNickname,
         title,
         content,
         mainCategory,

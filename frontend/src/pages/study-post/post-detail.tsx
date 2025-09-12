@@ -7,8 +7,10 @@ import "./post-detail.css";
 
 interface Post {
   id: number;
+  userNickname: string;
   title: string;
-  category: string;
+  mainCategory: string;
+  subCategories: string[];
   currentCount: number;
   maxCount: number;
   content: string;
@@ -36,15 +38,27 @@ export default function PostDetail() {
     <div>
       <div className="max-w-4xl mx-auto px-6 py-10">
         <h1 className="text-3xl font-bold mb-2">{post.title}</h1>
+
         <div className="flex justify-between items-center border-b border-gray-300 pb-2 mb-4">
-          <span className="text-gray-600">#{post.category}</span>
-          <span className="text-gray-600">마감까지 {getDDay(post.deadline)}</span>
+          <div className="flex flex-wrap gap-2 items-center">
+            <span className="text-gray-600 font-medium">{post.mainCategory}</span>
+            {post.subCategories?.map((sub, idx) => (
+              <span key={idx} className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">
+                {sub}
+              </span>
+            ))}
+          </div>
+
+          <span className="text-gray-600">작성자: {post.userNickname}</span>
         </div>
-        <div className="border-b border-gray-300 pb-2 mb-6">
+
+        <div className="flex justify-between items-center border-b border-gray-300 pb-2 mb-6">
           <span className="text-gray-700">
             현재 참여 인원: {post.currentCount} / {post.maxCount}
           </span>
+          <span className="text-gray-600">마감까지 {getDDay(post.deadline)}</span>
         </div>
+
         <div className="border border-gray-300 rounded-md p-6 mb-6">
           {/* <ReactMarkdown>{post.content}</ReactMarkdown> */}
           <CustomViewer contents={post.content} />
