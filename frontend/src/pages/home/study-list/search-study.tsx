@@ -2,16 +2,6 @@ import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { useRef, useState } from "react";
 
-export interface listDataType {
-  userId: string;
-  id: number;
-  title: string;
-  category: string;
-  content: string;
-  createdAt: string;
-  deadline: string;
-}
-
 interface SearchStudyProps {
   onSearch: (result: string) => void;
 }

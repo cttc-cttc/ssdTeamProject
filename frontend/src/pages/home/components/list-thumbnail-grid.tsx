@@ -31,13 +31,13 @@ export default function ListThumbnailGrid({ study }: { study: studyProps }) {
           </div>
         </div>
 
-        <div className="flex justify-between text-sm dark:text-muted-foreground">
-          <div>카테고리 - {categoryNameMap[study.category]}</div>
+        <div className="flex justify-between text-sm text-muted-foreground">
+          <div>카테고리 - {categoryNameMap[study.mainCategory]}</div>
           <div>찜하기 {study.wishCount}</div>
         </div>
 
-        <div className="text-sm dark:text-muted-foreground">
-          스터디 기간 {dayjs(study.created).format("YYYY-MM-DD")} ~{" "}
+        <div className="text-sm text-muted-foreground">
+          모집 기간 {dayjs(study.created).format("YYYY-MM-DD")} ~{" "}
           {dayjs(study.deadline).format("YYYY-MM-DD")}
         </div>
       </div>

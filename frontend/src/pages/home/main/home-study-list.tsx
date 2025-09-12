@@ -7,7 +7,8 @@ export interface studyProps {
   id: number;
   title: string;
   content: string;
-  category: string;
+  mainCategory: string;
+  subCategories: string[];
   deadline: Date;
   created: Date;
   updated: Date;
