@@ -17,10 +17,10 @@ public class NoticeService {
 
     // 전체 공지사항 조회 → DTO 변환
     public List<NoticeResponse> getAllNotices() {
-        return noticeRepository.findAll()
+        return noticeRepository.findAllByOrderByCreatedAtDesc()
                 .stream()
                 .map(NoticeResponse::new) // Notice → NoticeResponse 변환
-                .collect(Collectors.toList()).reversed();
+                .collect(Collectors.toList());
     }
 
     public NoticeResponse createNotice(NoticeRequest request) {
@@ -28,4 +28,11 @@ public class NoticeService {
         Notice savedNotice = noticeRepository.save(notice);
         return new NoticeResponse(savedNotice);
     }
+
+    public NoticeResponse getNoticeById(Long id) {
+        Notice notice = noticeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("공지사항을 찾을 수 없습니다. id=" + id));
+        return new NoticeResponse(notice);
+    }
+
 }
