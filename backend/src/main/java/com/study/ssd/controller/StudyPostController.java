@@ -57,4 +57,14 @@ public class StudyPostController {
         StudyPostResponse studyPostResponse = studyPostService.getPost(id);
         return ResponseEntity.ok(studyPostResponse);
     }
+
+    @PostMapping("/create-post/{id}/wish")
+    public ResponseEntity<StudyPostResponse> getWish ( @PathVariable Long id) {
+        return ResponseEntity.ok(studyPostService.addWish(id));
+    }
+
+    @PostMapping("/create-post/{id}/join")
+    public ResponseEntity<StudyPostResponse> getJoin ( @PathVariable Long id) {
+        return ResponseEntity.ok(studyPostService.joinStudy(id));
+    }
 }

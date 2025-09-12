@@ -47,7 +47,28 @@ public class StudyPostService {
         StudyPost post = studyPostRepository.findById(id)
                 .orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "게시글을 찾을 수 없습니다."));
 
-        // 여기에 마감일 넣는지?
+        return StudyPostResponse.fromEntity(post);
+    }
+
+    @Transactional
+    public StudyPostResponse addWish(Long id) {
+        StudyPost post = studyPostRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        post.setWishCount(post.getWishCount() + 1);
+        return StudyPostResponse.fromEntity(post);
+    }
+
+    @Transactional
+    public StudyPostResponse joinStudy(Long id) {
+        StudyPost post = studyPostRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        if (post.getCurrentCount() >= post.getMaxCount()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
+        post.setCurrentCount(post.getCurrentCount() + 1);
         return StudyPostResponse.fromEntity(post);
     }
 }

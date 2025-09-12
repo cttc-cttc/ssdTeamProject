@@ -15,6 +15,7 @@ interface Post {
   maxCount: number;
   content: string;
   deadline: string;
+  wishCount: number;
 }
 
 export default function PostDetail() {
@@ -40,6 +41,11 @@ export default function PostDetail() {
         <h1 className="text-3xl font-bold mb-2">{post.title}</h1>
 
         <div className="flex justify-between items-center border-b border-gray-300 pb-2 mb-4">
+          <span className="text-gray-600">작성자: {post.userNickname}</span>
+          {/* 수정 / 삭제 버튼 */}
+        </div>
+
+        <div className="flex justify-between items-center border-b border-gray-300 pb-2 mb-4">
           <div className="flex flex-wrap gap-2 items-center">
             <span className="text-gray-600 font-medium">{post.mainCategory}</span>
             {post.subCategories?.map((sub, idx) => (
@@ -49,20 +55,38 @@ export default function PostDetail() {
             ))}
           </div>
 
-          <span className="text-gray-600">작성자: {post.userNickname}</span>
+          <span className="text-gray-600">마감까지 {getDDay(post.deadline)}</span>
         </div>
 
         <div className="flex justify-between items-center border-b border-gray-300 pb-2 mb-6">
           <span className="text-gray-700">
             현재 참여 인원: {post.currentCount} / {post.maxCount}
           </span>
-          <span className="text-gray-600">마감까지 {getDDay(post.deadline)}</span>
+          <span>
+            <button
+              onClick={async () => {
+                const res = await axios.post(`/api/create-post/${post.id}/wish`);
+                setPost(res.data);
+              }}
+            >
+              찜하기 {post.wishCount}
+            </button>
+          </span>
         </div>
 
         <div className="border border-gray-300 rounded-md p-6 mb-6">
           {/* <ReactMarkdown>{post.content}</ReactMarkdown> */}
           <CustomViewer contents={post.content} />
         </div>
+
+        <button
+          onClick={async () => {
+            const res = await axios.post(`/api/create-post/${post.id}/join`);
+            setPost(res.data);
+          }}
+        >
+          참여하기
+        </button>
       </div>
     </div>
   );
