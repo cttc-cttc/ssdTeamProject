@@ -4,9 +4,7 @@ import com.study.ssd.dto.StudyPostResponse;
 import com.study.ssd.entity.StudyPost;
 import com.study.ssd.repository.HomeRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -55,10 +53,19 @@ public class HomeService {
                 .map(StudyPostResponse::fromEntity);
     }
 
-    public List<StudyPostResponse> findByAllTags(List<String> tags, int tagCount) {
-        return homeRepository.findByAllTags(tags, tagCount)
-                .stream()
-                .map(StudyPostResponse::fromEntity)
-                .collect(Collectors.toList());
+    /**
+     * 무한 스크롤 + 태그 필터링
+     * @param tags
+     * @param lastId
+     * @param size
+     * @return
+     */
+    public Slice<StudyPostResponse> getPostsByTags(List<String> tags, Long lastId, int size) {
+        long tagCount = tags.size();
+        Pageable pageable = PageRequest.of(0, size, Sort.by(Sort.Direction.DESC, "id"));
+
+        return homeRepository
+                .findByAllTagsWithCursor(tags, tagCount, lastId, pageable)
+                .map(StudyPostResponse::fromEntity);
     }
 }
