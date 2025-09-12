@@ -107,12 +107,20 @@ function PostingForm() {
       <div className="mb-5">
         <label className="inline-block w-20 font-medium">참여인원</label>
         <input
-          type="number"
+          type="text"
           value={maxCount}
-          onChange={e => setMaxCount(Number(e.target.value))}
+          onChange={e => {
+            const value = e.target.value;
+            if (/^\d*$/.test(value)) {
+              // 숫자만 허용
+              setMaxCount(Number(value));
+            }
+          }}
           className="w-[calc(100%-5rem)] px-3 py-2 border rounded-md"
         />
-        <span className="text-red-500 text-sm ml-2">* 최대 인원은 50명입니다.</span>
+        {(maxCount < 2 || maxCount > 50) && (
+          <span className="text-red-500 text-sm ml-2">참여인원은 2 ~ 50명 사이로 입력하세요.</span>
+        )}
       </div>
       <div className="mb-5">
         <Editor
