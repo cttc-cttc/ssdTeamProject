@@ -3,7 +3,9 @@ package com.study.ssd.service;
 import com.study.ssd.dto.StudyPostRequest;
 import com.study.ssd.dto.StudyPostResponse;
 import com.study.ssd.entity.StudyPost;
+import com.study.ssd.entity.User;
 import com.study.ssd.repository.StudyPostRepository;
+import com.study.ssd.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,7 @@ import java.time.LocalDateTime;
 public class StudyPostService {
 
     private final StudyPostRepository studyPostRepository;
+    private final UserRepository userRepository;
 
     @Transactional
     public StudyPostResponse createPost (StudyPostRequest studyPostRequest) {
@@ -26,12 +29,13 @@ public class StudyPostService {
         }
 
         StudyPost studyPost = StudyPost.builder()
+                .userNickname(studyPostRequest.getUserNickname())
                 .title(studyPostRequest.getTitle())
                 .content(studyPostRequest.getContent())
                 .mainCategory(studyPostRequest.getMainCategory())
                 .subCategories(studyPostRequest.getSubCategories())
                 .maxCount(studyPostRequest.getMaxCount())
-                .currentCont(0)
+                .currentCount(0)
                 .build();
 
         StudyPost saved = studyPostRepository.save(studyPost);
