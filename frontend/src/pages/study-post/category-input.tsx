@@ -4,14 +4,22 @@ function CategoryInput({ onChange }: { onChange: (main: string, subs: string[]) 
   const [mainCategory, setMainCategory] = useState("");
   const [subCategories, setSubCategories] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState("");
+  const [error, setError] = useState("");
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && inputValue.trim()) {
       e.preventDefault();
+
+      if (subCategories.length >= 3) {
+        setError("최대 3개까지 입력 가능합니다.");
+        return;
+      }
+
       if (!subCategories.includes(inputValue.trim())) {
         const updated = [...subCategories, inputValue.trim()];
         setSubCategories(updated);
         onChange(mainCategory, updated);
+        setError("");
       }
       setInputValue("");
     }
@@ -29,18 +37,12 @@ function CategoryInput({ onChange }: { onChange: (main: string, subs: string[]) 
   };
 
   return (
-    <div style={{ marginBottom: "20px" }}>
-      <label style={{ display: "inline-block", width: "80px" }}>메인 카테고리</label>
+    <div className="mb-5">
+      <label className="inline-block w-20 font-medium">메인 카테고리</label>
       <select
         value={mainCategory}
         onChange={handleMainChange}
-        className="bg-muted"
-        style={{
-          width: "calc(100% - 110px)",
-          padding: "10px",
-          border: "1px solid #ccc",
-          borderRadius: "6px",
-        }}
+        className="w-[calc(100%-5rem)] px-3 py-2 border rounded-md bg-white text-gray-700"
       >
         <option value="">-- 선택 --</option>
         <option value="lang-cert">어학/자격증</option>
@@ -49,36 +51,26 @@ function CategoryInput({ onChange }: { onChange: (main: string, subs: string[]) 
         <option value="etc">기타</option>
       </select>
 
-      <div className="mb-8">
-        <label style={{ display: "inline-block", width: "100px", fontWeight: 500 }}>
-          서브 카테고리
-        </label>
+      <div className="mt-4">
+        <label className="inline-block w-24 font-medium">서브 카테고리</label>
         <input
           type="text"
           placeholder="서브 카테고리 입력 후 Enter"
           value={inputValue}
           onChange={e => setInputValue(e.target.value)}
           onKeyDown={handleKeyDown}
-          style={{
-            padding: "8px",
-            border: "1px solid #ccc",
-            borderRadius: "6px",
-            minWidth: "200px",
-          }}
+          maxLength={20}
+          className="px-3 py-2 border rounded-md min-w-[200px]"
         />
+        {error && <span className="text-red-500 text-sm ml-3">{error}</span>}
       </div>
 
-      <div style={{ marginLeft: "100px", display: "flex", gap: "8px", flexWrap: "wrap" }}>
+      <div className="ml-24 mt-2 flex gap-2 flex-wrap">
         {subCategories.map(sub => (
           <span
             key={sub}
             onClick={() => removeSubCategory(sub)}
-            style={{
-              background: "#e2e8f0",
-              padding: "4px 8px",
-              borderRadius: "12px",
-              cursor: "pointer",
-            }}
+            className="bg-gray-200 px-3 py-1 rounded-full cursor-pointer text-sm"
           >
             #{sub} ✕
           </span>

@@ -10,7 +10,7 @@ function PostingForm() {
   const [title, setTitle] = useState("");
   const [mainCategory, setMainCategory] = useState("");
   const [subCategories, setSubCategories] = useState<string[]>([]);
-  const [maxCount, setMaxCount] = useState("");
+  const [maxCount, setMaxCount] = useState<number>(2);
   const [content, setContent] = useState("");
 
   useEffect(() => {
@@ -66,7 +66,7 @@ function PostingForm() {
       return;
     }
 
-    if (!maxCount.trim()) {
+    if (maxCount < 2 || maxCount > 50) {
       alert("참여인원을 입력하세요.");
       return;
     }
@@ -90,51 +90,31 @@ function PostingForm() {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      style={{
-        maxWidth: "600px",
-        margin: "40px auto",
-        padding: "24px",
-        borderRadius: "8px",
-      }}
-    >
-      <div style={{ marginBottom: "20px" }}>
-        <label style={{ display: "inline-block", width: "80px" }}>제목</label>
+    <form onSubmit={handleSubmit} className="max-w-xl mx-auto mt-10 p-6 rounded-lg bg-white shadow">
+      <div className="mb-5">
+        <label className="inline-block w-20 font-medium">제목</label>
         <input
           type="text"
           placeholder="제목을 입력하세요."
           value={title}
           onChange={e => setTitle(e.target.value)}
-          style={{
-            width: "calc(100% - 90px)",
-            padding: "10px",
-            border: "1px solid #ccc",
-            borderRadius: "6px",
-          }}
+          className="w-[calc(100%-5rem)] px-3 py-2 border rounded-md"
         />
       </div>
       <div>
         <CategoryInput onChange={handleCategory} />
       </div>
-      <div style={{ marginBottom: "20px" }}>
-        <label style={{ display: "inline-block", width: "80px" }}>참여인원</label>
+      <div className="mb-5">
+        <label className="inline-block w-20 font-medium">참여인원</label>
         <input
           type="number"
           value={maxCount}
-          onChange={e => setMaxCount(e.target.value)}
-          style={{
-            width: "calc(100% - 90px)",
-            padding: "10px",
-            border: "1px solid #ccc",
-            borderRadius: "6px",
-          }}
+          onChange={e => setMaxCount(Number(e.target.value))}
+          className="w-[calc(100%-5rem)] px-3 py-2 border rounded-md"
         />
-        <span style={{ color: "red", marginLeft: "8px", fontSize: "13px" }}>
-          * 최대 인원은 50명입니다.
-        </span>
+        <span className="text-red-500 text-sm ml-2">* 최대 인원은 50명입니다.</span>
       </div>
-      <div style={{ marginBottom: "20px" }}>
+      <div className="mb-5">
         <Editor
           key={theme}
           initialValue={content}
@@ -157,18 +137,7 @@ function PostingForm() {
       </div>
       <button
         type="submit"
-        style={{
-          display: "block",
-          width: "120px",
-          padding: "10px",
-          margin: "20px auto 0",
-          backgroundColor: "#2f4f36",
-          color: "white",
-          border: "none",
-          borderRadius: "6px",
-          fontWeight: "bold",
-          cursor: "pointer",
-        }}
+        className="block w-32 mx-auto py-2 bg-green-800 text-white rounded-md font-bold hover:bg-green-700 transition"
       >
         작성하기
       </button>

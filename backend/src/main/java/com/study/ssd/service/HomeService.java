@@ -31,7 +31,7 @@ public class HomeService {
         }
 
         // all 이 아니면 해당 카테고리로 조회
-        return homeRepository.findByCategoryOrderByIdDesc(category, pageable)
+        return homeRepository.findByMainCategoryOrderByIdDesc(category, pageable)
                 .map(StudyPostResponse::fromEntity);
     }
 
@@ -50,7 +50,7 @@ public class HomeService {
         }
 
         // all 이 아니면 해당 카테고리에서 검색 키워드로 조회
-        return homeRepository.findByCategoryAndTitleContainingIgnoreCase(category, keyword, pageable)
+        return homeRepository.findByMainCategoryAndTitleContainingIgnoreCase(category, keyword, pageable)
                 .map(StudyPostResponse::fromEntity);
     }
 }

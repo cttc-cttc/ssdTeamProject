@@ -20,10 +20,16 @@ public class StudyPostService {
 
     @Transactional
     public StudyPostResponse createPost (StudyPostRequest studyPostRequest) {
+
+        if (studyPostRequest.getSubCategories() != null && studyPostRequest.getSubCategories().size() > 3) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "최대 3개까지 가능합니다.");
+        }
+
         StudyPost studyPost = StudyPost.builder()
                 .title(studyPostRequest.getTitle())
                 .content(studyPostRequest.getContent())
-                .category(studyPostRequest.getMainCategory())
+                .mainCategory(studyPostRequest.getMainCategory())
+                .subCategories(studyPostRequest.getSubCategories())
                 .maxCount(studyPostRequest.getMaxCount())
                 .currentCont(0)
                 .deadline(LocalDateTime.now().plusDays(30))
@@ -31,18 +37,7 @@ public class StudyPostService {
 
         StudyPost saved = studyPostRepository.save(studyPost);
 
-        return StudyPostResponse.builder()
-                .id(saved.getId())
-                .title(saved.getTitle())
-                .content(saved.getContent())
-                .category(saved.getCategory())
-                .deadline(saved.getDeadline())
-                .created(saved.getCreatedAt())
-                .updated(saved.getUpdatedAt())
-                .currentCont(saved.getCurrentCont())
-                .maxCount(saved.getMaxCount())
-                .wishCount(saved.getWishCount())
-                .build();
+        return StudyPostResponse.fromEntity(saved);
     }
 
     public StudyPostResponse getPost(Long id) {
@@ -50,17 +45,6 @@ public class StudyPostService {
                 .orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "게시글을 찾을 수 없습니다."));
 
         // 여기에 마감일 넣는지?
-        return StudyPostResponse.builder()
-                .id(post.getId())
-                .title(post.getTitle())
-                .content(post.getContent())
-                .category(post.getCategory())
-                .deadline(post.getDeadline())
-                .created(post.getCreatedAt())
-                .updated(post.getUpdatedAt())
-                .currentCont(post.getCurrentCont())
-                .maxCount(post.getMaxCount())
-                .wishCount(post.getWishCount())
-                .build();
+        return StudyPostResponse.fromEntity(post);
     }
 }
