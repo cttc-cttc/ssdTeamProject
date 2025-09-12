@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import axios from "../../lib/api";
 
 type Notice = {
@@ -13,51 +13,42 @@ type Notice = {
   updatedAt: string;
 };
 
-const fmt = (iso?: string) => {
-  if (!iso) return "";
-  const d = new Date(iso);
-  const z = (n: number) => String(n).padStart(2, "0");
-  return `${d.getFullYear()}-${z(d.getMonth() + 1)}-${z(d.getDate())} ${z(d.getHours())}:${z(d.getMinutes())}`;
-};
-const escapeHtml = (s = "") =>
-  s.replace(
-    /[&<>"']/g,
-    c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!
-  );
-
 export default function NoticeDetail() {
-  const { id } = useParams();
-  const [n, setN] = useState<Notice | null>(null);
+  const { id } = useParams<{ id: string }>();
+  const [notice, setNotice] = useState<Notice | null>(null);
 
   useEffect(() => {
     if (!id) return;
     axios
       .get<Notice>(`/api/notices/${id}?inc=true`)
-      .then(res => setN(res.data))
+      .then(res => setNotice(res.data))
       .catch(console.error);
   }, [id]);
 
-  if (!n) return <div className="max-w-3xl mx-auto p-6">로딩...</div>;
+  if (!notice) return <div className="p-6"> 로딩중...</div>;
 
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-white rounded-xl shadow">
-      <Link to="/" className="text-sm text-blue-600 underline">
+    <div className="max-w-3xl mx-auto p-6 bg-white rounded shadow">
+      <Link to="/notices" className="text-blue-500 hover:underline text-sm">
         ← 목록으로
       </Link>
-      {n.pinned && (
+
+      {notice.pinned && (
         <div className="mt-2 text-amber-600 text-xs border px-2 py-0.5 rounded-full inline-block">
           상단고정
         </div>
       )}
-      <h1 className="text-2xl font-bold mt-2">{n.title}</h1>
+
+      <h1 className="text-2xl font-bold mt-2">{notice.title}</h1>
+
       <div className="text-sm text-gray-500 mt-1">
-        작성자 {n.author} · 조회 {n.viewCount} · {fmt(n.createdAt)}
+        작성자 {notice.author} · 조회 {notice.viewCount} ·{" "}
+        {new Date(notice.createdAt).toLocaleString()}
       </div>
+
       <hr className="my-4" />
-      <div
-        className="prose"
-        dangerouslySetInnerHTML={{ __html: escapeHtml(n.content).replace(/\n/g, "<br/>") }}
-      />
+
+      <div className="whitespace-pre-wrap break-words">{notice.content}</div>
     </div>
   );
 }

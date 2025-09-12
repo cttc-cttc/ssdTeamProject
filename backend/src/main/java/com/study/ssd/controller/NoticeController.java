@@ -26,4 +26,11 @@ public class NoticeController {
     public NoticeResponse createNotice(@Valid @RequestBody NoticeRequest request) {
         return noticeService.createNotice(request);
     }
+
+    @GetMapping("/{id}")
+    public NoticeResponse getNotice(@PathVariable Long id) {
+        return noticeService.getNoticeById(id);
+    }
+
+
 }
