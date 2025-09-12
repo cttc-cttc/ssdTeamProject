@@ -27,7 +27,7 @@ export default function ListThumbnailGrid({ study }: { study: studyProps }) {
             {study.title}
           </div>
           <div className="flex-1 text-end text-sm dark:text-muted-foreground">
-            참여자 {study.currentCont}/{study.maxCount}
+            참여자 {study.currentCount}/{study.maxCount}
           </div>
         </div>
 

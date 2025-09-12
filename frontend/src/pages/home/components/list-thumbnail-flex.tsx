@@ -52,7 +52,7 @@ export default function ListThumbnailFlex({ posts }: { posts: studyProps }) {
             </Button>
           </div>
           <div className="text-sm">
-            모집 인원: {posts.currentCont}/{posts.maxCount}
+            모집 인원: {posts.currentCount}/{posts.maxCount}
           </div>
           <div className="text-sm">찜하기: {posts.wishCount}</div>
         </div>

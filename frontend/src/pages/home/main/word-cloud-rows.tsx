@@ -35,6 +35,11 @@ const tempWords: Word[] = [
   { text: "# C++" },
   { text: "# 러시아어" },
   { text: "# 프랑스어" },
+  { text: "# ㅎㅎ" },
+  { text: "# 11" },
+  { text: "# 태그" },
+  { text: "# 태그1" },
+  { text: "# 태그2" },
 ];
 
 function WordCloudRows({ selectedTags, onTagClick }: WordCloudRowsProps) {

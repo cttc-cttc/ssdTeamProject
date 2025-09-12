@@ -12,7 +12,7 @@ export interface studyProps {
   deadline: Date;
   created: Date;
   updated: Date;
-  currentCont: number;
+  currentCount: number;
   maxCount: number;
   wishCount: number;
 }
