@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -52,5 +53,12 @@ public class HomeService {
         // all 이 아니면 해당 카테고리에서 검색 키워드로 조회
         return homeRepository.findByMainCategoryAndTitleContainingIgnoreCase(category, keyword, pageable)
                 .map(StudyPostResponse::fromEntity);
+    }
+
+    public List<StudyPostResponse> findByAllTags(List<String> tags, int tagCount) {
+        return homeRepository.findByAllTags(tags, tagCount)
+                .stream()
+                .map(StudyPostResponse::fromEntity)
+                .collect(Collectors.toList());
     }
 }

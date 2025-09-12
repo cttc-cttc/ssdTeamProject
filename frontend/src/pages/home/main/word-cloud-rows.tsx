@@ -10,6 +10,7 @@ interface WordCloudRowsProps {
   onTagClick: (newTags: string[]) => void;
 }
 
+// TODO: db 데이터 사용자 태그 조회 값으로 변경 필요
 const tempWords: Word[] = [
   { text: "# 부동산재무" },
   { text: "# C#" },

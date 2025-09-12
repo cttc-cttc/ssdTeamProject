@@ -48,4 +48,11 @@ public class HomeController {
         return ResponseEntity.ok(homeService.getStudyListByKeyword(category, keyword, pageable));
     }
 
+    @GetMapping("/posts/search")
+    public ResponseEntity<List<StudyPostResponse>> getStudyListByTags(@RequestParam List<String> tags) {
+        if(tags.isEmpty()) {
+            return ResponseEntity.ok(List.of());
+        }
+        return ResponseEntity.ok((homeService.findByAllTags(tags, tags.size())));
+    }
 }
