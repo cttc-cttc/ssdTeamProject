@@ -34,6 +34,9 @@ export default function TagSearchList({ tags }: { tags: string[] }) {
   return (
     <div className="container flex flex-col items-center my-10 gap-8">
       <div className="flex flex-col w-full max-w-7xl items-center py-4 gap-8">
+        <p className="flex w-full mt-6 py-4 text-2xl font-medium dark:text-foreground">
+          태그 검색 결과
+        </p>
         {studyPosts.map(posts => (
           <Link
             key={posts.id}

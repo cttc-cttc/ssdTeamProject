@@ -6,6 +6,7 @@ import ListThumbnailGrid from "../components/list-thumbnail-grid";
 export interface studyProps {
   id: number;
   title: string;
+  userNickname: string;
   content: string;
   mainCategory: string;
   subCategories: string[];

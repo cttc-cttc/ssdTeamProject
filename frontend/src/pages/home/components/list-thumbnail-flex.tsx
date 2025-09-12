@@ -29,7 +29,7 @@ export default function ListThumbnailFlex({ posts }: { posts: studyProps }) {
             모집 기간: {dayjs(posts.created).format("YYYY-MM-DD")} ~{" "}
             {dayjs(posts.deadline).format("YYYY-MM-DD")}
           </div>
-          <div className="mb-10 text-muted-foreground">작성자: {posts.id}</div>
+          <div className="mb-10 text-muted-foreground">작성자: {posts.userNickname}</div>
           {/* 왼쪽: 본문 미리보기 */}
           <div className="flex-1 line-clamp-5 text-muted-foreground">
             <ReactMarkdown
@@ -46,10 +46,12 @@ export default function ListThumbnailFlex({ posts }: { posts: studyProps }) {
 
         <div className="flex-1 flex flex-col items-end gap-2">
           <div>{categoryNameMap[posts.mainCategory]}</div>
-          <div>
-            <Button variant="ssd_tag" className="border-1 border-foreground/30 text-sm">
-              #태그
-            </Button>
+          <div className="flex gap-2">
+            {posts.subCategories.map(tag => (
+              <Button variant="ssd_tag" className="border-1 border-foreground/30 text-sm">
+                # {tag}
+              </Button>
+            ))}
           </div>
           <div className="text-sm">
             모집 인원: {posts.currentCount}/{posts.maxCount}
