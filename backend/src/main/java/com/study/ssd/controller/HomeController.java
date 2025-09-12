@@ -1,13 +1,11 @@
 package com.study.ssd.controller;
 
+import com.study.ssd.dto.SliceResponse;
 import com.study.ssd.dto.StudyPostResponse;
 import com.study.ssd.entity.StudyPost;
 import com.study.ssd.service.HomeService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,11 +46,25 @@ public class HomeController {
         return ResponseEntity.ok(homeService.getStudyListByKeyword(category, keyword, pageable));
     }
 
+    /**
+     * 무한 스크롤 + 태그 필터링
+     * @param tags
+     * @param lastId
+     * @param size
+     * @return
+     */
     @GetMapping("/posts/search")
-    public ResponseEntity<List<StudyPostResponse>> getStudyListByTags(@RequestParam List<String> tags) {
-        if(tags.isEmpty()) {
-            return ResponseEntity.ok(List.of());
+    public ResponseEntity<SliceResponse<StudyPostResponse>> getStudyListByTags(
+            @RequestParam List<String> tags,
+            @RequestParam(required = false) Long lastId,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        if (tags.isEmpty()) {
+            return ResponseEntity.ok(new SliceResponse<>(List.of(), false));
         }
-        return ResponseEntity.ok((homeService.findByAllTags(tags, tags.size())));
+        Slice<StudyPostResponse> slice = homeService.getPostsByTags(tags, lastId, size);
+        return ResponseEntity.ok(SliceResponse.from(slice));
     }
 }
+
+
