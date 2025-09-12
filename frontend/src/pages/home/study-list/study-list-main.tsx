@@ -7,15 +7,16 @@ import CategoryBreadcrumb from "@/components/common/category-breadcrumb";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
 import SidebarLayout from "@/components/common/sidebar-layout";
-import SearchStudy, { type listDataType } from "./search-study";
+import SearchStudy from "./search-study";
 import axios from "axios";
 import ListThumbnailFlex from "../components/list-thumbnail-flex";
 import StudyListPagination from "../components/study-list-pagination";
+import type { studyProps } from "../main/home-study-list";
 
 export default function StudyListMain() {
   const { cat, page } = useParams<{ cat: string; page?: string }>();
   const [currentPage, setCurrentPage] = useState(1);
-  const [studyList, setStudyList] = useState<listDataType[] | null>(null);
+  const [studyList, setStudyList] = useState<studyProps[] | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [totalPages, setTotalPages] = useState(1); // 전체 페이지 수
   const navigate = useNavigate();
@@ -81,7 +82,7 @@ export default function StudyListMain() {
   };
 
   // 리스트 랜더링
-  const renderList = (list: listDataType[]) => {
+  const renderList = (list: studyProps[]) => {
     return (
       <>
         {list.map(posts => (

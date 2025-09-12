@@ -1,12 +1,12 @@
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import type { listDataType } from "../study-list/search-study";
 import dayjs from "dayjs";
 import { categoryNameMap } from "@/components/common/mappings";
 import { Button } from "@/components/ui/button";
 import { ImageFrame } from "../study-list/image-frame";
+import type { studyProps } from "../main/home-study-list";
 
-export default function ListThumbnailFlex({ posts }: { posts: listDataType }) {
+export default function ListThumbnailFlex({ posts }: { posts: studyProps }) {
   // 첫 번째 이미지 추출 (정규식)
   const imageRegex = /!\[.*?\]\((.*?)\)/;
   const match = posts.content.match(imageRegex);
@@ -25,11 +25,11 @@ export default function ListThumbnailFlex({ posts }: { posts: listDataType }) {
           <div className="text-[#2c3e50] dark:text-accent-foreground text-xl font-bold">
             {posts.title}
           </div>
-          <div>
-            스터디 기간: {dayjs(posts.createdAt).format("YYYY-MM-DD")} ~{" "}
+          <div className="text-muted-foreground">
+            모집 기간: {dayjs(posts.created).format("YYYY-MM-DD")} ~{" "}
             {dayjs(posts.deadline).format("YYYY-MM-DD")}
           </div>
-          <div className="mb-10 text-muted-foreground">작성자: {posts.userId}</div>
+          <div className="mb-10 text-muted-foreground">작성자: {posts.id}</div>
           {/* 왼쪽: 본문 미리보기 */}
           <div className="flex-1 line-clamp-5 text-muted-foreground">
             <ReactMarkdown
@@ -45,13 +45,16 @@ export default function ListThumbnailFlex({ posts }: { posts: listDataType }) {
         </div>
 
         <div className="flex-1 flex flex-col items-end gap-2">
-          <div>{categoryNameMap[posts.category]}</div>
+          <div>{categoryNameMap[posts.mainCategory]}</div>
           <div>
             <Button variant="ssd_tag" className="border-1 border-foreground/30 text-sm">
               #태그
             </Button>
           </div>
-          <div className="text-sm">모집 인원: 1/5</div>
+          <div className="text-sm">
+            모집 인원: {posts.currentCont}/{posts.maxCount}
+          </div>
+          <div className="text-sm">찜하기: {posts.wishCount}</div>
         </div>
       </div>
 
