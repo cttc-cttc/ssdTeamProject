@@ -12,16 +12,23 @@ interface Post {
   currentCount: number;
   maxCount: number;
   content: string;
+  deadline: string;
 }
 
 export default function PostDetail() {
-  // 기타 기능 넣어야 됨 일단 조회만
   const { id } = useParams();
   const [post, setPost] = useState<Post | null>(null);
 
   useEffect(() => {
     axios.get(`/api/create-post/${id}`).then(res => setPost(res.data));
   }, [id]);
+
+  const getDDay = (deadline: string) => {
+    const end = new Date(deadline).getTime();
+    const now = new Date().getTime();
+    const diff = Math.ceil((end - now) / (1000 * 60 * 60 * 24));
+    return diff > 0 ? `D-${diff}` : "마감";
+  };
 
   if (!post) return <div>로딩 중...</div>;
 
@@ -31,7 +38,7 @@ export default function PostDetail() {
         <h1 className="text-3xl font-bold mb-2">{post.title}</h1>
         <div className="flex justify-between items-center border-b border-gray-300 pb-2 mb-4">
           <span className="text-gray-600">#{post.category}</span>
-          <span className="text-gray-600">마감까지 D-29</span>
+          <span className="text-gray-600">마감까지 {getDDay(post.deadline)}</span>
         </div>
         <div className="border-b border-gray-300 pb-2 mb-6">
           <span className="text-gray-700">

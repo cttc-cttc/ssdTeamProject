@@ -32,7 +32,6 @@ public class StudyPostService {
                 .subCategories(studyPostRequest.getSubCategories())
                 .maxCount(studyPostRequest.getMaxCount())
                 .currentCont(0)
-                .deadline(LocalDateTime.now().plusDays(30))
                 .build();
 
         StudyPost saved = studyPostRepository.save(studyPost);
