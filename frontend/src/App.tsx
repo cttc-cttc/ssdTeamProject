@@ -24,7 +24,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />}>
           <Route index element={<HomeMain />} />
-          {/* 홈 스터디 리스트 진입 시 비정상적인 url을 전부 /study/all 로 변경 */}
+          {/* 홈 스터디 리스트 진입 시 비정상적인 url을 전부 /study/all/1 로 변경 */}
           <Route path="/study">
             <Route index element={<Navigate to="/study/all/1" replace />} />
             <Route path=":cat/:page?" element={<StudyListMain />} />

@@ -1,9 +1,13 @@
 import { Button } from "@/components/ui/button";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 
 interface Word {
   text: string;
+}
+
+interface WordCloudRowsProps {
+  selectedTags: string[];
+  onTagClick: (newTags: string[]) => void;
 }
 
 const tempWords: Word[] = [
@@ -32,12 +36,28 @@ const tempWords: Word[] = [
   { text: "# 프랑스어" },
 ];
 
-function WordCloudRows() {
+function WordCloudRows({ selectedTags, onTagClick }: WordCloudRowsProps) {
   const [words, setWords] = useState<Word[]>([]);
 
   useEffect(() => {
     setWords(tempWords);
   }, []);
+
+  const handleClick = (tag: string) => {
+    const cleanTag = tag.replace("# ", "");
+    let newTags: string[];
+
+    if (selectedTags.includes(cleanTag)) {
+      // 이미 있으면 제거
+      newTags = selectedTags.filter(t => t !== cleanTag);
+    } else {
+      // 없으면 추가
+      newTags = [...selectedTags, cleanTag];
+    }
+
+    // 상위 컴포넌트로 상태 전달
+    onTagClick(newTags);
+  };
 
   // 한 줄에 들어갈 개수
   const rows = 3;
@@ -47,16 +67,22 @@ function WordCloudRows() {
     <div className="flex flex-col items-center gap-2">
       {Array.from({ length: rows }).map((_, rowIdx) => (
         <div key={rowIdx} className="flex gap-2 flex-wrap">
-          {words.slice(rowIdx * wordsPerRow, (rowIdx + 1) * wordsPerRow).map((word, idx) => (
-            <Button
-              key={idx}
-              variant="ssd_tag"
-              className="text-sm transition-transform duration-200 ease-in-out hover:scale-105 select-none"
-              asChild
-            >
-              <Link to="/">{word.text}</Link>
-            </Button>
-          ))}
+          {words.slice(rowIdx * wordsPerRow, (rowIdx + 1) * wordsPerRow).map((word, idx) => {
+            const cleanTag = word.text.replace("# ", "");
+            const isActive = selectedTags.includes(cleanTag);
+            return (
+              <Button
+                key={idx}
+                variant="ssd_tag"
+                className={`text-sm transition-transform duration-200 ease-in-out hover:scale-105 select-none ${
+                  isActive ? "bg-primary text-white hover:bg-none" : "hover:bg-[#B9A5D4]/50"
+                }`}
+                onClick={() => handleClick(word.text)}
+              >
+                {word.text}
+              </Button>
+            );
+          })}
         </div>
       ))}
     </div>
