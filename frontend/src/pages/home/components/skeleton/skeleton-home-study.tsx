@@ -44,7 +44,7 @@ export function SkeletonHomeStudy() {
       </div>
     );
   };
-  //
+
   return (
     <div className="w-full max-w-6xl flex flex-col gap-8 mb-25">
       {Array.from({ length: 6 }).map((_, i) => (
