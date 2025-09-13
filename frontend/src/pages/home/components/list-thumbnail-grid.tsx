@@ -2,6 +2,7 @@ import dayjs from "dayjs";
 import { categoryNameMap } from "@/components/common/mappings";
 import { ImageFrame } from "../study-list/image-frame";
 import type { studyProps } from "../main/home-study-list";
+import { Bookmark } from "lucide-react";
 
 export default function ListThumbnailGrid({ study }: { study: studyProps }) {
   // 첫 번째 이미지 추출 (정규식)
@@ -33,7 +34,9 @@ export default function ListThumbnailGrid({ study }: { study: studyProps }) {
 
         <div className="flex justify-between text-sm text-muted-foreground">
           <div>카테고리 - {categoryNameMap[study.mainCategory]}</div>
-          <div>찜하기 {study.wishCount}</div>
+          <div className="flex">
+            <Bookmark className="text-yellow-500 fill-yellow-200" /> 찜하기 {study.wishCount}
+          </div>
         </div>
 
         <div className="text-sm text-muted-foreground">
