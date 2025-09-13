@@ -24,6 +24,7 @@ export default function SearchStudy({ onSearch }: SearchStudyProps) {
       onSearch(query);
 
       if (searchRef.current) {
+        setQuery("");
         searchRef.current.value = "";
       }
     }
