@@ -49,6 +49,7 @@ export default function PartyStudy() {
           currentPage={currentPage}
           totalPages={totalPages}
           onPageChange={setCurrentPage}
+          
         />
       </div>
     </>
