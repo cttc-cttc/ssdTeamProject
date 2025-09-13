@@ -18,7 +18,7 @@ export default function MyPage() {
     useInfoStore();
 
   // 회원탈퇴 모달 상태
-  const [withdrawModal, setShowWithdrawModal] = useState(false);  
+  const [withdrawModal, setShowWithdrawModal] = useState(false);
 
   // 회원탈퇴 모달 핸들러
   const openWithdrawModal = () => {
@@ -76,10 +76,12 @@ export default function MyPage() {
   const page = () => {
     return (
       <div className="container items-center py-8 m-10 mt-0">
-        <div className="flex w-full max-w-7xl justify-start py-4">
+        <div className="flex justify-start w-full py-4 max-w-7xl">
           <CategoryBreadcrumb catTitle={sidebarTitle} pageTitle={mypagePageName} />
         </div>
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div
+          className={`${sidebar === "party-study" || sidebar === "open-study" || sidebar === "wish-study" ? "max-w-full" : "max-w-4xl"} mx-auto px-4 sm:px-6 lg:px-8`}
+        >
           <div className=" shadow rounded-lg border-2 border-[#3d6647]">
             {/* 사이드바 클릭에 따라서 변화*/}
             {renderContent()}
