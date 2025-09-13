@@ -20,6 +20,8 @@ function PostingForm() {
       const instance = editorRef.current.getInstance();
       instance.setMarkdown(content); // or setMarkdown(content)
     }
+    // 노란 경고 무시를 위한 주석
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [theme]); // 테마 바뀔 때마다 복구 content 값 넣으면 제대로 동작 안함
 
   const navigate = useNavigate();

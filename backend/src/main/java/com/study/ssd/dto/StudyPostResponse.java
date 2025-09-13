@@ -20,7 +20,7 @@ public class StudyPostResponse {
     private LocalDateTime deadline;
     private LocalDateTime created;
     private LocalDateTime updated;
-    // 초기값을 지정할 경우 @Builder.Default 선언 필요 아하!
+    // @Builder 사용 시 초기값을 지정할 경우 @Builder.Default 선언 필요
     @Builder.Default private int currentCount = 0;
     @Builder.Default private int maxCount = 0;
     @Builder.Default private int wishCount = 0;

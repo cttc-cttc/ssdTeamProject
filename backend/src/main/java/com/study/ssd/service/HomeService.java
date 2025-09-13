@@ -3,6 +3,7 @@ package com.study.ssd.service;
 import com.study.ssd.dto.StudyPostResponse;
 import com.study.ssd.entity.StudyPost;
 import com.study.ssd.repository.HomeRepository;
+import com.study.ssd.repository.StudyPostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,29 @@ import java.util.stream.Collectors;
 public class HomeService {
 
     private final HomeRepository homeRepository;
+
+    /**
+     * 스터디 섹션에 따른 스터디 리스트 조회
+     * @param studySections 표시할 스터디 종류 - 마감 임박 / 인기 / 최신 스터디
+     * @param page 현재 페이지 (첫 페이지만 필요하니 0으로 고정)
+     * @param size 한 페이지에 보여줄 게시글 개수 (마감 임박 / 인기 스터디는 6개, 최신 스터디는 9개)
+     * @return Page<StudyPostResponse>
+     */
+    public Page<StudyPostResponse> getStudyListStudySections(String studySections, int page, int size) {
+
+        // Spring Data JPA 의 findAll(Pageable pageable) 은 이미 정렬 조건을 Pageable 에서 받아서 동적으로 쿼리를 생성해 줍니다.
+        // 따라서 deadline, popular, recent 같은 케이스는 Pageable의 Sort 조건만 바꾸면 충분합니다. - by gpt
+        // properties 값은 DB의 컬럼명이 아닌 Entity java 파일의 변수명
+        Pageable pageable = switch (studySections) {
+            case "deadline" -> PageRequest.of(page, size, Sort.by("deadline").ascending());
+            case "popular" -> PageRequest.of(page, size, Sort.by("wishCount").descending());
+            case "recent" -> PageRequest.of(page, size, Sort.by("id").descending());
+            default -> throw new IllegalArgumentException("잘못된 정렬 조건입니다.");
+        };
+
+        Page<StudyPost> posts = homeRepository.findAll(pageable);
+        return posts.map(StudyPostResponse::fromEntity);
+    }
 
     /**
      * 스터디 리스트 조회 (전체 / 각 카테고리)

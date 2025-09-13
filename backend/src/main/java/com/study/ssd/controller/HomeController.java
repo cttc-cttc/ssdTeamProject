@@ -19,6 +19,27 @@ public class HomeController {
     private final HomeService homeService;
 
     /**
+     * [홈 - 메인]
+     * 스터디 섹션에 따른 스터디 리스트 조회
+     * deadline - 마감 임박 스터디
+     * popular - 인기 스터디
+     * recent - 최신 스터디
+     * @param studySections
+     * @param page
+     * @param size
+     * @return
+     */
+    @GetMapping("/studyList/studySections")
+    public ResponseEntity<Page<StudyPostResponse>> getStudyListStudySections(
+            @RequestParam String studySections,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "9") int size
+    ) {
+        return ResponseEntity.ok(homeService.getStudyListStudySections(studySections, page, size));
+    }
+
+    /**
+     * [홈 - 스터디]
      * 스터디 리스트 조회 (전체 / 각 카테고리) 또는
      * 검색 결과의 스터디 리스트 조회 (전체 / 각 카테고리)
      * @param category
@@ -37,7 +58,6 @@ public class HomeController {
         Pageable pageable = PageRequest.of(page, size, Sort.by("id").descending());
 
         // 검색 키워드가 없으면 스터디 리스트 조회 (전체 / 각 카테고리)
-        System.out.println("keyword: " + keyword);
         if (keyword.isBlank()) {
             return ResponseEntity.ok(homeService.getStudyList(category, pageable));
         }
@@ -47,6 +67,7 @@ public class HomeController {
     }
 
     /**
+     * [홈 - 메인 (태그 선택)]
      * 무한 스크롤 + 태그 필터링
      * @param tags
      * @param lastId
