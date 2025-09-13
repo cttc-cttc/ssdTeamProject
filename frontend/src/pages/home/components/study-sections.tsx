@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import ListThumbnailGrid from "./list-thumbnail-grid";
 import { Button } from "@/components/ui/button";
 import { BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import { SkeletonHomeMain } from "./skeleton/skeleton-home-main";
 
 interface StudySectionProps {
   type: "deadline" | "popular" | "recent"; // 어떤 섹션인지 구분
@@ -22,12 +23,14 @@ export default function StudySections({ type, title, studyCount }: StudySectionP
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     const query: Record<string, string | number> = {
       studySections: type,
-      category: "all",
       page: 0,
       size: studyCount,
     };
+
+    const startTime = Date.now();
 
     axios
       .get("/api/studyList/studySections", { params: query })
@@ -36,10 +39,17 @@ export default function StudySections({ type, title, studyCount }: StudySectionP
         setList(res.data.content);
       })
       .catch(err => console.error("리스트 조회 실패: ", err))
-      .finally(() => setLoading(false));
-  }, [type, studyCount]);
+      .finally(() => {
+        const elapsed = Date.now() - startTime;
+        const minLoadingTime = 500; // 최소 0.5초는 스켈레톤 보여주기
 
-  if (loading) return <div>로딩 중..</div>;
+        if (elapsed < minLoadingTime) {
+          setTimeout(() => setLoading(false), minLoadingTime - elapsed);
+        } else {
+          setLoading(false);
+        }
+      });
+  }, [type, studyCount]);
 
   return (
     <div className="flex flex-col items-center">
@@ -54,19 +64,23 @@ export default function StudySections({ type, title, studyCount }: StudySectionP
           </Button>
         </div>
       </div>
-      <div className="flex max-w-7xl flex-col w-full gap-4 mb-16">
-        <div className="grid grid-cols-3 gap-8">
-          {list.map(study => (
-            <Link
-              key={study.id}
-              to={`/posts/${study.id}`}
-              className="hover:ring-3 ring-ring/50 transition-all duration-200 ease-in-out"
-            >
-              <ListThumbnailGrid study={study} type={type} />
-            </Link>
-          ))}
+      {loading ? (
+        <SkeletonHomeMain />
+      ) : (
+        <div className="flex max-w-7xl flex-col w-full gap-4 mb-16">
+          <div className="grid grid-cols-3 gap-8">
+            {list.map(study => (
+              <Link
+                key={study.id}
+                to={`/posts/${study.id}`}
+                className="hover:ring-3 ring-ring/50 transition-all duration-200 ease-in-out"
+              >
+                <ListThumbnailGrid study={study} type={type} />
+              </Link>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

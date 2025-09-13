@@ -49,8 +49,12 @@ export default function ListThumbnailFlex({ posts }: { posts: studyProps }) {
         <div className="flex-1 flex flex-col items-end gap-2">
           <div>{categoryNameMap[posts.mainCategory]}</div>
           <div className="flex gap-2">
-            {posts.subCategories.map(tag => (
-              <Button variant="ssd_tag" className="border-1 border-foreground/30 text-sm">
+            {posts.subCategories.map((tag, index) => (
+              <Button
+                key={index}
+                variant="ssd_tag"
+                className="border-1 border-foreground/30 text-sm"
+              >
                 # {tag}
               </Button>
             ))}
