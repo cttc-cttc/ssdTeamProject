@@ -32,7 +32,7 @@ export default function StudySections({ type, title, studyCount }: StudySectionP
     axios
       .get("/api/studyList/studySections", { params: query })
       .then(res => {
-        console.log(res.data.content);
+        // console.log(res.data.content);
         setList(res.data.content);
       })
       .catch(err => console.error("리스트 조회 실패: ", err))
@@ -62,7 +62,7 @@ export default function StudySections({ type, title, studyCount }: StudySectionP
               to={`/posts/${study.id}`}
               className="hover:ring-3 ring-ring/50 transition-all duration-200 ease-in-out"
             >
-              <ListThumbnailGrid study={study} />
+              <ListThumbnailGrid study={study} type={type} />
             </Link>
           ))}
         </div>

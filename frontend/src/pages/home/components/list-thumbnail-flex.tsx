@@ -22,6 +22,7 @@ export default function ListThumbnailFlex({ posts }: { posts: studyProps }) {
   return (
     <div className="flex shadow-xl max-h-56">
       <div className="flex-5 flex border-1 border-accent bg-white dark:bg-muted/50 p-4">
+        {/* 왼쪽 : 정보 영역 */}
         <div className="flex-4 flex flex-col gap-2">
           <div className="text-[#2c3e50] dark:text-accent-foreground text-xl font-bold">
             {posts.title}
@@ -31,7 +32,7 @@ export default function ListThumbnailFlex({ posts }: { posts: studyProps }) {
             {dayjs(posts.deadline).format("YYYY-MM-DD")}
           </div>
           <div className="mb-10 text-muted-foreground">작성자: {posts.userNickname}</div>
-          {/* 왼쪽: 본문 미리보기 */}
+          {/* 본문 미리보기 */}
           <div className="flex-1 line-clamp-5 text-muted-foreground">
             <ReactMarkdown
               remarkPlugins={[remarkGfm]}

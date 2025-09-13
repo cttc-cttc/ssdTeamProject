@@ -3,8 +3,14 @@ import { categoryNameMap } from "@/components/common/mappings";
 import { ImageFrame } from "../study-list/image-frame";
 import type { studyProps } from "../main/home-study-list";
 import { Bookmark } from "lucide-react";
+import Countdown from "./countdown";
 
-export default function ListThumbnailGrid({ study }: { study: studyProps }) {
+interface ListThumbnailGridProps {
+  study: studyProps;
+  type: string; // "deadline" | "popular" | "recent"
+}
+
+export default function ListThumbnailGrid({ study, type }: ListThumbnailGridProps) {
   // 첫 번째 이미지 추출 (정규식)
   const imageRegex = /!\[.*?\]\((.*?)\)/;
   const match = study.content.match(imageRegex);
@@ -12,7 +18,7 @@ export default function ListThumbnailGrid({ study }: { study: studyProps }) {
 
   return (
     <div className="shadow-xl border border-accent max-h-80 rounded overflow-hidden flex flex-col">
-      {/* 이미지 영역 */}
+      {/* 첫 번째 이미지 썸네일 */}
       <div className="w-full h-60 overflow-hidden">
         {firstImage ? (
           <img src={firstImage} alt="thumbnail" className="w-full h-full object-cover" />
@@ -39,9 +45,18 @@ export default function ListThumbnailGrid({ study }: { study: studyProps }) {
           </div>
         </div>
 
-        <div className="text-sm text-muted-foreground">
-          모집 기간 {dayjs(study.created).format("YYYY-MM-DD")} ~{" "}
-          {dayjs(study.deadline).format("YYYY-MM-DD")}
+        <div className="flex justify-between text-sm text-muted-foreground">
+          <div>
+            모집 기간 {dayjs(study.created).format("YYYY-MM-DD")} ~{" "}
+            {dayjs(study.deadline).format("YYYY-MM-DD")}
+          </div>
+          {type === "deadline" ? (
+            <div>
+              <Countdown deadline={study.deadline} />
+            </div>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </div>
