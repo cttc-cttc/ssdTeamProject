@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -67,4 +68,22 @@ public class StudyPostController {
     public ResponseEntity<StudyPostResponse> getJoin ( @PathVariable Long id) {
         return ResponseEntity.ok(studyPostService.joinStudy(id));
     }
+
+     // 조인 스터디 조회
+     @GetMapping("/join-study")
+     public ResponseEntity<List<StudyPostResponse>> getJoinStudy(@RequestParam Long userId) {
+         return ResponseEntity.ok(studyPostService.getJoinStudy(userId));
+     }
+ 
+     // 오픈 스터디 조회
+     @GetMapping("/open-study")
+     public ResponseEntity<List<StudyPostResponse>> getOpenStudy(@RequestParam String userNickname) {
+         return ResponseEntity.ok(studyPostService.getOpenStudy(userNickname));
+     }
+ 
+     // 위시 스터디 조회
+     @GetMapping("/wish-study")
+     public ResponseEntity<List<StudyPostResponse>> getWishStudy(@RequestParam Long userId) {
+         return ResponseEntity.ok(studyPostService.getWishStudy(userId));
+     }
 }

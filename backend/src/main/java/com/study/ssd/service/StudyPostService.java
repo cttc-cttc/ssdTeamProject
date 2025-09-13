@@ -2,17 +2,21 @@ package com.study.ssd.service;
 
 import com.study.ssd.dto.StudyPostRequest;
 import com.study.ssd.dto.StudyPostResponse;
+import com.study.ssd.entity.JoinStudy;
 import com.study.ssd.entity.StudyPost;
 import com.study.ssd.entity.User;
+import com.study.ssd.entity.WishStudy;
+import com.study.ssd.repository.JoinStudyRepository;
 import com.study.ssd.repository.StudyPostRepository;
 import com.study.ssd.repository.UserRepository;
+import com.study.ssd.repository.WishStudyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +24,8 @@ public class StudyPostService {
 
     private final StudyPostRepository studyPostRepository;
     private final UserRepository userRepository;
+    private final WishStudyRepository wishStudyRepository;
+    private final JoinStudyRepository joinStudyRepository;
 
     @Transactional
     public StudyPostResponse createPost (StudyPostRequest studyPostRequest) {
@@ -69,6 +75,31 @@ public class StudyPostService {
         }
 
         post.setCurrentCount(post.getCurrentCount() + 1);
+
         return StudyPostResponse.fromEntity(post);
     }
+    // 조인 스터디 조회
+    public List<StudyPostResponse> getJoinStudy(Long userId) {
+        List<JoinStudy> joinStudy = joinStudyRepository.findByUserIdWithPost(userId);
+        return joinStudy.stream()
+                .map(joinStudies -> StudyPostResponse.fromEntity(joinStudies.getPost()))
+                .toList();
+    }
+
+    // 오픈 스터디 조회
+    public List<StudyPostResponse> getOpenStudy(String userNickname) {
+        List<StudyPost> studyPosts = studyPostRepository.findByUserNickname(userNickname);
+        return studyPosts.stream()
+                .map(StudyPostResponse::fromEntity)
+                .toList();
+    }
+
+    // 위시 스터디 조회
+    public List<StudyPostResponse> getWishStudy(Long userId) {
+        List<WishStudy> wishStudy = wishStudyRepository.findByUserIdWithPost(userId);
+        return wishStudy.stream()
+                .map(wishStudies -> StudyPostResponse.fromEntity(wishStudies.getPost()))
+                .toList();
+    }
+    
 }

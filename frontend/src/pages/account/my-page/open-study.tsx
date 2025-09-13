@@ -5,8 +5,12 @@ import { Link } from "react-router-dom";
 import ListThumbnailGrid from "../../home/components/list-thumbnail-grid";
 import type { studyProps } from "../../home/main/home-study-list";
 import axios from "axios";
+import { useInfoStore } from "../info-store";
 
 export default function OpenStudy() {
+  // 사용자 정보 가져오기
+  const { userNickname } = useInfoStore();
+
   // 페이지네이션 상태 추가
   const [currentPage, setCurrentPage] = useState(1);
   // 한 페이지에 보여줄 스터디 수
@@ -20,22 +24,22 @@ export default function OpenStudy() {
   // 개설한 스터디 데이터 가져오기
   useEffect(() => {
     const fetchMyStudies = async () => {
+      if (!userNickname) {
+        console.error("사용자 닉네임이 없습니다.");
+        setStudies([]);
+        setTotalPages(1);
+        return;
+      }
+
       setLoading(true);
       try {
-        // 현재는 일반 studyList API를 사용하되, 추후 개설한 스터디 전용 API로 변경 가능
-        const query: Record<string, string | number> = {
-          category: "all",
-          page: currentPage - 1,
-          size: studyPerPage,
-          keyword: "",
-          // TODO: 실제 API에서 개설한 스터디만 필터링하는 파라미터 추가 필요
-          // type: "created" 또는 userId: currentUserId
-        };
-
-        const response = await axios.get("/api/studyList", { params: query });
+        // 백엔드 API 호출
+        const response = await axios.get("/api/open-study", {
+          params: { userNickname },
+        });
 
         // 실제 API 데이터만 사용 (개설한 스터디가 없으면 빈 배열)
-        const apiData = response.data.content || [];
+        const apiData = response.data || [];
         setStudies(apiData);
         setTotalPages(Math.max(1, Math.ceil(apiData.length / studyPerPage)));
       } catch (error) {
@@ -49,7 +53,7 @@ export default function OpenStudy() {
     };
 
     fetchMyStudies();
-  }, [currentPage, studyPerPage]);
+  }, [userNickname, currentPage, studyPerPage]);
 
   // 페이지네이션 로직
   const indexOfLastStudy = currentPage * studyPerPage;

@@ -10,7 +10,7 @@ export const mypageSidebar = [
   },
   {
     title: "참여 스터디",
-    url: "party-study",
+    url: "join-study",
     icon: Book,
   },
   {

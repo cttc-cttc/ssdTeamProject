@@ -8,7 +8,7 @@ import ProfileSection from "./components/profile-section";
 import AccountSection from "./components/account-section";
 import WithdrawProcess from "./components/withdraw-process";
 import ActivitySection from "./components/activity-section";
-import PartyStudy from "./party-study";
+import JoinStudy from "./join-study";
 import OpenStudy from "./open-study";
 import WishStudy from "./wish-study";
 
@@ -45,8 +45,8 @@ export default function MyPage() {
 
   // 사이드바 경로에 따라 다른 컴포넌트 렌더링
   const renderContent = () => {
-    if (sidebar === "party-study") {
-      return <PartyStudy />;
+    if (sidebar === "join-study") {
+      return <JoinStudy />;
     } else if (sidebar === "open-study") {
       return <OpenStudy />;
     } else if (sidebar === "wish-study") {
@@ -80,7 +80,7 @@ export default function MyPage() {
           <CategoryBreadcrumb catTitle={sidebarTitle} pageTitle={mypagePageName} />
         </div>
         <div
-          className={`${sidebar === "party-study" || sidebar === "open-study" || sidebar === "wish-study" ? "max-w-full" : "max-w-4xl"} mx-auto px-4 sm:px-6 lg:px-8`}
+          className={`${sidebar === "join-study" || sidebar === "open-study" || sidebar === "wish-study" ? "max-w-full" : "max-w-4xl"} mx-auto px-4 sm:px-6 lg:px-8`}
         >
           <div className=" shadow rounded-lg border-2 border-[#3d6647]">
             {/* 사이드바 클릭에 따라서 변화*/}
