@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 // import ReactMarkdown from "react-markdown";
 import CustomViewer from "./custom-viewer";
 import "./post-detail.css";
@@ -21,6 +21,7 @@ interface Post {
 export default function PostDetail() {
   const { id } = useParams();
   const [post, setPost] = useState<Post | null>(null);
+  const navigate = useNavigate(); // 삭제 후 메인 화면으로 이동
 
   useEffect(() => {
     axios.get(`/api/create-post/${id}`).then(res => setPost(res.data));
@@ -33,7 +34,21 @@ export default function PostDetail() {
     return diff > 0 ? `D-${diff}` : "마감";
   };
 
-  if (!post) return <div>로딩 중...</div>;
+  if (!post) return <div>게시글을 불러오고 있습니다.</div>; // 필요할까요??
+
+  const handleDelete = async (postId: number) => {
+    try {
+      const ok = window.confirm("정말 삭제하시겠습니까?");
+      if (!ok) return;
+
+      await axios.delete(`/api/delete-post/${postId}`);
+      alert("게시글이 삭제되었습니다.");
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+      alert("게시글 삭제 실패");
+    }
+  };
 
   return (
     <div>
@@ -42,7 +57,22 @@ export default function PostDetail() {
 
         <div className="flex justify-between items-center border-b border-gray-300 pb-2 mb-4">
           <span className="text-gray-600">작성자: {post.userNickname}</span>
-          {/* 수정 / 삭제 버튼 */}
+          <div className="flex flex-wrap gap-2 items-center">
+            <span>
+              {/*<button
+                onClick={() => handleEdit(post.id)}
+                className="px-3 py-1 text-sm text-white bg-blue-500 rounded hover:bg-blue-600"
+              >
+                수정
+              </button>*/}
+              <button
+                onClick={() => handleDelete(post.id)}
+                className="px-3 py-1 text-sm text-white bg-blue-500 rounded hover:bg-blue-600"
+              >
+                삭제
+              </button>
+            </span>
+          </div>
         </div>
 
         <div className="flex justify-between items-center border-b border-gray-300 pb-2 mb-4">

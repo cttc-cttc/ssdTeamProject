@@ -2,6 +2,8 @@ package com.study.ssd.service;
 
 import com.study.ssd.dto.StudyPostRequest;
 import com.study.ssd.dto.StudyPostResponse;
+import com.study.ssd.dto.UpdateStudyPostRequest;
+import com.study.ssd.dto.UpdateStudyPostResponse;
 import com.study.ssd.entity.JoinStudy;
 import com.study.ssd.entity.StudyPost;
 import com.study.ssd.entity.User;
@@ -34,7 +36,7 @@ public class StudyPostService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "최대 3개까지 가능합니다.");
         }
 
-        StudyPost studyPost = StudyPost.builder()
+        StudyPost post = StudyPost.builder()
                 .userNickname(studyPostRequest.getUserNickname())
                 .title(studyPostRequest.getTitle())
                 .content(studyPostRequest.getContent())
@@ -44,16 +46,50 @@ public class StudyPostService {
                 .currentCount(0)
                 .build();
 
-        StudyPost saved = studyPostRepository.save(studyPost);
+        StudyPost saved = studyPostRepository.save(post);
 
         return StudyPostResponse.fromEntity(saved);
     }
 
+    // 상세 페이지 조회
     public StudyPostResponse getPost(Long id) {
         StudyPost post = studyPostRepository.findById(id)
                 .orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "게시글을 찾을 수 없습니다."));
 
         return StudyPostResponse.fromEntity(post);
+    }
+
+    // 게시글 수정
+    public UpdateStudyPostResponse updatePost (Long id, UpdateStudyPostRequest updateStudyPostRequest) {
+        StudyPost post = studyPostRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
+
+        post.setTitle(updateStudyPostRequest.getTitle());
+        post.setContent(updateStudyPostRequest.getContent());
+        post.setMainCategory(updateStudyPostRequest.getMainCategory());
+        post.setSubCategories(updateStudyPostRequest.getSubCategories());
+        post.setMaxCount(updateStudyPostRequest.getMaxCount());
+
+        StudyPost saved = studyPostRepository.save(post); // 수정 게시글 저장
+
+        UpdateStudyPostResponse response = new UpdateStudyPostResponse();
+        response.setId(saved.getId());
+        response.setTitle(saved.getTitle());
+        response.setContent(saved.getContent());
+        response.setMainCategory(saved.getMainCategory());
+        response.setSubCategories(saved.getSubCategories());
+        response.setMaxCount(saved.getMaxCount());
+        response.setCreatedAt(saved.getCreatedAt());
+        response.setUpdateAt(saved.getUpdatedAt());
+
+        return response;
+    }
+
+    // 게시글 삭제
+    public void deletePost(Long id) {
+        StudyPost post = studyPostRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
+        studyPostRepository.delete(post);
     }
 
     @Transactional

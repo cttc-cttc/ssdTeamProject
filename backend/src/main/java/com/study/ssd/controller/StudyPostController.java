@@ -1,7 +1,6 @@
 package com.study.ssd.controller;
 
-import com.study.ssd.dto.StudyPostRequest;
-import com.study.ssd.dto.StudyPostResponse;
+import com.study.ssd.dto.*;
 import com.study.ssd.service.StudyPostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -57,6 +56,21 @@ public class StudyPostController {
     public ResponseEntity<StudyPostResponse> getPost ( @PathVariable Long id) {
         StudyPostResponse studyPostResponse = studyPostService.getPost(id);
         return ResponseEntity.ok(studyPostResponse);
+    }
+
+    @PutMapping("/update-post/{id}")
+    public ResponseEntity<UpdateStudyPostResponse> updatePost (
+            @PathVariable Long id,
+            @RequestBody UpdateStudyPostRequest updateStudyPostRequest) {
+
+        UpdateStudyPostResponse response = studyPostService.updatePost(id, updateStudyPostRequest);
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/delete-post/{id}")
+    public ResponseEntity<DeleteStudyPostResponse> deletePost ( @PathVariable Long id) {
+        studyPostService.deletePost(id);
+        return ResponseEntity.ok(new DeleteStudyPostResponse(true, "게시글이 삭제되었습니다."));
     }
 
     @PostMapping("/create-post/{id}/wish")
