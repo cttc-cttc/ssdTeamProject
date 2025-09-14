@@ -33,7 +33,7 @@ export function SkeletonHomeMain() {
       </div>
     );
   };
-
+  //
   return (
     <div className="flex max-w-7xl flex-col w-full gap-4 mb-16">
       <div className="grid grid-cols-3 gap-8">
