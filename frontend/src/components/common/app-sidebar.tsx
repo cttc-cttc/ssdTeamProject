@@ -14,9 +14,10 @@ interface AppSidebarProps {
   catParam: string;
   categoryName: string;
   categories: SidebarItem[];
+  onTabChange?: (tab: string) => void; // 탭 변경 콜백 함수
 }
 
-export function AppSidebar({ catParam, categoryName, categories }: AppSidebarProps) {
+export function AppSidebar({ catParam, categoryName, categories, onTabChange }: AppSidebarProps) {
   return (
     <Sidebar className="sticky top-40 h-fit">
       <SidebarContent>
@@ -26,13 +27,26 @@ export function AppSidebar({ catParam, categoryName, categories }: AppSidebarPro
             <SidebarMenu>
               {categories.map(item => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild isActive={catParam === item.url}>
-                    <a
-                      href={categoryName === "스터디 카테고리" ? `/study/${item.url}/1` : item.url}
-                    >
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </a>
+                  <SidebarMenuButton
+                    asChild
+                    isActive={catParam === item.url}
+                    onClick={() => onTabChange?.(item.url)}
+                  >
+                    {categoryName === "스터디 상세 페이지 사이드바" ? (
+                      <button className="w-full text-left">
+                        <item.icon />
+                        <span>{item.title}</span>
+                      </button>
+                    ) : (
+                      <a
+                        href={
+                          categoryName === "스터디 카테고리" ? `/study/${item.url}/1` : item.url
+                        }
+                      >
+                        <item.icon />
+                        <span>{item.title}</span>
+                      </a>
+                    )}
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}

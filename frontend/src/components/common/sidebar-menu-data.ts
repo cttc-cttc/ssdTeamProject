@@ -1,4 +1,5 @@
 import { Monitor, ScrollText, Languages, BriefcaseBusiness, CircleEllipsis } from "lucide-react";
+import { UserRoundPen, Book, BookPlus, BookMarked } from "lucide-react";
 
 /**
  * 홈의 스터디 리스트, 마이 페이지, 관리자 페이지에서 사용할 사이드 바의 메뉴를 커스텀하는 파일입니다
@@ -46,5 +47,47 @@ export const studyCategory = [
     title: "기타",
     url: "etc",
     icon: CircleEllipsis,
+  },
+];
+
+// 마이 페이지 사이드 바
+export const mypageSidebarName = "마이 페이지 사이드바";
+export const mypagePageName = "마이 페이지";
+export const mypageSidebar = [
+  {
+    title: "프로필 관리",
+    url: "manage-profile",
+    icon: UserRoundPen,
+  },
+  {
+    title: "참여 스터디",
+    url: "join-study",
+    icon: Book,
+  },
+  {
+    title: "개설 스터디",
+    url: "open-study",
+    icon: BookPlus,
+  },
+  {
+    title: "위시 스터디",
+    url: "wish-study",
+    icon: BookMarked,
+  },
+];
+
+// 마이 페이지 내부 - 스터디 상세 페이지
+export const mypageInnerSidebarName = "스터디 상세 페이지 사이드바";
+export const mypagePageInnerName = "스터디 상세 페이지";
+export const mypageInnerSidebar = [
+  {
+    title: "스터디 상세",
+    url: "study-detail",
+    icon: Book,
+  },
+  {
+    title: "스터디 종료",
+    url: "end-study",
+    icon: BookPlus,
   },
 ];
