@@ -20,4 +20,7 @@ export default defineConfig({
       "/uploads": "http://localhost:8080",
     },
   },
+  define: {
+    global: "window", // Node.js global 대신 window 사용
+  },
 });

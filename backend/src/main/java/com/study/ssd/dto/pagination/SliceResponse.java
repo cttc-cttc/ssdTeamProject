@@ -1,4 +1,4 @@
-package com.study.ssd.dto;
+package com.study.ssd.dto.pagination;
 
 import org.springframework.data.domain.Slice;
 

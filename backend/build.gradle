@@ -39,6 +39,9 @@ dependencies {
 
 	implementation 'com.mysql:mysql-connector-j'
 	implementation 'io.github.cdimascio:java-dotenv:5.2.2'
+
+	// WebSocket (실시간 채팅에 필요)
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 }
 
 tasks.named('test') {

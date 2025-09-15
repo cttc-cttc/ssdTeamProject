@@ -1,8 +1,7 @@
 package com.study.ssd.controller;
 
-import com.study.ssd.dto.SliceResponse;
+import com.study.ssd.dto.pagination.SliceResponse;
 import com.study.ssd.dto.StudyPostResponse;
-import com.study.ssd.entity.StudyPost;
 import com.study.ssd.service.HomeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
