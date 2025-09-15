@@ -1,15 +1,13 @@
 package com.study.ssd.service;
 
-import com.study.ssd.dto.StudyPostResponse;
+import com.study.ssd.dto.studyPost.StudyPostResponse;
 import com.study.ssd.entity.StudyPost;
 import com.study.ssd.repository.HomeRepository;
-import com.study.ssd.repository.StudyPostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

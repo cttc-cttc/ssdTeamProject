@@ -1,4 +1,4 @@
-package com.study.ssd.dto;
+package com.study.ssd.dto.studyPost;
 
 import com.study.ssd.entity.StudyPost;
 import lombok.*;

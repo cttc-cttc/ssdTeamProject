@@ -1,4 +1,4 @@
-package com.study.ssd.dto;
+package com.study.ssd.dto.studyPost;
 
 import java.time.LocalDateTime;
 import java.util.List;

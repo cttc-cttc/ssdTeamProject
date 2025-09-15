@@ -1,12 +1,11 @@
 package com.study.ssd.service;
 
-import com.study.ssd.dto.StudyPostRequest;
-import com.study.ssd.dto.StudyPostResponse;
-import com.study.ssd.dto.UpdateStudyPostRequest;
-import com.study.ssd.dto.UpdateStudyPostResponse;
+import com.study.ssd.dto.studyPost.StudyPostRequest;
+import com.study.ssd.dto.studyPost.StudyPostResponse;
+import com.study.ssd.dto.studyPost.UpdateStudyPostRequest;
+import com.study.ssd.dto.studyPost.UpdateStudyPostResponse;
 import com.study.ssd.entity.JoinStudy;
 import com.study.ssd.entity.StudyPost;
-import com.study.ssd.entity.User;
 import com.study.ssd.entity.WishStudy;
 import com.study.ssd.repository.JoinStudyRepository;
 import com.study.ssd.repository.StudyPostRepository;

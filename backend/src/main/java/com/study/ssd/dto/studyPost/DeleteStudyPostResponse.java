@@ -1,4 +1,4 @@
-package com.study.ssd.dto;
+package com.study.ssd.dto.studyPost;
 
 public class DeleteStudyPostResponse {
     private boolean success;

@@ -1,4 +1,4 @@
-package com.study.ssd.dto;
+package com.study.ssd.dto.studyPost;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
