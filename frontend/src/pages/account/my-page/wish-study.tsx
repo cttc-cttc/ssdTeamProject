@@ -21,6 +21,7 @@ export default function WishStudy() {
   const [loading, setLoading] = useState(false);
   const [totalPages, setTotalPages] = useState(1);
 
+  
   // 위시 스터디 데이터 가져오기
   useEffect(() => {
     const fetchWishStudies = async () => {

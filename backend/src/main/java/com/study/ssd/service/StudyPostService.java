@@ -114,6 +114,7 @@ public class StudyPostService {
 
         return StudyPostResponse.fromEntity(post);
     }
+    
     // 조인 스터디 조회
     public List<StudyPostResponse> getJoinStudy(Long userId) {
         List<JoinStudy> joinStudy = joinStudyRepository.findByUserIdWithPost(userId);
