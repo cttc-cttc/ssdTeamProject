@@ -6,6 +6,7 @@ import CustomViewer from "./custom-viewer";
 import "./post-detail.css";
 import { categoryNameMap } from "@/components/common/mappings";
 import { Button } from "@/components/ui/button";
+import { useInfoStore } from "../account/info-store";
 
 interface Post {
   id: number;
@@ -22,6 +23,7 @@ interface Post {
 
 export default function PostDetail() {
   const { id } = useParams();
+  const { userNickname } = useInfoStore();
   const [post, setPost] = useState<Post | null>(null);
   const navigate = useNavigate(); // 삭제 후 메인 화면으로 이동
 
@@ -64,20 +66,22 @@ export default function PostDetail() {
         <div className="flex justify-between items-center border-b border-gray-300 pb-2 mb-4">
           <span className="text-gray-600">작성자: {post.userNickname}</span>
           <div className="flex flex-wrap gap-2 items-center">
-            <span>
-              <Button
-                onClick={handleEdit}
-                className="px-3 py-1 text-sm text-white bg-blue-500 rounded hover:bg-blue-600"
-              >
-                수정
-              </Button>
-              <Button
-                onClick={() => handleDelete(post.id)}
-                className="px-3 py-1 text-sm text-white bg-blue-500 rounded hover:bg-blue-600"
-              >
-                삭제
-              </Button>
-            </span>
+            {userNickname === post.userNickname && (
+              <span>
+                <Button
+                  onClick={handleEdit}
+                  className="px-3 py-1 text-sm text-white bg-blue-500 rounded hover:bg-blue-600"
+                >
+                  수정
+                </Button>
+                <Button
+                  onClick={() => handleDelete(post.id)}
+                  className="px-3 py-1 text-sm text-white bg-blue-500 rounded hover:bg-blue-600"
+                >
+                  삭제
+                </Button>
+              </span>
+            )}
           </div>
         </div>
 
