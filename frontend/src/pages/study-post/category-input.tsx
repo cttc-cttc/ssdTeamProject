@@ -1,10 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-function CategoryInput({ onChange }: { onChange: (main: string, subs: string[]) => void }) {
-  const [mainCategory, setMainCategory] = useState("");
-  const [subCategories, setSubCategories] = useState<string[]>([]);
+interface CategoryInputProps {
+  onChange: (main: string, subs: string[]) => void;
+  initialMain?: string;
+  initialSubs?: string[];
+}
+
+function CategoryInput({ onChange, initialMain = "", initialSubs = [] }: CategoryInputProps) {
+  const [mainCategory, setMainCategory] = useState(initialMain);
+  const [subCategories, setSubCategories] = useState(initialSubs);
   const [inputValue, setInputValue] = useState("");
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    setMainCategory(initialMain);
+    setSubCategories(initialSubs);
+  }, [initialMain, initialSubs]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && inputValue.trim()) {

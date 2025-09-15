@@ -17,6 +17,7 @@ import PostDetail from "./pages/study-post/post-detail";
 
 import "@toast-ui/editor/dist/toastui-editor.css";
 import "@toast-ui/editor/dist/theme/toastui-editor-dark.css";
+import PostingForm from "./pages/study-post/posting-form";
 
 function App() {
   return (
@@ -46,8 +47,9 @@ function App() {
             <Route path="/notices/create" element={<NoticeCreate />} />
           </Route>
 
-          <Route path="/posting-page" element={<PostingPage />} />
+          <Route path="/create" element={<PostingPage />} />
           <Route path="/posts/:id" element={<PostDetail />} />
+          <Route path="/edit/:id" element={<PostingForm />} />
 
           <Route path="/*" element={<Page404 />} />
         </Route>

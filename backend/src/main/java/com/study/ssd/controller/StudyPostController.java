@@ -1,6 +1,6 @@
 package com.study.ssd.controller;
 
-import com.study.ssd.dto.*;
+import com.study.ssd.dto.studyPost.*;
 import com.study.ssd.service.StudyPostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -68,7 +68,7 @@ public class StudyPostController {
     }
 
     @DeleteMapping("/delete-post/{id}")
-    public ResponseEntity<DeleteStudyPostResponse> deletePost ( @PathVariable Long id) {
+    public ResponseEntity<DeleteStudyPostResponse> deletePost (@PathVariable Long id) {
         studyPostService.deletePost(id);
         return ResponseEntity.ok(new DeleteStudyPostResponse(true, "게시글이 삭제되었습니다."));
     }

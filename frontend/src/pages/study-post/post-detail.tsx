@@ -4,6 +4,8 @@ import { useNavigate, useParams } from "react-router-dom";
 // import ReactMarkdown from "react-markdown";
 import CustomViewer from "./custom-viewer";
 import "./post-detail.css";
+import { categoryNameMap } from "@/components/common/mappings";
+import { Button } from "@/components/ui/button";
 
 interface Post {
   id: number;
@@ -34,7 +36,11 @@ export default function PostDetail() {
     return diff > 0 ? `D-${diff}` : "마감";
   };
 
-  if (!post) return <div>게시글을 불러오고 있습니다.</div>; // 필요할까요??
+  if (!post) return <div>게시글을 불러오고 있습니다.</div>; // 필요한가??
+
+  const handleEdit = () => {
+    navigate(`/edit/${post.id}`, { state: post });
+  };
 
   const handleDelete = async (postId: number) => {
     try {
@@ -59,25 +65,25 @@ export default function PostDetail() {
           <span className="text-gray-600">작성자: {post.userNickname}</span>
           <div className="flex flex-wrap gap-2 items-center">
             <span>
-              {/*<button
-                onClick={() => handleEdit(post.id)}
+              <Button
+                onClick={handleEdit}
                 className="px-3 py-1 text-sm text-white bg-blue-500 rounded hover:bg-blue-600"
               >
                 수정
-              </button>*/}
-              <button
+              </Button>
+              <Button
                 onClick={() => handleDelete(post.id)}
                 className="px-3 py-1 text-sm text-white bg-blue-500 rounded hover:bg-blue-600"
               >
                 삭제
-              </button>
+              </Button>
             </span>
           </div>
         </div>
 
         <div className="flex justify-between items-center border-b border-gray-300 pb-2 mb-4">
           <div className="flex flex-wrap gap-2 items-center">
-            <span className="text-gray-600 font-medium">{post.mainCategory}</span>
+            <span className="text-gray-600 font-medium">{categoryNameMap[post.mainCategory]}</span>
             {post.subCategories?.map((sub, idx) => (
               <span key={idx} className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">
                 {sub}
