@@ -1,5 +1,6 @@
 package com.study.ssd.controller;
 
+import com.study.ssd.dto.home.TagDto;
 import com.study.ssd.dto.studyPost.StudyPostResponse;
 import com.study.ssd.dto.pagination.SliceResponse;
 import com.study.ssd.service.HomeService;
@@ -16,6 +17,18 @@ import java.util.List;
 public class HomeController {
 
     private final HomeService homeService;
+
+    /**
+     * [홈 - 메인] 사용자 태그 영역
+     * 인기 태그 Top 30 처럼 표시
+     * 방식 : 사용자가 입력한 태그들 중 일치하는 태그 수를 합산 -> 합산 수치가 높은 태그 순으로 표시
+     * @param limit
+     * @return
+     */
+    @GetMapping("/tags/popular")
+    public List<TagDto> getPopularTags(@RequestParam(defaultValue = "30") int limit) {
+        return homeService.getPopularTags(limit);
+    }
 
     /**
      * [홈 - 메인]

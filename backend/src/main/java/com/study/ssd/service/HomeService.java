@@ -1,11 +1,13 @@
 package com.study.ssd.service;
 
+import com.study.ssd.dto.home.TagDto;
 import com.study.ssd.dto.studyPost.StudyPostResponse;
 import com.study.ssd.entity.StudyPost;
 import com.study.ssd.repository.HomeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -14,6 +16,17 @@ import java.util.List;
 public class HomeService {
 
     private final HomeRepository homeRepository;
+
+    /**
+     * 사용자 태그 영역
+     * 인기 태그 Top 30 처럼 표시
+     * 조회 결과의 수를 제한하기 위해 PageRequest로 limit 적용
+     * @param limit
+     * @return
+     */
+    public List<TagDto> getPopularTags(int limit) {
+        return homeRepository.findPopularTags(PageRequest.of(0, limit));
+    }
 
     /**
      * 스터디 섹션에 따른 스터디 리스트 조회

@@ -1,5 +1,6 @@
 package com.study.ssd.repository;
 
+import com.study.ssd.dto.home.TagDto;
 import com.study.ssd.entity.StudyPost;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,6 +12,15 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface HomeRepository extends JpaRepository<StudyPost, Long> {
+
+    // 인기 태그 Top 30
+    @Query("""
+            SELECT new com.study.ssd.dto.home.TagDto(s, COUNT(s))
+            FROM StudyPost p JOIN p.subCategories s
+            GROUP BY s
+            ORDER BY COUNT(s) DESC
+            """)
+    List<TagDto> findPopularTags(Pageable pageable);
 
     // 모든 리스트 조회 (id값 내림차순 페이징)
     Page<StudyPost> findAllByOrderByIdDesc(Pageable pageable);
