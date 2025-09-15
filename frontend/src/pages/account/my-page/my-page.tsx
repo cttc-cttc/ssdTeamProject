@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { useInfoStore } from "../info-store";
-import { mypagePageName, mypageSidebar, mypageSidebarName } from "../sidebar-menu-data";
+import { mypagePageName, mypageSidebar, mypageSidebarName } from "../../../components/common/sidebar-menu-data";
 import CategoryBreadcrumb from "@/components/common/category-breadcrumb";
 import SidebarLayout from "@/components/common/sidebar-layout";
 import ProfileSection from "./components/profile-section";

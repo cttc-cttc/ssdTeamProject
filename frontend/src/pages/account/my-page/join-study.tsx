@@ -105,7 +105,7 @@ export default function JoinStudy() {
                 to={`/posts/${study.id}`}
                 className="transition-all duration-200 ease-in-out hover:ring-3 ring-ring/50"
               >
-                <ListThumbnailGrid study={study} />
+                <ListThumbnailGrid study={study} type="string" />
               </Link>
             ))}
           </div>
