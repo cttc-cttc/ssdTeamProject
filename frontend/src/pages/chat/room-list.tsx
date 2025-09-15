@@ -8,7 +8,11 @@ interface ChatRoomType {
   name: string;
 }
 
-export default function RoomList({ onSelectRoom }: { onSelectRoom: (roomId: string) => void }) {
+interface RoomListProps {
+  onSelectRoom: (roomId: string, roomName: string) => void;
+}
+
+export default function RoomList({ onSelectRoom }: RoomListProps) {
   const [rooms, setRooms] = useState<ChatRoomType[]>([]);
   const [newRoomName, setNewRoomName] = useState("");
 
@@ -34,21 +38,24 @@ export default function RoomList({ onSelectRoom }: { onSelectRoom: (roomId: stri
   };
 
   return (
-    <div>
+    <div className="flex flex-col gap-2">
       <h3>채팅방 목록</h3>
-      <ul>
+      <ul className="flex flex-col gap-2 bg-accent py-2 px-2">
         {rooms.map(room => (
-          <li key={room.id}>
-            {room.name} <Button onClick={() => onSelectRoom(room.id)}>접속</Button>
+          <li key={room.id} className="flex justify-between items-center">
+            <span>{room.name}</span>{" "}
+            <Button onClick={() => onSelectRoom(room.id, room.name)}>접속</Button>
           </li>
         ))}
       </ul>
-      <Input
-        value={newRoomName}
-        onChange={e => setNewRoomName(e.target.value)}
-        placeholder="새 방 이름"
-      />
-      <Button onClick={createRoom}>방 생성</Button>
+      <div className="flex gap-1">
+        <Input
+          value={newRoomName}
+          onChange={e => setNewRoomName(e.target.value)}
+          placeholder="새 방 이름"
+        />
+        <Button onClick={createRoom}>방 생성</Button>
+      </div>
     </div>
   );
 }

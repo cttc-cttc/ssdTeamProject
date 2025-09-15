@@ -15,7 +15,7 @@ public class ChatMessageResponseDto {
     private String roomId; // 채팅방 id
     private String sender; // 메시지 작성자
     private String content; // 메시지 내용
-    private LocalDateTime createdAt; // 작서 시간
+    private LocalDateTime createdAt; // 작성 시간
 
     public static ChatMessageResponseDto fromEntity(ChatMessage entity) {
         return ChatMessageResponseDto.builder()

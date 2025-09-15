@@ -11,7 +11,13 @@ interface ChatMessage {
   content: string;
 }
 
-export default function ChatRoom({ roomId, username }: { roomId: string; username: string }) {
+interface ChatRoomProps {
+  roomId: string;
+  roomName: string;
+  username: string;
+}
+
+export default function ChatRoom({ roomId, roomName, username }: ChatRoomProps) {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [client, setClient] = useState<Client | null>(null);
@@ -52,21 +58,23 @@ export default function ChatRoom({ roomId, username }: { roomId: string; usernam
   };
 
   return (
-    <div>
-      <h3>Room: {roomId}</h3>
-      <div style={{ height: 200, overflowY: "auto" }}>
+    <div className="flex flex-col gap-2">
+      <h3>{roomName}</h3>
+      <div className="bg-accent flex flex-col gap-1 p-2" style={{ height: 200, overflowY: "auto" }}>
         {messages.map((msg, i) => (
           <div key={i}>
             <b>{msg.sender}:</b> {msg.content}
           </div>
         ))}
       </div>
-      <Input
-        value={input}
-        onChange={e => setInput(e.target.value)}
-        onKeyDown={e => e.key === "Enter" && sendMessage()}
-      />
-      <Button onClick={sendMessage}>Send</Button>
+      <div className="flex gap-1">
+        <Input
+          value={input}
+          onChange={e => setInput(e.target.value)}
+          onKeyDown={e => e.key === "Enter" && sendMessage()}
+        />
+        <Button onClick={sendMessage}>Send</Button>
+      </div>
     </div>
   );
 }
