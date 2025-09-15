@@ -14,6 +14,7 @@ import java.util.UUID;
 @Builder
 public class ChatRoom {
     @Id
+    @Builder.Default
     private String id = UUID.randomUUID().toString(); // String PK
 
     @Column(length = 50, nullable = false)
