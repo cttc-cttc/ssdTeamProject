@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Client, type IMessage } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useInfoStore } from "../account/info-store";
+import { Textarea } from "@/components/ui/textarea";
 
 interface ChatMessage {
   roomId: string;
@@ -24,6 +24,7 @@ export default function ChatRoom({ roomId, roomName, username }: ChatRoomProps) 
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [client, setClient] = useState<Client | null>(null);
+  const bottomRef = useRef<HTMLDivElement>(null);
 
   // 1️⃣ 기존 메시지 로드
   useEffect(() => {
@@ -60,6 +61,11 @@ export default function ChatRoom({ roomId, roomName, username }: ChatRoomProps) 
     setInput("");
   };
 
+  // 메시지가 바뀔 때마다 스크롤 이동
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
   return (
     <div className="flex flex-col gap-2">
       <h3>{roomName}</h3>
@@ -73,7 +79,7 @@ export default function ChatRoom({ roomId, roomName, username }: ChatRoomProps) 
               // 내 매시지
               <div
                 key={i}
-                className="self-end max-w-10/12 bg-primary text-white px-3 py-2 rounded-2xl shadow-sm"
+                className="self-end max-w-10/12 bg-primary text-white px-3 py-2 rounded-2xl shadow-sm whitespace-pre-wrap"
               >
                 {msg.content}
               </div>
@@ -81,18 +87,26 @@ export default function ChatRoom({ roomId, roomName, username }: ChatRoomProps) 
               // 상대방 메시지
               <div key={i} className="flex flex-col self-start max-w-10/12 gap-2">
                 <span className="font-medium text-muted-foreground">{msg.sender}</span>
-                <div className="bg-muted px-3 py-2 rounded-2xl shadow-sm">{msg.content}</div>
+                <div className="bg-muted px-3 py-2 rounded-2xl shadow-sm whitespace-pre-wrap">
+                  {msg.content}
+                </div>
               </div>
             )
           )}
+          <div ref={bottomRef} />
         </div>
       </ScrollArea>
-      <div className="flex gap-1">
-        <Input
+      <div className="flex flex-col gap-1">
+        <Textarea
           value={input}
           placeholder="메시지를 입력하세요..."
           onChange={e => setInput(e.target.value)}
-          onKeyDown={e => e.key === "Enter" && sendMessage()}
+          onKeyDown={e => {
+            if (e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault(); // 줄바꿈 막기
+              sendMessage();
+            }
+          }}
         />
         <Button onClick={sendMessage}>전송</Button>
       </div>
