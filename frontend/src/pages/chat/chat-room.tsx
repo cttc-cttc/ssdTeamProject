@@ -69,9 +69,6 @@ export default function ChatRoom({ roomId, roomName, username }: ChatRoomProps) 
   return (
     <div className="flex flex-col gap-2">
       <h3>{roomName}</h3>
-      {/* <div className="bg-accent flex flex-col gap-1 p-2" style={{ height: 200, overflowY: "auto" }}>
-        
-      </div> */}
       <ScrollArea className="w-xl rounded-md h-96 border p-4">
         <div className="flex flex-col gap-4">
           {messages.map((msg, i) =>
@@ -98,6 +95,7 @@ export default function ChatRoom({ roomId, roomName, username }: ChatRoomProps) 
       </ScrollArea>
       <div className="flex flex-col gap-1">
         <Textarea
+          className="max-h-48"
           value={input}
           placeholder="메시지를 입력하세요..."
           onChange={e => setInput(e.target.value)}
