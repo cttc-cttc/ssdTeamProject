@@ -20,7 +20,12 @@ export default function NoticeCreate() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto mt-10 p-6 bg-white rounded shadow">
+    <div
+      className="max-w-2xl mx-auto mt-10 p-6 
+                    bg-white dark:bg-gray-800 
+                    text-gray-900 dark:text-gray-100 
+                    rounded shadow"
+    >
       <h1 className="text-xl font-bold mb-4">공지사항 등록</h1>
       <form onSubmit={handleSubmit} className="space-y-3">
         <div>
@@ -29,7 +34,9 @@ export default function NoticeCreate() {
             type="text"
             value={title}
             onChange={e => setTitle(e.target.value)}
-            className="w-full border rounded px-3 py-2"
+            className="w-full border rounded px-3 py-2 
+                       bg-white dark:bg-gray-700 
+                       text-gray-900 dark:text-gray-100"
             required
           />
         </div>
@@ -38,14 +45,17 @@ export default function NoticeCreate() {
           <textarea
             value={content}
             onChange={e => setContent(e.target.value)}
-            className="w-full border rounded px-3 py-2"
+            className="w-full border rounded px-3 py-2 
+                       bg-white dark:bg-gray-700 
+                       text-gray-900 dark:text-gray-100"
             rows={6}
             required
           />
         </div>
         <button
           type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+          className="bg-blue-500 hover:bg-blue-600 
+                     text-white px-4 py-2 rounded"
         >
           등록하기
         </button>

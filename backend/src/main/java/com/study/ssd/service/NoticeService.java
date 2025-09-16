@@ -35,4 +35,12 @@ public class NoticeService {
         return new NoticeResponse(notice);
     }
 
+    public List<NoticeResponse> searchNotices(String keyword) {
+        return noticeRepository.findByTitleContaining(keyword)
+                .stream()
+                .map(NoticeResponse::new)
+                .toList();
+    }
+
+
 }
