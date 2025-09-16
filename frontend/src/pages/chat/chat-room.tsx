@@ -4,6 +4,8 @@ import SockJS from "sockjs-client";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { useInfoStore } from "../account/info-store";
 
 interface ChatMessage {
   roomId: string;
@@ -18,6 +20,7 @@ interface ChatRoomProps {
 }
 
 export default function ChatRoom({ roomId, roomName, username }: ChatRoomProps) {
+  const { userNickname } = useInfoStore();
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [client, setClient] = useState<Client | null>(null);
@@ -30,7 +33,7 @@ export default function ChatRoom({ roomId, roomName, username }: ChatRoomProps) 
   // 2️⃣ WebSocket 연결
   useEffect(() => {
     const stompClient = new Client({
-      webSocketFactory: () => new SockJS("http://localhost:8080/ws-chat"),
+      webSocketFactory: () => new SockJS("/ws-chat"),
       reconnectDelay: 5000,
       onConnect: () => {
         stompClient.subscribe(`/sub/chat/room/${roomId}`, (msg: IMessage) => {
@@ -60,20 +63,38 @@ export default function ChatRoom({ roomId, roomName, username }: ChatRoomProps) 
   return (
     <div className="flex flex-col gap-2">
       <h3>{roomName}</h3>
-      <div className="bg-accent flex flex-col gap-1 p-2" style={{ height: 200, overflowY: "auto" }}>
-        {messages.map((msg, i) => (
-          <div key={i}>
-            <b>{msg.sender}:</b> {msg.content}
-          </div>
-        ))}
-      </div>
+      {/* <div className="bg-accent flex flex-col gap-1 p-2" style={{ height: 200, overflowY: "auto" }}>
+        
+      </div> */}
+      <ScrollArea className="w-xl rounded-md h-96 border p-4">
+        <div className="flex flex-col gap-4">
+          {messages.map((msg, i) =>
+            msg.sender === userNickname ? (
+              // 내 매시지
+              <div
+                key={i}
+                className="self-end max-w-10/12 bg-primary text-white px-3 py-2 rounded-2xl shadow-sm"
+              >
+                {msg.content}
+              </div>
+            ) : (
+              // 상대방 메시지
+              <div key={i} className="flex flex-col self-start max-w-10/12 gap-2">
+                <span className="font-medium text-muted-foreground">{msg.sender}</span>
+                <div className="bg-muted px-3 py-2 rounded-2xl shadow-sm">{msg.content}</div>
+              </div>
+            )
+          )}
+        </div>
+      </ScrollArea>
       <div className="flex gap-1">
         <Input
           value={input}
+          placeholder="메시지를 입력하세요..."
           onChange={e => setInput(e.target.value)}
           onKeyDown={e => e.key === "Enter" && sendMessage()}
         />
-        <Button onClick={sendMessage}>Send</Button>
+        <Button onClick={sendMessage}>전송</Button>
       </div>
     </div>
   );

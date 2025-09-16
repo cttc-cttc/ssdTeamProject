@@ -13,6 +13,11 @@ export default defineConfig({
   },
   server: {
     proxy: {
+      "/ws-chat": {
+        target: "http://localhost:8080",
+        changeOrigin: true,
+        ws: true, // 웹소켓 프록시 활성화
+      },
       "/api": {
         target: "http://localhost:8080",
         changeOrigin: true,

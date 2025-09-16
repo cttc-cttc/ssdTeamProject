@@ -18,7 +18,7 @@ export default function ChatApp() {
 
   return (
     <div className="container m-auto flex flex-col items-center">
-      <div className="w-full max-w-7xl flex flex-col items-center h-[60vh] mb-12">
+      <div className="w-full max-w-7xl flex flex-col items-center min-h-[60vh] mb-12">
         <h2 className="text-primary text-2xl text-bold my-8">채팅 앱</h2>
 
         <div className="flex gap-6 justify-between">
