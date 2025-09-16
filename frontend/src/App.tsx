@@ -19,6 +19,7 @@ import "@toast-ui/editor/dist/toastui-editor.css";
 import "@toast-ui/editor/dist/theme/toastui-editor-dark.css";
 import PostingForm from "./pages/study-post/posting-form";
 import TestPage from "./pages/chat/test-page";
+import StudyListDetail from "./pages/home/study-list/study-list-detail";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="/study">
             <Route index element={<Navigate to="/study/all/1" replace />} />
             <Route path=":cat/:page?" element={<StudyListMain />} />
+            <Route path=":cat/posts/:id" element={<StudyListDetail />} />
           </Route>
 
           <Route path="/sign-up" element={<SignUp />} />

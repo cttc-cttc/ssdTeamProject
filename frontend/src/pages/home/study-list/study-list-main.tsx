@@ -92,7 +92,7 @@ export default function StudyListMain() {
         {list.map(posts => (
           <Link
             key={posts.id}
-            to={`/posts/${posts.id}`}
+            to={`/study/${catParam}/posts/${posts.id}`}
             className="w-full max-w-6xl hover:ring-3 ring-ring/50 transition-all duration-200 ease-in-out"
           >
             <ListThumbnailFlex posts={posts} />
