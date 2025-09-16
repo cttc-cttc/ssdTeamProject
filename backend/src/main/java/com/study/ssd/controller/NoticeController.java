@@ -32,5 +32,10 @@ public class NoticeController {
         return noticeService.getNoticeById(id);
     }
 
+    @GetMapping("/search")
+    public List<NoticeResponse> searchNotices(@RequestParam("q") String keyword) {
+        return noticeService.searchNotices(keyword);
+    }
+
 
 }
