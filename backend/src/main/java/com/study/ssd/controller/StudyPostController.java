@@ -73,11 +73,6 @@ public class StudyPostController {
         return ResponseEntity.ok(new DeleteStudyPostResponse(true, "게시글이 삭제되었습니다."));
     }
 
-    @PostMapping("/create-post/{id}/wish")
-    public ResponseEntity<StudyPostResponse> getWish ( @PathVariable Long id) {
-        return ResponseEntity.ok(studyPostService.addWish(id));
-    }
-
     @PostMapping("/create-post/{id}/join")
     public ResponseEntity<StudyPostResponse> getJoin ( @PathVariable Long id) {
         return ResponseEntity.ok(studyPostService.joinStudy(id));
@@ -93,11 +88,5 @@ public class StudyPostController {
      @GetMapping("/open-study")
      public ResponseEntity<List<StudyPostResponse>> getOpenStudy(@RequestParam String userNickname) {
          return ResponseEntity.ok(studyPostService.getOpenStudy(userNickname));
-     }
- 
-     // 위시 스터디 조회
-     @GetMapping("/wish-study")
-     public ResponseEntity<List<StudyPostResponse>> getWishStudy(@RequestParam Long userId) {
-         return ResponseEntity.ok(studyPostService.getWishStudy(userId));
      }
 }

@@ -45,6 +45,7 @@ public class Comment {
     private LocalDateTime updatedAt;
 
     @Column(nullable = false)
+    @Builder.Default
     private int depth = 0; // 들여쓰기 단계 관리
 
 }

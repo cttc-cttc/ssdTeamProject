@@ -17,7 +17,7 @@ import {
   mypagePageInnerName,
 } from "@/components/common/sidebar-menu-data";
 import CategoryBreadcrumb from "@/components/common/category-breadcrumb";
-// import { useInfoStore } from "@/pages/account/info-store";
+// import { useInfoStore } from "@/pages/account/info-store"; 지워도 되나요?
 
 interface Post {
   id: number;
@@ -35,14 +35,28 @@ interface Post {
 export default function PostDetail() {
   const { id } = useParams();
   const [post, setPost] = useState<Post | null>(null);
-  const navigate = useNavigate(); // 삭제 후 메인 화면으로 이동
-  const { userNickname } = useInfoStore(); // 현재 사용자 정보
+
+  const [isWished, setIsWished] = useState(false); // 위시
+  const { userId, userNickname } = useInfoStore(); // 현재 사용자 정보 > 작성자
+  const navigate = useNavigate(); // 글 삭제 후 메인 화면으로 이동
   const [activeSidebar, setActiveSidebar] = useState("study-detail"); // 현재 활성 사이드바
 
+  // 게시글 가져오기
   useEffect(() => {
     axios.get(`/api/create-post/${id}`).then(res => setPost(res.data));
   }, [id]);
 
+  // 찜 여부 확인
+  useEffect(() => {
+    if (userId && id) {
+      axios
+        .get(`/api/wish/check?userId=${userId}&postId=${id}`)
+        .then(res => setIsWished(res.data.isWished))
+        .catch(err => console.error(err));
+    }
+  }, [userId, id]);
+
+  // 마감일 헬퍼 함수
   const getDDay = (deadline: string) => {
     const end = new Date(deadline).getTime();
     const now = new Date().getTime();
@@ -50,12 +64,46 @@ export default function PostDetail() {
     return diff > 0 ? `D-${diff}` : "마감";
   };
 
-  if (!post) return <div>게시글을 불러오고 있습니다.</div>; // 필요한가??
-
+  // 액션 핸들러
   const handleEdit = () => {
-    navigate(`/edit/${post.id}`, { state: post });
+    navigate(`/edit/${post!.id}`, { state: post });
   };
 
+  const handleDelete = async (postId: number) => {
+    try {
+      const ok = window.confirm("정말 삭제하시겠습니까?");
+      if (!ok) return;
+
+      await axios.delete(`/api/delete-post/${postId}`);
+      alert("게시글이 삭제되었습니다.");
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+      alert("게시글 삭제 실패");
+    }
+  };
+
+  const handleWish = async () => {
+    if (!post || userId) return;
+
+    try {
+      if (isWished) {
+        await axios.delete(`/api/wish?userId=${userId}&postId=${post.id}`);
+        setIsWished(false);
+        setPost({ ...post, wishCount: post.wishCount - 1 });
+      } else {
+        await axios.post(`/api/wish?userId=${userId}&postId=${post.id}`);
+        setIsWished(true);
+        setPost({ ...post, wishCount: post.wishCount + 1 });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // 참여하기 추가
+
+  if (!post) return <div>게시글을 불러오고 있습니다.</div>;
   // 개설자 확인
   const creator = userNickname === post.userNickname;
 
@@ -73,20 +121,6 @@ export default function PostDetail() {
         categories: studyCategory,
         catParam: "all", // 기본 카테고리
       };
-
-  const handleDelete = async (postId: number) => {
-    try {
-      const ok = window.confirm("정말 삭제하시겠습니까?");
-      if (!ok) return;
-
-      await axios.delete(`/api/delete-post/${postId}`);
-      alert("게시글이 삭제되었습니다.");
-      navigate("/");
-    } catch (error) {
-      console.error(error);
-      alert("게시글 삭제 실패");
-    }
-  };
 
   // 사이드바 콘텐츠
   const bringSidebar = () => {
@@ -152,14 +186,12 @@ export default function PostDetail() {
           현재 참여 인원: {post.currentCount} / {post.maxCount}
         </span>
         <span>
-          <button
-            onClick={async () => {
-              const res = await axios.post(`/api/create-post/${post.id}/wish`);
-              setPost(res.data);
-            }}
+          <Button
+            onClick={handleWish}
+            className={`px-3 py-1 rounded ${isWished ? "bg-red-400 text-white" : "bg-gray-200"}`}
           >
-            찜하기 {post.wishCount}
-          </button>
+            {isWished ? "위시 취소" : "위시 추가"} {post.wishCount}
+          </Button>
         </span>
       </div>
 
@@ -168,14 +200,14 @@ export default function PostDetail() {
         <CustomViewer contents={post.content} />
       </div>
 
-      <button
+      <Button
         onClick={async () => {
           const res = await axios.post(`/api/create-post/${post.id}/join`);
           setPost(res.data);
         }}
       >
         참여하기
-      </button>
+      </Button>
     </div>
   );
 

@@ -18,8 +18,8 @@ public class StudyPostResponse {
     private String mainCategory;
     private List<String> subCategories;
     private LocalDateTime deadline;
-    private LocalDateTime created;
-    private LocalDateTime updated;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
     // @Builder 사용 시 초기값을 지정할 경우 @Builder.Default 선언 필요
     @Builder.Default private int currentCount = 0;
     @Builder.Default private int maxCount = 0;
@@ -35,8 +35,8 @@ public class StudyPostResponse {
                 .mainCategory(entity.getMainCategory())
                 .subCategories(entity.getSubCategories())
                 .deadline(entity.getDeadline())
-                .created(entity.getCreatedAt())
-                .updated(entity.getUpdatedAt())
+                .createdAt(entity.getCreatedAt())
+                .updatedAt(entity.getUpdatedAt())
                 .currentCount(entity.getCurrentCount())
                 .maxCount(entity.getMaxCount())
                 .wishCount(entity.getWishCount())

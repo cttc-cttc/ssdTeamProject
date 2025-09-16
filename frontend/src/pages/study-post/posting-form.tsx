@@ -45,9 +45,11 @@ function PostingForm() {
       if (instance.getMarkdown() !== content) {
         instance.setMarkdown(content);
       }
-    } // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [content]); // 테마 바뀔 때마다 복구 content 값 넣으면 제대로 동작 안함
-  // 수정 모드일 때 content가 바뀌면 Editor에 반영
+    }
+  }, [content]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // 테마 바뀔 때마다 복구 content 값 넣으면 제대로 동작 안함
+  // 수정 모드일 때 content가 바뀌면 Editor에 반영 */
 
   const onUploadImage = async (blob: File, callback: (Url: string, altText: string) => void) => {
     try {

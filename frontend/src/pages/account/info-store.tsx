@@ -2,6 +2,7 @@
 import { create } from "zustand";
 
 interface InfoStore {
+  userPkID: number | null;
   userName: string | null;
   userId: string | null;
   userNickname: string | null;
@@ -16,6 +17,7 @@ interface InfoStore {
 }
 
 export const useInfoStore = create<InfoStore>(set => ({
+  userPkID: Number(localStorage.getItem("userPkId")),
   userName: localStorage.getItem("userName"),
   userId: localStorage.getItem("userId"),
   userNickname: localStorage.getItem("userNickname"),
