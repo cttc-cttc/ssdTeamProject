@@ -39,6 +39,8 @@ function PostingForm() {
     }
   }, [id, state]);
 
+  // 수정 모드일 때 content가 바뀌면 Editor에 반영
+  // dark/light 테마 변경 시 글쓰던 내용이 유지되도록 함
   useEffect(() => {
     if (editorRef.current) {
       const instance = editorRef.current.getInstance();
@@ -46,10 +48,7 @@ function PostingForm() {
         instance.setMarkdown(content);
       }
     }
-  }, [content]);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  // 테마 바뀔 때마다 복구 content 값 넣으면 제대로 동작 안함
-  // 수정 모드일 때 content가 바뀌면 Editor에 반영 */
+  }, [content, theme]);
 
   const onUploadImage = async (blob: File, callback: (Url: string, altText: string) => void) => {
     try {

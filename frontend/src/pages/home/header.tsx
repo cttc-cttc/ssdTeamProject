@@ -73,7 +73,7 @@ export default function Header() {
                   로그아웃
                 </Button>
                 <Button asChild variant="default" size="sm">
-                  <Link to="/posting-page">
+                  <Link to="/create">
                     <span className="flex items-center gap-1">
                       <Plus />
                       <Pencil />
