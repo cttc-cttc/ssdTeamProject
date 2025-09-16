@@ -14,7 +14,6 @@ export default function Header() {
   const isSystemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
   const handleLogout = () => {
-    clearInfoStore();
     if (confirm("로그아웃 하시겠습니까?")) {
       clearInfoStore();
       navigate("/");
