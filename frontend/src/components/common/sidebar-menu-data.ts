@@ -76,6 +76,7 @@ export const mypageSidebar = [
   },
 ];
 
+
 // 마이 페이지 내부 - 스터디 상세 페이지
 export const mypageInnerSidebarName = "스터디 상세 페이지 사이드바";
 export const mypagePageInnerName = "스터디 상세 페이지";
