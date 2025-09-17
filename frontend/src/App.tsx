@@ -20,6 +20,7 @@ import "@toast-ui/editor/dist/theme/toastui-editor-dark.css";
 import PostingForm from "./pages/study-post/posting-form";
 import TestPage from "./pages/chat/test-page";
 import StudyListDetail from "./pages/home/study-list/study-list-detail";
+import MyPageStudyListDetail from "./pages/account/my-page/components/my-page-study-list-detail";
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
           <Route path="/my-page">
             <Route index element={<Navigate to="manage-profile" replace />} />
             <Route path=":sidebar" element={<MyPage />} />
+            <Route path="open-study/:id/:cat" element={<MyPageStudyListDetail />} />
           </Route>
 
           <Route element={<RootLayout />}>
