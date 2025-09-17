@@ -45,10 +45,11 @@ export default function LogIn() {
 
       if (response.status === 200) {
         const data = response.data;
+        // console.log(response.data);
 
         // 로그인 성공 시, 전역 상태에 사용자 정보 저장
         setInfoStore({
-          userPkId: data.id,
+          userPkID: data.id,
           userName: data.userName,
           userId: data.userId,
           userNickname: data.userNickname,

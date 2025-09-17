@@ -1,4 +1,4 @@
-package com.study.ssd.service;
+package com.study.ssd.service.chat;
 
 import com.study.ssd.dto.chat.ChatMessageRequestDto;
 import com.study.ssd.entity.chat.ChatMessage;

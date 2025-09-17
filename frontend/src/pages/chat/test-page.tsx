@@ -2,6 +2,7 @@ import { useState } from "react";
 import RoomList from "./room-list";
 import ChatRoom from "./chat-room";
 import { useInfoStore } from "../account/info-store";
+import { Navigate } from "react-router-dom";
 
 export default function ChatApp() {
   const { userNickname } = useInfoStore();
@@ -14,7 +15,7 @@ export default function ChatApp() {
     setCurrentRoomName(roomName);
   };
 
-  if (!userNickname) return <div>로그인이 필요합니다</div>;
+  if (!userNickname) return <Navigate to="/log-in" replace />;
 
   return (
     <div className="container m-auto flex flex-col items-center">

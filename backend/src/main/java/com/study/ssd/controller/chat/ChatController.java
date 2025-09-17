@@ -1,7 +1,7 @@
 package com.study.ssd.controller.chat;
 
 import com.study.ssd.dto.chat.ChatMessageRequestDto;
-import com.study.ssd.service.ChatService;
+import com.study.ssd.service.chat.ChatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Controller;
