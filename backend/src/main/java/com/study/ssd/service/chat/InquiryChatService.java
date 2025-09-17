@@ -1,5 +1,6 @@
 package com.study.ssd.service.chat;
 
+import com.study.ssd.dto.chat.InquiryMessageRequestDto;
 import com.study.ssd.entity.User;
 import com.study.ssd.entity.chat.InquiryChatMessage;
 import com.study.ssd.entity.chat.InquiryChatRoom;
@@ -19,7 +20,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class InquiryChatService {
     private final InquiryChatRoomRepository inquiryChatRoomRepository;
-    private final InquiryChatMessageRepository messageRepo;
+    private final InquiryChatMessageRepository inquiryChatMessageRepository;
     private final UserRepository userRepository; // 기존 User repo
     private final SimpMessageSendingOperations messagingTemplate;
 
@@ -35,7 +36,7 @@ public class InquiryChatService {
         User user = userRepository.findById(userPk)
                 .orElseThrow(() -> new IllegalArgumentException("유저를 찾을 수 없습니다."));
 
-        // 관리자 계정 PK 고정값 (예: 11L) — 실제로는 설정(property)으로 관리하세요
+        // 관리자 계정 PK 고정값 (예: 11L) — 실제로는 설정(property)으로 관리 필요
         // 현재 db에 등록된 임시 관리자 Admin(임시)의 pk는 11번
         Long ADMIN_PK = 11L;
         User admin = userRepository.findById(ADMIN_PK)
@@ -50,35 +51,20 @@ public class InquiryChatService {
         return inquiryChatRoomRepository.save(newRoom);
     }
 
-    public List<InquiryChatMessage> getMessages(String roomId, Long requesterPk) {
-        InquiryChatRoom room = inquiryChatRoomRepository.findById(roomId).orElseThrow();
-        // 권한 체크: 유저는 자기 방만, admin은 전체 가능 (간단 예)
-        if (!room.getUser().getId().equals(requesterPk) && !room.getAdmin().getId().equals(requesterPk)) {
-            throw new RuntimeException("권한 없음");
-        }
-        return messageRepo.findByRoomOrderByCreatedAtAsc(room);
+    // 메시지 작성
+    public void writeMessage(String roomId, InquiryMessageRequestDto messageDto) {
+        InquiryChatRoom room = inquiryChatRoomRepository.findById(roomId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 방"));
+
+        InquiryChatMessage entity = InquiryChatMessage.builder()
+                .room(room)
+                .sender(messageDto.getSender())
+                .content(messageDto.getContent())
+                .build();
+        inquiryChatMessageRepository.save(entity);
+
+        // 해당 방 구독자에게 메시지 발행
+        messagingTemplate.convertAndSend("/sub/inquiry/" + roomId, messageDto);
     }
 
-    @Transactional
-    public InquiryChatMessage postMessage(String roomId, Long senderPk, String content) {
-        InquiryChatRoom room = inquiryChatRoomRepository.findById(roomId).orElseThrow();
-        User sender = userRepository.findById(senderPk).orElseThrow();
-
-        InquiryChatMessage msg = new InquiryChatMessage();
-        msg.setRoom(room);
-        msg.setSender(sender.getUserNickname());
-        msg.setContent(content);
-        InquiryChatMessage saved = messageRepo.save(msg);
-
-        // WebSocket으로 방 구독자에게 브로드캐스트 (destination 패턴은 클라이언트와 맞춰야 함)
-        messagingTemplate.convertAndSend("/sub/inquiry/" + roomId, Map.of(
-                "id", saved.getId(),
-                "roomId", roomId,
-                "senderPk", senderPk,
-                "senderNick", sender.getUserNickname(),
-                "content", saved.getContent(),
-                "createdAt", saved.getCreatedAt().toString()
-        ));
-        return saved;
-    }
 }

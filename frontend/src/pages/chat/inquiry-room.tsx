@@ -4,10 +4,10 @@ import SockJS from "sockjs-client";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useInfoStore } from "../account/info-store";
 import { Textarea } from "@/components/ui/textarea";
+import { ArrowLeftToLine, SendHorizontal } from "lucide-react";
 
-interface ChatMessage {
+interface InquiryChatMessage {
   roomId: string;
   sender: string;
   content: string;
@@ -17,28 +17,38 @@ interface InquiryRoomProps {
   roomId: string;
   roomName: string;
   username: string;
+  onBack?: () => void;
 }
 
-export default function InquiryRoom({ roomId, roomName, username }: InquiryRoomProps) {
-  const { userNickname } = useInfoStore();
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
+export default function InquiryRoom({ roomId, roomName, username, onBack }: InquiryRoomProps) {
+  const [messages, setMessages] = useState<InquiryChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [client, setClient] = useState<Client | null>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
 
   // 1️⃣ 기존 메시지 로드
   useEffect(() => {
-    axios.get(`/api/chat/inquiry-room/${roomId}/messages`).then(res => setMessages(res.data));
+    if (!roomId) return; // roomId가 없으면 요청 안 보냄
+
+    axios
+      .get(`/api/inquiry/inquiry-room/${roomId}/messages`)
+      .then(res => {
+        setMessages(res.data);
+      })
+      .catch(err => console.error("기존 메시지를 불러오기 에러: ", err));
   }, [roomId]);
 
   // 2️⃣ WebSocket 연결
   useEffect(() => {
+    if (!roomId) return;
+
     const stompClient = new Client({
       webSocketFactory: () => new SockJS("/ws-chat"),
       reconnectDelay: 5000,
       onConnect: () => {
-        stompClient.subscribe(`/sub/chat/inquiry-room/${roomId}`, (msg: IMessage) => {
-          const received: ChatMessage = JSON.parse(msg.body);
+        // 구독
+        stompClient.subscribe(`/sub/inquiry/${roomId}`, (msg: IMessage) => {
+          const received = JSON.parse(msg.body);
           setMessages(prev => [...prev, received]);
         });
       },
@@ -48,15 +58,19 @@ export default function InquiryRoom({ roomId, roomName, username }: InquiryRoomP
     setClient(stompClient);
 
     return () => {
-      stompClient.deactivate().catch(() => {}); // cleanup에서 Promise 무시
+      stompClient.deactivate();
     };
   }, [roomId]);
 
+  // 메시지 보내기
   const sendMessage = () => {
     if (!client || !input.trim()) return;
     client.publish({
-      destination: "/pub/chat/message",
-      body: JSON.stringify({ roomId, sender: username, content: input }),
+      destination: `/pub/inquiry/${roomId}/message`,
+      body: JSON.stringify({
+        sender: username,
+        content: input,
+      }),
     });
     setInput("");
   };
@@ -66,13 +80,30 @@ export default function InquiryRoom({ roomId, roomName, username }: InquiryRoomP
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  const handleBack = () => {
+    if (onBack) onBack();
+  };
+
   return (
     <div className="flex flex-col gap-2">
-      <h3>{roomName}</h3>
+      <h3 className="flex gap-2 items-center">
+        {username === "Admin(임시)" && (
+          <Button
+            variant="outline"
+            size="icon"
+            className="rounded hover:bg-accent"
+            onClick={handleBack}
+          >
+            <ArrowLeftToLine className="w-6 h-6" />
+          </Button>
+        )}
+
+        {roomName}
+      </h3>
       <ScrollArea className="w-xl rounded-md h-96 border p-4">
         <div className="flex flex-col gap-4">
           {messages.map((msg, i) =>
-            msg.sender === userNickname ? (
+            msg.sender === username ? (
               // 내 매시지
               <div
                 key={i}
@@ -106,7 +137,10 @@ export default function InquiryRoom({ roomId, roomName, username }: InquiryRoomP
             }
           }}
         />
-        <Button onClick={sendMessage}>전송</Button>
+        <Button onClick={sendMessage}>
+          전송
+          <SendHorizontal />
+        </Button>
       </div>
     </div>
   );

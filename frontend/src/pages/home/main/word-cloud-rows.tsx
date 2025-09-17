@@ -61,7 +61,7 @@ function WordCloudRows({ selectedTags, onTagClick }: WordCloudRowsProps) {
     axios
       .get("/api/tags/popular")
       .then(res => {
-        console.log(res.data);
+        // console.log(res.data);
         setWords(res.data);
       })
       .catch(err => console.error("태그 불러오기 에러 ", err))
