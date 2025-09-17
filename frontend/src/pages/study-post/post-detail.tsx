@@ -109,7 +109,7 @@ export default function PostDetail() {
                 setPost(res.data);
               }}
             >
-              찜하기 {post.wishCount}
+              찜하기 {post.wishCount} 
             </button>
           </span>
         </div>
@@ -119,14 +119,14 @@ export default function PostDetail() {
           <CustomViewer contents={post.content} />
         </div>
 
-        <button
+        <Button
           onClick={async () => {
             const res = await axios.post(`/api/create-post/${post.id}/join`);
             setPost(res.data);
           }}
         >
           참여하기
-        </button>
+        </Button>
       </div>
     </div>
   );
