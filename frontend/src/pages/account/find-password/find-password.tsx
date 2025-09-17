@@ -130,6 +130,7 @@ export default function FindPassword() {
             </Link>
           </div>
 
+
           <div className="text-center">
             계정이 없으신가요?{" "}
             <Link
