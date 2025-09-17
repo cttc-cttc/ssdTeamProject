@@ -48,6 +48,7 @@ export default function LogIn() {
 
         // 로그인 성공 시, 전역 상태에 사용자 정보 저장
         setInfoStore({
+          userPkId: data.id,
           userName: data.userName,
           userId: data.userId,
           userNickname: data.userNickname,
@@ -73,9 +74,7 @@ export default function LogIn() {
       <div className="max-w-md w-full space-y-8 border-2 border-[#2c5536] rounded-lg p-6 shadow-2xl">
         <div>
           <h2 className="mt-6 text-3xl font-extrabold text-center">로그인</h2>
-          <p className="mt-2 text-sm text-center">
-            SSD에 로그인하고 다양한 스터디를 경험해보세요!
-          </p>
+          <p className="mt-2 text-sm text-center">SSD에 로그인하고 다양한 스터디를 경험해보세요!</p>
         </div>
 
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
@@ -117,17 +116,22 @@ export default function LogIn() {
             </Button>
           </div>
 
-
           <div className="text-center">
             계정이 없으신가요?{" "}
-            <Link to="/sign-up" className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600">
+            <Link
+              to="/sign-up"
+              className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600"
+            >
               회원가입하기
             </Link>
           </div>
 
           <div className="text-center">
             혹시 비밀번호를 잊으셨나요?{" "}
-            <Link to="/find-password" className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600">
+            <Link
+              to="/find-password"
+              className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600"
+            >
               비밀번호찾기
             </Link>
           </div>
