@@ -109,7 +109,7 @@ export default function PostDetail() {
                 setPost(res.data);
               }}
             >
-              찜하기 {post.wishCount} 
+              찜하기 {post.wishCount}
             </button>
           </span>
         </div>

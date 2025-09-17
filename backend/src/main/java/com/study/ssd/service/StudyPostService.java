@@ -140,7 +140,7 @@ public class StudyPostService {
 
     // 스터디 종료
     @Transactional
-    public void endStudy(Long id) {
+    public StudyPostResponse endStudy(Long id) {
         StudyPost post = studyPostRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         
@@ -149,6 +149,8 @@ public class StudyPostService {
         }
         
         post.setEnded(true);
-        studyPostRepository.save(post);
+        StudyPost savedPost = studyPostRepository.save(post);
+        
+        return StudyPostResponse.fromEntity(savedPost);
     }
 }

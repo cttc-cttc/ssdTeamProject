@@ -6,7 +6,6 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -56,6 +55,7 @@ public class StudyPost {
     @Builder.Default private int wishCount = 0;
 
     // 스터디 종료
+    @Column(name = "is_ended")
     @Builder.Default
     private boolean isEnded = false;
 
