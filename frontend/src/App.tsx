@@ -20,6 +20,7 @@ import "@toast-ui/editor/dist/theme/toastui-editor-dark.css";
 import PostingForm from "./pages/study-post/posting-form";
 import TestPage from "./pages/chat/test-page";
 import StudyListDetail from "./pages/home/study-list/study-list-detail";
+import Inquiry from "./pages/home/inquiry/inquiry";
 
 function App() {
   return (
@@ -54,6 +55,7 @@ function App() {
           <Route path="/posts/:id" element={<PostDetail />} />
           <Route path="/edit/:id" element={<PostingForm />} />
 
+          <Route path="/inquiry" element={<Inquiry />} />
           <Route path="/testPage" element={<TestPage />} />
           <Route path="/*" element={<Page404 />} />
         </Route>
