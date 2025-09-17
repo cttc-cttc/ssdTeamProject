@@ -163,9 +163,6 @@ export default function PostDetail() {
           {/* <ReactMarkdown>{post.content}</ReactMarkdown> */}
           <CustomViewer contents={post.content} />
         </div>
-        <div className="p-6 mb-6 border rounded-md">
-          <CustomViewer contents={post.content} />
-        </div>
         <Button onClick={handleJoin}>참여하기</Button>
       </div>
     </div>
