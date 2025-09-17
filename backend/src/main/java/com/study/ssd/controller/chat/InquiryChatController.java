@@ -1,14 +1,16 @@
 package com.study.ssd.controller.chat;
 
+import com.study.ssd.dto.chat.InquiryChatRoomResponseDto;
+import com.study.ssd.dto.chat.InquiryMessageResponseDto;
 import com.study.ssd.entity.chat.InquiryChatRoom;
 import com.study.ssd.repository.UserRepository;
+import com.study.ssd.repository.chat.InquiryChatMessageRepository;
+import com.study.ssd.repository.chat.InquiryChatRoomRepository;
 import com.study.ssd.service.chat.InquiryChatService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.nio.file.attribute.UserPrincipal;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -17,8 +19,10 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/inquiry")
 @RequiredArgsConstructor
 public class InquiryChatController {
+
     private final InquiryChatService inquiryChatService;
-    private final UserRepository userRepository;
+    private final InquiryChatRoomRepository inquiryChatRoomRepository;
+    private final InquiryChatMessageRepository inquiryChatMessageRepository;
 
     // GET /api/inquiry/room/me  -> 현재 로그인 유저의 문의 방 반환(없으면 생성)
     @GetMapping("/room/me")
@@ -27,27 +31,24 @@ public class InquiryChatController {
         return ResponseEntity.ok(Map.of("roomId", room.getId(), "roomName", room.getName()));
     }
 
-    // GET /api/inquiry/room/{roomId}/messages
-//    @GetMapping("/room/{roomId}/messages")
-//    public List<Map<String,Object>> getMessages(@PathVariable String roomId, UserPrincipal principal) {
-//        Long requesterPk = principal.getId();
-//        return inquiryChatService.getMessages(roomId, requesterPk)
-//                .stream()
-//                .map(m -> Map.of(
-//                        "id", m.getId(),
-////                        "senderPk", m.getSender().getId(),
-//                        "senderNick", m.getSender(),
-//                        "content", m.getContent(),
-//                        "createdAt", m.getCreatedAt()
-//                )).collect(Collectors.toList());
-//    }
-//
-//    // POST /api/inquiry/room/{roomId}/messages  (fallback REST send)
-//    @PostMapping("/room/{roomId}/messages")
-//    public ResponseEntity<?> postMessage(@PathVariable String roomId, UserPrincipal principal, @RequestBody Map<String,String> body) {
-//        Long senderPk = principal.getId();
-//        String content = body.get("content");
-//        inquiryChatService.postMessage(roomId, senderPk, content);
-//        return ResponseEntity.ok().build();
-//    }
+
+    // 채팅방 메시지 불러오기
+    // 채팅방 id로 메시지 조회
+    @GetMapping("/inquiry-room/{roomId}/messages")
+    public List<InquiryMessageResponseDto> getMessages(@PathVariable String roomId) {
+        return inquiryChatMessageRepository.findByRoomIdOrderByCreatedAtAsc(roomId)
+                .stream()
+                .map(InquiryMessageResponseDto::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+    // 관리자가 보는 경우 방 목록 불러오기
+    @GetMapping("/rooms")
+    public List<InquiryChatRoomResponseDto> getRooms() {
+        return inquiryChatRoomRepository.findAll()
+                .stream()
+                .map(InquiryChatRoomResponseDto::fromEntity)
+                .collect(Collectors.toList());
+    }
+
 }
