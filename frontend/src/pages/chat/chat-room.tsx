@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Client, type IMessage } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 import axios from "axios";
@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useInfoStore } from "../account/info-store";
 import { Textarea } from "@/components/ui/textarea";
+import { scrollDown } from "./components/scroll-utils";
 
 interface ChatMessage {
   roomId: string;
@@ -24,7 +25,7 @@ export default function ChatRoom({ roomId, roomName, username }: ChatRoomProps) 
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [client, setClient] = useState<Client | null>(null);
-  const bottomRef = useRef<HTMLDivElement>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
 
   // 1️⃣ 기존 메시지 로드
   useEffect(() => {
@@ -61,22 +62,22 @@ export default function ChatRoom({ roomId, roomName, username }: ChatRoomProps) 
     setInput("");
   };
 
-  // 메시지가 바뀔 때마다 스크롤 이동
-  useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  // 메시지 입력 시 채팅창 스크롤 하단으로 내리기
+  useLayoutEffect(() => {
+    scrollDown(rootRef);
   }, [messages]);
 
   return (
     <div className="flex flex-col gap-2">
       <h3>{roomName}</h3>
-      <ScrollArea className="w-xl rounded-md h-96 border p-4">
+      <ScrollArea ref={rootRef} className="w-xl rounded-md h-96 border p-4">
         <div className="flex flex-col gap-4">
           {messages.map((msg, i) =>
             msg.sender === userNickname ? (
               // 내 매시지
               <div
                 key={i}
-                className="self-end max-w-10/12 bg-primary text-white px-3 py-2 rounded-2xl shadow-sm whitespace-pre-wrap"
+                className="self-end w-fit max-w-10/12 bg-primary text-white px-3 py-2 rounded-2xl shadow-sm whitespace-pre-wrap"
               >
                 {msg.content}
               </div>
@@ -84,13 +85,12 @@ export default function ChatRoom({ roomId, roomName, username }: ChatRoomProps) 
               // 상대방 메시지
               <div key={i} className="flex flex-col self-start max-w-10/12 gap-2">
                 <span className="font-medium text-muted-foreground">{msg.sender}</span>
-                <div className="bg-muted px-3 py-2 rounded-2xl shadow-sm whitespace-pre-wrap">
+                <div className="bg-muted w-fit px-3 py-2 rounded-2xl shadow-sm whitespace-pre-wrap">
                   {msg.content}
                 </div>
               </div>
             )
           )}
-          <div ref={bottomRef} />
         </div>
       </ScrollArea>
       <div className="flex flex-col gap-1">

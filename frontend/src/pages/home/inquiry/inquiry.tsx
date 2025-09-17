@@ -55,7 +55,7 @@ export default function Inquiry() {
   if (!userNickname) return <Navigate to="/log-in" replace />;
 
   return (
-    <div className="container m-auto my-16 flex flex-col items-center">
+    <div className="container m-auto my-16 flex flex-col items-center min-h-[52vh]">
       <h1 className="font-bold text-2xl text-primary mb-8">관리자와 실시간 채팅</h1>
 
       {userNickname === "Admin(임시)" ? (
