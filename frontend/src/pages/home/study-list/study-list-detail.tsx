@@ -1,7 +1,7 @@
 import SidebarLayout from "@/components/common/sidebar-layout";
 import { studyCategory, studyCategoryName } from "@/components/common/sidebar-menu-data";
+import PostDetail from "@/pages/study-post/post-detail";
 import { useParams } from "react-router-dom";
-import PostsDetail from "./components/posts-detail";
 
 export default function StudyListDetail() {
   const { cat } = useParams<{ cat: string }>();
@@ -9,7 +9,7 @@ export default function StudyListDetail() {
   const catParam = cat && validUrls.includes(cat) ? cat : "all";
 
   const pageComponent = () => {
-    return <PostsDetail />;
+    return <PostDetail />;
   };
 
   return (

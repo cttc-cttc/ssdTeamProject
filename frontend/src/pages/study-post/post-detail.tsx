@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-// import ReactMarkdown from "react-markdown";
 import CustomViewer from "./custom-viewer";
 import "./post-detail.css";
 import { categoryNameMap } from "@/components/common/mappings";
@@ -87,7 +86,6 @@ export default function PostDetail() {
 
   const handleJoin = async () => {
     if (!post || userPkIdNum) return;
-
     try {
       const res = await axios.post(`/api/join`, null, {
         params: { userId: userPkIdNum, postId: post.id },
@@ -160,7 +158,6 @@ export default function PostDetail() {
         </div>
 
         <div className="border border-gray-300 rounded-md p-6 mb-6">
-          {/* <ReactMarkdown>{post.content}</ReactMarkdown> */}
           <CustomViewer contents={post.content} />
         </div>
         <Button onClick={handleJoin}>참여하기</Button>
