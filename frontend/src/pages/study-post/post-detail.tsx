@@ -23,13 +23,23 @@ interface Post {
 
 export default function PostDetail() {
   const { id } = useParams();
-  const { userNickname } = useInfoStore();
-  const [post, setPost] = useState<Post | null>(null);
+  const { userPkId, userNickname } = useInfoStore();
   const navigate = useNavigate(); // 삭제 후 메인 화면으로 이동
+  const [post, setPost] = useState<Post | null>(null);
+  const [isWished, setIsWished] = useState(false);
 
   useEffect(() => {
     axios.get(`/api/create-post/${id}`).then(res => setPost(res.data));
   }, [id]);
+
+  useEffect(() => {
+    if (userPkId && id) {
+      axios
+        .get(`/api/wish/check?userId=${userPkId}&postId=${id}`)
+        .then(res => setIsWished(res.data.isWished))
+        .catch(console.error);
+    }
+  }, [userPkId, id]);
 
   const getDDay = (deadline: string) => {
     const end = new Date(deadline).getTime();
@@ -38,10 +48,8 @@ export default function PostDetail() {
     return diff > 0 ? `D-${diff}` : "마감";
   };
 
-  if (!post) return <div>게시글을 불러오고 있습니다.</div>; // 필요한가??
-
   const handleEdit = () => {
-    navigate(`/edit/${post.id}`, { state: post });
+    navigate(`/edit/${post!.id}`, { state: post });
   };
 
   const handleDelete = async (postId: number) => {
@@ -57,6 +65,38 @@ export default function PostDetail() {
       alert("게시글 삭제 실패");
     }
   };
+
+  const handleWish = async () => {
+    console.log("post:", post, "userPkId:", userPkId); // ✅ 눌렀을 때 찍히는지 확인
+    if (!post || !userPkId) {
+      console.warn("조건 때문에 함수 종료됨");
+      return;
+    }
+    console.log("handleWish 실행됨");
+
+    try {
+      if (isWished) {
+        await axios.delete(`/api/wish?userId=${userPkId}&postId=${post.id}`);
+        setIsWished(false);
+        setPost({ ...post, wishCount: post.wishCount - 1 });
+      } else {
+        await axios.post(`/api/wish?userId=${userPkId}&postId=${post.id}`);
+        setIsWished(true);
+        setPost({ ...post, wishCount: post.wishCount + 1 });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // 참여하기 임시
+  const handleJoin = async () => {
+    if (!post) return;
+    const res = await axios.post(`/api/create-post/${post.id}/join`);
+    setPost(res.data);
+  };
+
+  if (!post) return <div>게시글을 불러오고 있습니다.</div>;
 
   return (
     <div>
@@ -102,31 +142,23 @@ export default function PostDetail() {
           <span className="text-gray-700">
             현재 참여 인원: {post.currentCount} / {post.maxCount}
           </span>
-          <span>
-            <button
-              onClick={async () => {
-                const res = await axios.post(`/api/create-post/${post.id}/wish`);
-                setPost(res.data);
-              }}
-            >
-              찜하기 {post.wishCount} 
-            </button>
-          </span>
+
+          <Button
+            onClick={handleWish}
+            className={`px-3 py-1 rounded ${isWished ? "bg-red-400 text-white" : "bg-gray-200"}`}
+          >
+            {isWished ? "위시 취소" : "위시 추가"} {post.wishCount}
+          </Button>
         </div>
 
         <div className="border border-gray-300 rounded-md p-6 mb-6">
           {/* <ReactMarkdown>{post.content}</ReactMarkdown> */}
           <CustomViewer contents={post.content} />
         </div>
-
-        <Button
-          onClick={async () => {
-            const res = await axios.post(`/api/create-post/${post.id}/join`);
-            setPost(res.data);
-          }}
-        >
-          참여하기
-        </Button>
+        <div className="p-6 mb-6 border rounded-md">
+          <CustomViewer contents={post.content} />
+        </div>
+        <Button onClick={handleJoin}>참여하기</Button>
       </div>
     </div>
   );
