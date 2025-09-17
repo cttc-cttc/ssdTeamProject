@@ -137,5 +137,18 @@ public class StudyPostService {
                 .map(wishStudies -> StudyPostResponse.fromEntity(wishStudies.getPost()))
                 .toList();
     }
-    
+
+    // 스터디 종료
+    @Transactional
+    public void endStudy(Long id) {
+        StudyPost post = studyPostRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        
+        if (post.isEnded()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+        
+        post.setEnded(true);
+        studyPostRepository.save(post);
+    }
 }
