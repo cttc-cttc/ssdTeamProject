@@ -77,12 +77,6 @@ public class StudyPostController {
     public ResponseEntity<StudyPostResponse> getJoin ( @PathVariable Long id) {
         return ResponseEntity.ok(studyPostService.joinStudy(id));
     }
-
-     // 조인 스터디 조회
-     @GetMapping("/join-study")
-     public ResponseEntity<List<StudyPostResponse>> getJoinStudy(@RequestParam Long userId) {
-         return ResponseEntity.ok(studyPostService.getJoinStudy(userId));
-     }
  
      // 오픈 스터디 조회
      @GetMapping("/open-study")

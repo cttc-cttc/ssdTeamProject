@@ -23,7 +23,8 @@ interface Post {
 
 export default function PostDetail() {
   const { id } = useParams();
-  const { userPkId, userNickname } = useInfoStore();
+  const { userPkID, userNickname } = useInfoStore();
+  const userPkIdNum = userPkID ? Number(userPkID) : null;
   const navigate = useNavigate(); // 삭제 후 메인 화면으로 이동
   const [post, setPost] = useState<Post | null>(null);
   const [isWished, setIsWished] = useState(false);
@@ -33,13 +34,13 @@ export default function PostDetail() {
   }, [id]);
 
   useEffect(() => {
-    if (userPkId && id) {
+    if (userPkIdNum && id) {
       axios
-        .get(`/api/wish/check?userId=${userPkId}&postId=${id}`)
+        .get(`/api/wish/check?userId=${userPkIdNum}&postId=${id}`)
         .then(res => setIsWished(res.data.isWished))
         .catch(console.error);
     }
-  }, [userPkId, id]);
+  }, [userPkIdNum, id]);
 
   const getDDay = (deadline: string) => {
     const end = new Date(deadline).getTime();
@@ -67,20 +68,15 @@ export default function PostDetail() {
   };
 
   const handleWish = async () => {
-    console.log("post:", post, "userPkId:", userPkId); // ✅ 눌렀을 때 찍히는지 확인
-    if (!post || !userPkId) {
-      console.warn("조건 때문에 함수 종료됨");
-      return;
-    }
-    console.log("handleWish 실행됨");
+    if (!post || !userPkIdNum) return;
 
     try {
       if (isWished) {
-        await axios.delete(`/api/wish?userId=${userPkId}&postId=${post.id}`);
+        await axios.delete(`/api/wish?userId=${userPkIdNum}&postId=${post.id}`);
         setIsWished(false);
         setPost({ ...post, wishCount: post.wishCount - 1 });
       } else {
-        await axios.post(`/api/wish?userId=${userPkId}&postId=${post.id}`);
+        await axios.post(`/api/wish?userId=${userPkIdNum}&postId=${post.id}`);
         setIsWished(true);
         setPost({ ...post, wishCount: post.wishCount + 1 });
       }
@@ -89,11 +85,23 @@ export default function PostDetail() {
     }
   };
 
-  // 참여하기 임시
   const handleJoin = async () => {
-    if (!post) return;
-    const res = await axios.post(`/api/create-post/${post.id}/join`);
-    setPost(res.data);
+    if (!post || userPkIdNum) return;
+
+    try {
+      const res = await axios.post(`/api/join`, null, {
+        params: { userId: userPkIdNum, postId: post.id },
+      });
+      alert(res.data.message);
+
+      setPost(prev => (prev ? { ...prev, currentCount: prev.currentCount + 1 } : prev));
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err) && err.response?.data?.message) {
+        alert(err.response.data.message);
+      } else {
+        alert("Error");
+      }
+    }
   };
 
   if (!post) return <div>게시글을 불러오고 있습니다.</div>;

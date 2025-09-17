@@ -66,7 +66,7 @@ public class StudyPost {
         }
     }
 
-    public void increaseCurrentCont() {
+    public void increaseCurrentCount() {
         if (currentCount < maxCount) {
             this.currentCount++;
         } else {
@@ -74,7 +74,7 @@ public class StudyPost {
         }
     }
 
-    public void decreaseCurrentCont() {
+    public void decreaseCurrentCount() {
         if (currentCount > 0) {
             this.currentCount--;
         }

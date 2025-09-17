@@ -28,9 +28,9 @@ public class WishStudyService {
         }
 
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("Not found user: " + userId));
+                .orElseThrow(() -> new IllegalArgumentException("User not found: " + userId));
         StudyPost post = studyPostRepository.findById(postId)
-                .orElseThrow(() -> new IllegalArgumentException("Not found post: " + postId));
+                .orElseThrow(() -> new IllegalArgumentException("Post not found: " + postId));
 
         WishStudy wishStudy = WishStudy.builder()
                 .user(user)

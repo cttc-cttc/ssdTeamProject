@@ -9,7 +9,8 @@ import { useInfoStore } from "../info-store";
 
 export default function WishStudy() {
   // 사용자 정보 가져오기
-  const { userPkId } = useInfoStore();
+  const { userPkID } = useInfoStore();
+  const userPkIdNum = userPkID ? Number(userPkID) : null;
 
   // 페이지네이션 상태 추가
   const [currentPage, setCurrentPage] = useState(1);
@@ -24,7 +25,7 @@ export default function WishStudy() {
   // 위시 스터디 데이터 가져오기
   useEffect(() => {
     const fetchWishStudies = async () => {
-      if (!userPkId) {
+      if (!userPkIdNum) {
         console.error("사용자 ID가 없습니다.");
         setStudies([]);
         setTotalPages(1);
@@ -35,7 +36,7 @@ export default function WishStudy() {
       try {
         // 백엔드 API 호출
         const response = await axios.get(`/api/wish/list`, {
-          params: { userId: userPkId },
+          params: { userId: userPkIdNum },
         });
 
         // 실제 API 데이터만 사용 (위시 스터디가 없으면 빈 배열)
@@ -53,7 +54,7 @@ export default function WishStudy() {
     };
 
     fetchWishStudies();
-  }, [userPkId, currentPage, studyPerPage]);
+  }, [userPkIdNum, currentPage, studyPerPage]);
 
   // 페이지네이션 로직
   const indexOfLastStudy = currentPage * studyPerPage;
