@@ -24,6 +24,7 @@ public class StudyPostResponse {
     @Builder.Default private int currentCount = 0;
     @Builder.Default private int maxCount = 0;
     @Builder.Default private int wishCount = 0;
+    @Builder.Default private boolean isEnded = false;
 
     // StudyPost -> StudyPostResponse 변환
     public static StudyPostResponse fromEntity(StudyPost entity) {
@@ -40,6 +41,7 @@ public class StudyPostResponse {
                 .currentCount(entity.getCurrentCount())
                 .maxCount(entity.getMaxCount())
                 .wishCount(entity.getWishCount())
+                .isEnded(entity.isEnded())
                 .build();
     }
 }

@@ -84,9 +84,10 @@ public class StudyPostController {
          return ResponseEntity.ok(studyPostService.getOpenStudy(userNickname));
      }
 
-     // 스터디 종료 -> 보이드 값으로 리턴 없이
+     // 스터디 종료
      @PostMapping("/end-study/{id}")
-     public void endStudy(@PathVariable Long id) {
-         studyPostService.endStudy(id);
+     public ResponseEntity<StudyPostResponse> endStudy(@PathVariable Long id) {
+         StudyPostResponse response = studyPostService.endStudy(id);
+         return ResponseEntity.ok(response);
      }
 }
