@@ -19,7 +19,7 @@ import { Button } from "@/components/ui/button";
 
 export default function MyPage() {
   const navigate = useNavigate();
-  const { userName, userId, userNickname, userEmail, setInfoStore, clearInfoStore } =
+  const { userPkID, userName, userId, userNickname, userEmail, setInfoStore, clearInfoStore } =
     useInfoStore();
 
   // 회원탈퇴 모달 상태
@@ -65,6 +65,7 @@ export default function MyPage() {
             <p>개인정보를 관리하고 계정 설정을 변경할 수 있습니다.</p>
           </div>
           <ProfileSection
+            userPkID={userPkID || ""}
             userName={userName || ""}
             userId={userId || ""}
             userNickname={userNickname || ""}
