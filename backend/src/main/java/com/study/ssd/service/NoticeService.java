@@ -41,6 +41,12 @@ public class NoticeService {
                 .map(NoticeResponse::new)
                 .toList();
     }
+    // 공지사항 삭제
+    public void deleteNotice(Long id) {
+        Notice notice = noticeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("공지사항을 찾을 수 없습니다. id=" + id));
+        noticeRepository.delete(notice);
+    }
 
 
 }

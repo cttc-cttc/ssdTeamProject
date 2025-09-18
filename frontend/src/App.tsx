@@ -24,6 +24,7 @@ import TestPage from "./pages/chat/test-page";
 import StudyListDetail from "./pages/home/study-list/study-list-detail";
 import MyPageStudyListDetail from "./pages/account/my-page/components/my-page-study-list-detail";
 import Inquiry from "./pages/home/inquiry/inquiry";
+import Guide from "./pages/guide/guide";
 
 function App() {
   return (
@@ -60,6 +61,8 @@ function App() {
           <Route path="/create" element={<PostingPage />} />
           <Route path="/posts/:id" element={<PostDetail />} />
           <Route path="/edit/:id" element={<PostingForm />} />
+
+          <Route path="/guide" element={<Guide />} />
 
           <Route path="/inquiry" element={<Inquiry />} />
           <Route path="/testPage" element={<TestPage />} />
