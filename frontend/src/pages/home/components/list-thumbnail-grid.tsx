@@ -19,11 +19,16 @@ export default function ListThumbnailGrid({ study, type }: ListThumbnailGridProp
   return (
     <div className="shadow-xl border border-accent max-h-80 rounded overflow-hidden flex flex-col">
       {/* 첫 번째 이미지 썸네일 */}
-      <div className="w-full h-60 overflow-hidden">
+      <div className="relative w-full h-60 overflow-hidden">
         {firstImage ? (
           <img src={firstImage} alt="thumbnail" className="w-full h-full object-cover" />
         ) : (
           <ImageFrame />
+        )}
+        {study.ended && (
+          <div className="absolute top-2 right-2 text-sm text-white bg-destructive p-1 rounded">
+            종료된 스터디
+          </div>
         )}
       </div>
 
