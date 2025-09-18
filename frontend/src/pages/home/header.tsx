@@ -1,14 +1,16 @@
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
-import { Pencil } from "lucide-react";
+import { Pencil, Shield, Users, Settings } from "lucide-react";
 import { Plus } from "lucide-react";
 import { useInfoStore } from "../account/info-store";
+import { useAdminInfoStore } from "../account/admin-info-store";
 import { ModeToggle } from "@/components/common/mode-toggle";
 import { useTheme } from "@/components/theme-provider";
 
 export default function Header() {
   const { theme } = useTheme();
   const { userId, userNickname, clearInfoStore } = useInfoStore();
+  const { adminPkID, adminName, clearInfoStore: clearAdminInfoStore } = useAdminInfoStore();
   const navigate = useNavigate();
 
   const isSystemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -19,6 +21,17 @@ export default function Header() {
       navigate("/");
     }
   };
+
+  const handleAdminLogout = () => {
+    if (confirm("관리자 로그아웃 하시겠습니까?")) {
+      clearAdminInfoStore();
+      navigate("/");
+    }
+  };
+
+  // 로그인 상태 확인
+  const isAdminLoggedIn = !!adminPkID;
+  const isUserLoggedIn = !!userId;
 
   return (
     // transition-colors duration-500 ease-in-out
@@ -57,7 +70,36 @@ export default function Header() {
 
         {/* 우측: 사용자 영역 */}
         <div className="flex items-center gap-2">
-          {userId ? (
+          {isAdminLoggedIn ? (
+            // 관리자 헤더
+            <div className="flex flex-col gap-4 items-end">
+              <div className="flex gap-2">
+                <span className="hidden sm:flex items-center whitespace-nowrap text-red-600 font-semibold">
+                  <Shield className="w-4 h-4 mr-1" />
+                  관리자 {adminName}님
+                </span>
+                <ModeToggle />
+              </div>
+              <div className="flex gap-2 justify-end">
+                <Button asChild variant="outline" size="sm">
+                  <Link to="/admin/dashboard">
+                    <Settings className="w-4 h-4 mr-1" />
+                    관리자 대시보드
+                  </Link>
+                </Button>
+                <Button asChild variant="outline" size="sm">
+                  <Link to="/admin/users">
+                    <Users className="w-4 h-4 mr-1" />
+                    사용자 관리
+                  </Link>
+                </Button>
+                <Button onClick={handleAdminLogout} variant="outline" size="sm">
+                  관리자 로그아웃
+                </Button>
+              </div>
+            </div>
+          ) : isUserLoggedIn ? (
+            // 일반 사용자 헤더
             <div className="flex flex-col gap-4 items-end">
               <div className="flex gap-2">
                 <span className="hidden sm:flex items-center whitespace-nowrap">
@@ -83,6 +125,7 @@ export default function Header() {
               </div>
             </div>
           ) : (
+            // 비로그인 헤더
             <div className="flex flex-col gap-4 items-end">
               <div className="flex gap-2">
                 <span className="hidden sm:flex items-center whitespace-nowrap">
