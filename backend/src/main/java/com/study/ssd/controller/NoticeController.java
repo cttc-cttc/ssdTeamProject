@@ -5,6 +5,7 @@ import com.study.ssd.dto.NoticeResponse;
 import com.study.ssd.service.NoticeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,6 +36,16 @@ public class NoticeController {
     @GetMapping("/search")
     public List<NoticeResponse> searchNotices(@RequestParam("q") String keyword) {
         return noticeService.searchNotices(keyword);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteNotice(@PathVariable Long id) {
+        try {
+            noticeService.deleteNotice(id);
+            return ResponseEntity.ok("공지사항 삭제 완료");
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
 
