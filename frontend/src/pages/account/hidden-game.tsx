@@ -20,6 +20,7 @@ export default function ClashMiniGameCSS() {
 
   // 수축 기믹 상태 (성공 횟수는 렌더링에 사용되지 않으므로 ref로 관리)
   const successCountRef = useRef(0);
+  const failCountRef = useRef(0);
   const requiredSuccess = 10;
 
   // 키보드 입력 스팸 방지
@@ -122,8 +123,12 @@ export default function ClashMiniGameCSS() {
       setOuterSize(prev => {
         const next = prev - SHRINK_SPEED;
         if (next <= OUTER_MIN_SIZE - COLLIDE_TOLERANCE * 2) {
-          // 실패 간주 → 실패 카운트 증가 및 다음 라운드
-          // 실패 카운트 증가(필요시 로깅/통계에 사용 가능)
+          // 실패 간주 → 3회 누적 시 메인으로 이동
+          failCountRef.current += 1;
+          if (failCountRef.current >= 3) {
+            navigate("/");
+            return prev;
+          }
           cycleScoredRef.current = false;
           rerollRequiredKey();
           rerollTargetPos();
@@ -187,14 +192,22 @@ export default function ClashMiniGameCSS() {
     <div className="bg-[#f5f5f5] text-black text-center pt-12 h-screen transition-all duration-500 relative overflow-hidden">
       {!cheatActivated && (
         <>
-          <h1>로그인 화면</h1>
-          <p>치트코드를 입력해보세요!</p>
+          <p>You have to go back</p>
         </>
       )}
 
       {cheatActivated && (
         <>
-          <h1>격돌</h1>
+          <h1
+            className="text-4xl md:text-5xl font-extrabold text-red-600"
+            style={{
+              textShadow:
+                "0 0 8px rgba(255,0,0,0.6), 0 0 16px rgba(255,0,0,0.4), 0 0 24px rgba(255,0,0,0.25)",
+              animation: "red-glow 1.2s ease-in-out infinite",
+            }}
+          >
+            격돌
+          </h1>
 
           {/* 수축 원 UI */}
           <div ref={containerRef} className="relative w-full h-[600px] my-6 mx-auto">
@@ -236,6 +249,13 @@ export default function ClashMiniGameCSS() {
               {requiredKey}
             </div>
           </div>
+          {/* 헤더 글자 글로우 애니메이션 */}
+          <style>{`
+            @keyframes red-glow {
+              0%, 100% { text-shadow: 0 0 6px rgba(255,0,0,0.5), 0 0 12px rgba(255,0,0,0.3); }
+              50% { text-shadow: 0 0 14px rgba(255,0,0,0.8), 0 0 28px rgba(255,0,0,0.6); }
+            }
+          `}</style>
         </>
       )}
     </div>
