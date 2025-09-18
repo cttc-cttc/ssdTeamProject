@@ -8,5 +8,5 @@ import java.util.List;
 public interface StudyPostRepository extends JpaRepository<StudyPost, Long> {
     
     // 특정 사용자가 개설한 스터디 목록 조회
-    List<StudyPost> findByUserNickname(String userNickname);
+    List<StudyPost> findByUserNicknameOrderByIdDesc(String userNickname);
 }

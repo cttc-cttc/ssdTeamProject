@@ -14,7 +14,7 @@ public interface WishStudyRepository extends JpaRepository<WishStudy, Long> {
     Optional<WishStudy> findByUserIdAndPostId(Long userId, Long postId);
     
     // 사용자가 찜한 모든 스터디 조회
-    @Query("SELECT ws FROM WishStudy ws JOIN FETCH ws.post WHERE ws.user.id = :userId")
+    @Query("SELECT ws FROM WishStudy ws JOIN FETCH ws.post WHERE ws.user.id = :userId ORDER BY ws.id DESC")
     List<WishStudy> findByUserIdWithPost(@Param("userId") Long userId);
     
     // 스터디를 찜한 사용자 수 조회

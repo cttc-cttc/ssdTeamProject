@@ -17,29 +17,34 @@ public interface HomeRepository extends JpaRepository<StudyPost, Long> {
     @Query("""
             SELECT new com.study.ssd.dto.home.TagDto(s, COUNT(s))
             FROM StudyPost p JOIN p.subCategories s
+            WHERE p.isEnded = false
             GROUP BY s
             ORDER BY COUNT(s) DESC
             """)
     List<TagDto> findPopularTags(Pageable pageable);
 
+    // 마감되지 않은 스터디 리스트 조회 (마감 임박 / 인기 / 최신)
+    Page<StudyPost> findAllByIsEndedFalse(Pageable pageable);
+
     // 모든 리스트 조회 (id값 내림차순 페이징)
-    Page<StudyPost> findAllByOrderByIdDesc(Pageable pageable);
+    Page<StudyPost> findAllByIsEndedFalseOrderByIdDesc(Pageable pageable);
 
     // 카테고리로 찾기 (id값 내림차순 페이징)
-    Page<StudyPost> findByMainCategoryOrderByIdDesc(String category, Pageable pageable);
+    Page<StudyPost> findByMainCategoryAndIsEndedFalseOrderByIdDesc(String category, Pageable pageable);
 
     // 모든 리스트에서 검색 키워드로 찾기 (id값 내림차순 페이징)
-    Page<StudyPost> findByTitleContainingIgnoreCase(String keyword, Pageable pageable);
+    Page<StudyPost> findByTitleContainingIgnoreCaseAndIsEndedFalse(String keyword, Pageable pageable);
 
     // 특정 카테고리에서 검색 키워드로 찾기 (id값 내림차순 페이징)
-    Page<StudyPost> findByMainCategoryAndTitleContainingIgnoreCase(String category, String keyword, Pageable pageable);
+    Page<StudyPost> findByMainCategoryAndTitleContainingIgnoreCaseAndIsEndedFalse(String category, String keyword, Pageable pageable);
 
     // 무한 스크롤 + 태그 필터링
     @Query("""
         SELECT p
         FROM StudyPost p
         JOIN p.subCategories t
-        WHERE (:lastId IS NULL OR p.id < :lastId)
+        WHERE p.isEnded = false
+          AND (:lastId IS NULL OR p.id < :lastId)
           AND t IN :tags
         GROUP BY p.id
         HAVING COUNT(DISTINCT t) = :tagCount

@@ -124,7 +124,7 @@ public class StudyPostService {
 
     // 오픈 스터디 조회
     public List<StudyPostResponse> getOpenStudy(String userNickname) {
-        List<StudyPost> studyPosts = studyPostRepository.findByUserNickname(userNickname);
+        List<StudyPost> studyPosts = studyPostRepository.findByUserNicknameOrderByIdDesc(userNickname);
         return studyPosts.stream()
                 .map(StudyPostResponse::fromEntity)
                 .toList();
