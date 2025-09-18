@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
+import { ArrowLeft } from "lucide-react";
 
 export default function StudyEndPage() {
   const { id } = useParams<{ id: string }>();
@@ -58,9 +59,21 @@ export default function StudyEndPage() {
     }
   };
 
+  const backStep = () => {
+    navigate(-1);
+  };
+
   return (
     <div className="w-full px-6 py-10">
       <div className="max-w-2xl mx-auto">
+        <Button
+          onClick={backStep}
+          variant="outline"
+          className="flex items-center gap-2 text-gray-600 hover:text-gray-800 mb-6"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          뒤로가기
+        </Button>
         <h1 className="text-3xl font-bold mb-6">스터디 종료</h1>
 
         {isEnded ? (

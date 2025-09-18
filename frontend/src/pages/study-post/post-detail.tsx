@@ -6,6 +6,7 @@ import "./post-detail.css";
 import { categoryNameMap } from "@/components/common/mappings";
 import { Button } from "@/components/ui/button";
 import { useInfoStore } from "../account/info-store";
+import { ArrowLeft } from "lucide-react";
 
 interface Post {
   id: number;
@@ -97,9 +98,13 @@ export default function PostDetail() {
       if (axios.isAxiosError(err) && err.response?.data?.message) {
         alert(err.response.data.message);
       } else {
-        alert("Error");
+        alert("이미 종료된 스터디이거나 참여 인원이 가득 찼습니다.");
       }
     }
+  };
+
+  const backStep = () => {
+    navigate(-1); 
   };
 
   if (!post) return <div>게시글을 불러오고 있습니다.</div>;
@@ -107,8 +112,17 @@ export default function PostDetail() {
   return (
     <div>
       <div className="max-w-4xl mx-auto px-6 py-10">
+        <div className="mb-6">
+          <Button
+            onClick={backStep}
+            variant="outline"
+            className="flex items-center gap-2 text-gray-600 hover:text-gray-800"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            뒤로가기
+          </Button>
+        </div>
         <h1 className="text-3xl font-bold mb-2">{post.title}</h1>
-
 
         <div className="flex justify-between items-center border-b border-gray-300 pb-2 mb-4">
           <span className="text-gray-600">작성자: {post.userNickname}</span>
