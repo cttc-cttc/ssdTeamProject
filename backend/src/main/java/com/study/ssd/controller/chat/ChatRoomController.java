@@ -6,9 +6,11 @@ import com.study.ssd.entity.chat.ChatRoom;
 import com.study.ssd.repository.chat.ChatMessageRepository;
 import com.study.ssd.repository.chat.ChatRoomRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -40,5 +42,15 @@ public class ChatRoomController {
                 .stream()
                 .map(ChatMessageResponseDto::fromEntity)
                 .collect(Collectors.toList());
+    }
+
+    @GetMapping("/checkRoom")
+    public ResponseEntity<?> checkRoom(@RequestParam Long postId) {
+        return chatRoomRepository.findByStudyPostId(postId)
+                .map(room -> ResponseEntity.ok(Map.of(
+                        "exists", true,
+                        "roomId", room.getId()
+                )))
+                .orElse(ResponseEntity.ok(Map.of("exists", false)));
     }
 }

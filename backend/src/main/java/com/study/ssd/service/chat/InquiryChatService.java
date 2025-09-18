@@ -47,7 +47,7 @@ public class InquiryChatService {
 
         InquiryChatRoom newRoom = InquiryChatRoom.builder()
                 .user(user)           // User 객체 직접 할당
-                .admin(admin)         // 관리자 User 객체
+                .admin(admin)         // 관리자 Admin 객체
                 .name(user.getUserNickname() + "님의 문의방")
                 .build();
 

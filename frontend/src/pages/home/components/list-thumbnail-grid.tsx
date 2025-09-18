@@ -27,7 +27,7 @@ export default function ListThumbnailGrid({ study, type }: ListThumbnailGridProp
         )}
         {study.ended && (
           <div className="absolute top-2 right-2 text-sm text-white bg-destructive p-1 rounded">
-            종료된 스터디
+            종료됨
           </div>
         )}
       </div>

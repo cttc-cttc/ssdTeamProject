@@ -1,5 +1,6 @@
 package com.study.ssd.entity.chat;
 
+import com.study.ssd.entity.StudyPost;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,6 +20,10 @@ public class ChatRoom {
 
     @Column(length = 50, nullable = false)
     private String name; // 채팅방 이름
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id", nullable = false, unique = true)
+    private StudyPost studyPost; // 연결된 게시글
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
