@@ -9,8 +9,8 @@ import { useTheme } from "@/components/theme-provider";
 
 export default function Header() {
   const { theme } = useTheme();
-  const { userId, userNickname, clearInfoStore } = useInfoStore();
   const { adminPkID, adminName, clearInfoStore: clearAdminInfoStore } = useAdminInfoStore();
+  const { userId, userNickname, clearInfoStore } = useInfoStore();
   const navigate = useNavigate();
 
   const isSystemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
