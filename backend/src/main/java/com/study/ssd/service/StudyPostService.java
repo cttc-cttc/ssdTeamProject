@@ -4,13 +4,10 @@ import com.study.ssd.dto.studyPost.StudyPostRequest;
 import com.study.ssd.dto.studyPost.StudyPostResponse;
 import com.study.ssd.dto.studyPost.UpdateStudyPostRequest;
 import com.study.ssd.dto.studyPost.UpdateStudyPostResponse;
-import com.study.ssd.entity.JoinStudy;
 import com.study.ssd.entity.StudyPost;
-import com.study.ssd.entity.WishStudy;
-import com.study.ssd.repository.JoinStudyRepository;
+import com.study.ssd.entity.User;
 import com.study.ssd.repository.StudyPostRepository;
 import com.study.ssd.repository.UserRepository;
-import com.study.ssd.repository.WishStudyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -25,8 +22,6 @@ public class StudyPostService {
 
     private final StudyPostRepository studyPostRepository;
     private final UserRepository userRepository;
-    private final WishStudyRepository wishStudyRepository;
-    private final JoinStudyRepository joinStudyRepository;
 
     @Transactional
     public StudyPostResponse createPost (StudyPostRequest studyPostRequest) {
@@ -91,28 +86,6 @@ public class StudyPostService {
         studyPostRepository.delete(post);
     }
 
-    @Transactional
-    public StudyPostResponse addWish(Long id) {
-        StudyPost post = studyPostRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-
-        post.setWishCount(post.getWishCount() + 1);
-        return StudyPostResponse.fromEntity(post);
-    }
-
-    @Transactional
-    public StudyPostResponse joinStudy(Long id) {
-        StudyPost post = studyPostRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-
-        if (post.getCurrentCount() >= post.getMaxCount()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-        }
-
-        post.setCurrentCount(post.getCurrentCount() + 1);
-
-        return StudyPostResponse.fromEntity(post);
-    }
     // 오픈 스터디 조회
     public List<StudyPostResponse> getOpenStudy(String userNickname) {
         List<StudyPost> studyPosts = studyPostRepository.findByUserNicknameOrderByIdDesc(userNickname);

@@ -1,6 +1,7 @@
 package com.study.ssd.dto.studyPost;
 
 import com.study.ssd.entity.StudyPost;
+import com.study.ssd.entity.User;
 import lombok.*;
 
 import java.time.LocalDateTime;

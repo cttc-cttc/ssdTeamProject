@@ -73,11 +73,6 @@ public class StudyPostController {
         return ResponseEntity.ok(new DeleteStudyPostResponse(true, "게시글이 삭제되었습니다."));
     }
 
-    @PostMapping("/create-post/{id}/join")
-    public ResponseEntity<StudyPostResponse> getJoin ( @PathVariable Long id) {
-        return ResponseEntity.ok(studyPostService.joinStudy(id));
-    }
- 
      // 오픈 스터디 조회
      @GetMapping("/open-study")
      public ResponseEntity<List<StudyPostResponse>> getOpenStudy(@RequestParam String userNickname) {

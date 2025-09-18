@@ -8,9 +8,11 @@ import { Button } from "@/components/ui/button";
 import { useInfoStore } from "../account/info-store";
 import { ArrowLeft } from "lucide-react";
 
+// 백엔드 response dto
 interface Post {
   id: number;
   userNickname: string;
+  userPkId: number;
   title: string;
   mainCategory: string;
   subCategories: string[];
@@ -23,7 +25,7 @@ interface Post {
 
 export default function PostDetail() {
   const { id } = useParams();
-  const { userPkID, userNickname } = useInfoStore();
+  const { userPkID } = useInfoStore();
   const userPkIdNum = userPkID ? Number(userPkID) : null;
   const navigate = useNavigate(); // 삭제 후 메인 화면으로 이동
   const [post, setPost] = useState<Post | null>(null);
@@ -143,7 +145,7 @@ export default function PostDetail() {
         <div className="flex justify-between items-center border-b border-gray-300 pb-2 mb-4">
           <span className="text-gray-600">작성자: {post.userNickname}</span>
           <div className="flex flex-wrap gap-2 items-center">
-            {userNickname === post.userNickname && (
+            {userPkIdNum !== post.userPkId && (
               <span>
                 <Button
                   onClick={handleEdit}
@@ -179,19 +181,22 @@ export default function PostDetail() {
           <span className="text-gray-700">
             현재 참여 인원: {post.currentCount} / {post.maxCount}
           </span>
-
-          <Button
-            onClick={handleWish}
-            className={`px-3 py-1 rounded ${isWished ? "bg-red-400 text-white" : "bg-gray-200"}`}
-          >
-            {isWished ? "위시 취소" : "위시 추가"} {post.wishCount}
-          </Button>
+          {userPkIdNum !== post.userPkId && (
+            <Button
+              onClick={handleWish}
+              className={`px-3 py-1 rounded ${isWished ? "bg-red-400 text-white" : "bg-gray-200"}`}
+            >
+              {isWished ? "위시 취소" : "위시 추가"} {post.wishCount}
+            </Button>
+          )}
         </div>
 
         <div className="border border-gray-300 rounded-md p-6 mb-6">
           <CustomViewer contents={post.content} />
         </div>
-        <Button onClick={handleJoin}>{isJoined ? "스터디 탈퇴" : "참여하기"}</Button>
+        {userPkIdNum !== post.userPkId && (
+          <Button onClick={handleJoin}>{isJoined ? "스터디 탈퇴" : "참여하기"}</Button>
+        )}
       </div>
     </div>
   );
