@@ -105,19 +105,27 @@ export default function PostDetail() {
         const res = await axios.delete("/api/join", {
           params: { userId: userPkIdNum, postId: post.id },
         });
-        alert(res.data.message);
+        alert(res.data.message || "스터디 탈퇴 완료");
         setIsJoined(false);
         setPost({ ...post, currentCount: post.currentCount - 1 });
       } else {
         const res = await axios.post("/api/join", null, {
           params: { userId: userPkIdNum, postId: post.id },
         });
-        alert(res.data.message);
+        alert(res.data.message || "스터디 참여 완료");
         setIsJoined(true);
         setPost({ ...post, currentCount: post.currentCount + 1 });
       }
-    } catch (error) {
-      console.error(error);
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error) && error.response) {
+        if (error.response.status === 400) {
+          alert("모집 인원이 마감된 스터디입니다."); // 400 잘못된 요청
+        } else {
+          alert("참여 중 오류가 발생했습니다."); // 400 외 서버 에러
+        }
+      } else {
+        alert("서버와 통신할 수 없습니다."); // 서버 연결 문제
+      }
     }
   };
 

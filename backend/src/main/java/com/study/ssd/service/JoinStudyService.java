@@ -35,6 +35,10 @@ public class JoinStudyService {
         StudyPost post = studyPostRepository.findById(postId)
                 .orElseThrow(() -> new IllegalArgumentException("Post not found: " + postId));
 
+        if (post.getCurrentCount() >= post.getMaxCount()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "모집인원이 마감된 스터디입니다.");
+        }
+
         JoinStudy joinStudy = JoinStudy.builder()
                 .user(user)
                 .post(post)
