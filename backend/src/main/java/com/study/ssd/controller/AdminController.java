@@ -3,6 +3,7 @@ package com.study.ssd.controller;
 import com.study.ssd.dto.AdminDTO;
 import com.study.ssd.entity.Admin;
 import com.study.ssd.repository.AdminRepository;
+import com.study.ssd.service.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 // @CrossOrigin(origins = "*") 나중에 하자
 public class AdminController {
     private final AdminRepository adminRepository;
+    private final AdminService adminService;
 
     // 회원가입
     @PostMapping("/signUp")
@@ -33,6 +35,25 @@ public class AdminController {
                     saveAdmin.getAdminId(),
                     saveAdmin.getAdminName(),
                     saveAdmin.getAdminPassword()
+            );
+
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    // 로그인
+    @PostMapping("/login")
+    public ResponseEntity<?> loginAdmin(@RequestBody AdminDTO.LoginRequest loginRequest){
+        try {
+            Admin admin = adminService.loginAdmin(loginRequest.getAdminId(), loginRequest.getAdminPassword());
+            
+            AdminDTO.AdminResponse response = new AdminDTO.AdminResponse(
+                    admin.getId(),
+                    admin.getAdminId(),
+                    admin.getAdminName(),
+                    admin.getAdminPassword()
             );
 
             return ResponseEntity.ok(response);
