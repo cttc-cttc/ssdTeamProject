@@ -53,8 +53,8 @@ export default function SignUp() {
     // 비밀번호 유효성 검사
     if (!formData.adminPassword) {
       checkErrors.adminPassword = "비밀번호를 입력하세요.";
-    } else if (formData.adminPassword.length < 6 || formData.adminPassword.length > 18) {
-      checkErrors.adminPassword = "비밀번호는 6자 이상 18자 이하로 입력하세요.";
+    } else if (formData.adminPassword.length < 4 || formData.adminPassword.length > 18) {
+      checkErrors.adminPassword = "비밀번호는 4자 이상 18자 이하로 입력하세요.";
     }
 
     // 비밀번호 확인 유효성 검사
@@ -93,7 +93,7 @@ export default function SignUp() {
 
       if (response.status === 200) {
         alert("관리자 계정생성 성공!");
-        navigate("/log-in");
+        navigate("/admin-log-in");
       }
     } catch (error) {
       if (axios.isAxiosError(error) && error.response?.status === 400) {
@@ -194,7 +194,7 @@ export default function SignUp() {
           <div className="text-center">
             이미 계정이 있으신가요?{" "}
             <Link
-              to="/log-in"
+              to="/admin-log-in"
               className="text-blue-600 hover:text-blue-800  dark:text-blue-400 dark:hover:text-blue-600"
             >
               로그인하기

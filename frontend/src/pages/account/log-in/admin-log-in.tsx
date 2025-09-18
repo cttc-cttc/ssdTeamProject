@@ -53,6 +53,11 @@ export default function AdminLogIn() {
           adminId: data.adminId,
         });
         alert("로그인 성공!");
+        //관리자 대시보드 생성 구역
+        //관리자 대시보드 생성 구역
+        //관리자 대시보드 생성 구역
+        //관리자 대시보드 생성 구역
+        //관리자 대시보드 생성 구역
         navigate("/");
       }
     } catch (error) {
