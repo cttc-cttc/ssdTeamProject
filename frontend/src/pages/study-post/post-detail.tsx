@@ -27,6 +27,7 @@ export default function PostDetail() {
   const navigate = useNavigate(); // 삭제 후 메인 화면으로 이동
   const [post, setPost] = useState<Post | null>(null);
   const [isWished, setIsWished] = useState(false);
+  const [isJoined, setIsJoined] = useState(false);
 
   useEffect(() => {
     axios.get(`/api/create-post/${id}`).then(res => setPost(res.data));
@@ -37,6 +38,15 @@ export default function PostDetail() {
       axios
         .get(`/api/wish/check?userId=${userPkIdNum}&postId=${id}`)
         .then(res => setIsWished(res.data.isWished))
+        .catch(console.error);
+    }
+  }, [userPkIdNum, id]);
+
+  useEffect(() => {
+    if (userPkIdNum && id) {
+      axios
+        .get(`/api/join/check?userId=${userPkIdNum}&postId=${id}`)
+        .then(res => setIsJoined(res.data.isJoined))
         .catch(console.error);
     }
   }, [userPkIdNum, id]);
@@ -85,20 +95,26 @@ export default function PostDetail() {
   };
 
   const handleJoin = async () => {
-    if (!post || userPkIdNum) return;
-    try {
-      const res = await axios.post(`/api/join`, null, {
-        params: { userId: userPkIdNum, postId: post.id },
-      });
-      alert(res.data.message);
+    if (!post || !userPkIdNum) return;
 
-      setPost(prev => (prev ? { ...prev, currentCount: prev.currentCount + 1 } : prev));
-    } catch (err: unknown) {
-      if (axios.isAxiosError(err) && err.response?.data?.message) {
-        alert(err.response.data.message);
+    try {
+      if (isJoined) {
+        const res = await axios.delete("/api/join", {
+          params: { userId: userPkIdNum, postId: post.id },
+        });
+        alert(res.data.message);
+        setIsJoined(false);
+        setPost({ ...post, currentCount: post.currentCount - 1 });
       } else {
-        alert("Error");
+        const res = await axios.post("/api/join", null, {
+          params: { userId: userPkIdNum, postId: post.id },
+        });
+        alert(res.data.message);
+        setIsJoined(true);
+        setPost({ ...post, currentCount: post.currentCount + 1 });
       }
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -160,7 +176,7 @@ export default function PostDetail() {
         <div className="border border-gray-300 rounded-md p-6 mb-6">
           <CustomViewer contents={post.content} />
         </div>
-        <Button onClick={handleJoin}>참여하기</Button>
+        <Button onClick={handleJoin}>{isJoined ? "스터디 탈퇴" : "참여하기"}</Button>
       </div>
     </div>
   );

@@ -113,28 +113,11 @@ public class StudyPostService {
 
         return StudyPostResponse.fromEntity(post);
     }
-    
-    // 조인 스터디 조회
-    public List<StudyPostResponse> getJoinStudy(Long userId) {
-        List<JoinStudy> joinStudy = joinStudyRepository.findByUserIdWithPost(userId);
-        return joinStudy.stream()
-                .map(joinStudies -> StudyPostResponse.fromEntity(joinStudies.getPost()))
-                .toList();
-    }
-
     // 오픈 스터디 조회
     public List<StudyPostResponse> getOpenStudy(String userNickname) {
         List<StudyPost> studyPosts = studyPostRepository.findByUserNickname(userNickname);
         return studyPosts.stream()
                 .map(StudyPostResponse::fromEntity)
-                .toList();
-    }
-
-    // 위시 스터디 조회
-    public List<StudyPostResponse> getWishStudy(Long userId) {
-        List<WishStudy> wishStudy = wishStudyRepository.findByUserIdWithPost(userId);
-        return wishStudy.stream()
-                .map(wishStudies -> StudyPostResponse.fromEntity(wishStudies.getPost()))
                 .toList();
     }
 

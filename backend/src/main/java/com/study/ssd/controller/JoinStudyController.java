@@ -22,6 +22,12 @@ public class JoinStudyController {
         return ResponseEntity.ok(Map.of("message", "join successfully"));
     }
 
+    @DeleteMapping
+    public ResponseEntity<?> leaveStudy (@RequestParam Long userId, @RequestParam Long postId) {
+        joinStudyService.leaveStudy(userId, postId);
+        return ResponseEntity.ok(Map.of("message", "Join Deleted Successfully"));
+    }
+
     @GetMapping("/check")
     public ResponseEntity<?> getJoinCheck (@RequestParam Long userId, @RequestParam Long postId) {
         boolean isJoined = joinStudyService.isJoined(userId, postId);

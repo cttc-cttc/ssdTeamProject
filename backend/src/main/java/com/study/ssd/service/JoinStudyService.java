@@ -4,6 +4,7 @@ import com.study.ssd.dto.studyPost.StudyPostResponse;
 import com.study.ssd.entity.JoinStudy;
 import com.study.ssd.entity.StudyPost;
 import com.study.ssd.entity.User;
+import com.study.ssd.entity.WishStudy;
 import com.study.ssd.repository.JoinStudyRepository;
 import com.study.ssd.repository.StudyPostRepository;
 import com.study.ssd.repository.UserRepository;
@@ -40,6 +41,17 @@ public class JoinStudyService {
         joinStudyRepository.save(joinStudy);
 
         post.increaseCurrentCount();
+        studyPostRepository.save(post);
+    }
+
+    @Transactional
+    public void leaveStudy (Long userId, Long postId) {
+        JoinStudy joinStudy = joinStudyRepository.findByUserIdAndPostId(userId, postId)
+                .orElseThrow(() -> new IllegalArgumentException("Not found join study"));
+        joinStudyRepository.delete(joinStudy);
+
+        StudyPost post = joinStudy.getPost();
+        post.decreaseCurrentCount();
         studyPostRepository.save(post);
     }
 
