@@ -1,9 +1,11 @@
 package com.study.ssd.service.chat;
 
 import com.study.ssd.dto.chat.InquiryMessageRequestDto;
+import com.study.ssd.entity.Admin;
 import com.study.ssd.entity.User;
 import com.study.ssd.entity.chat.InquiryChatMessage;
 import com.study.ssd.entity.chat.InquiryChatRoom;
+import com.study.ssd.repository.AdminRepository;
 import com.study.ssd.repository.UserRepository;
 import com.study.ssd.repository.chat.InquiryChatMessageRepository;
 import com.study.ssd.repository.chat.InquiryChatRoomRepository;
@@ -21,7 +23,8 @@ import java.util.Optional;
 public class InquiryChatService {
     private final InquiryChatRoomRepository inquiryChatRoomRepository;
     private final InquiryChatMessageRepository inquiryChatMessageRepository;
-    private final UserRepository userRepository; // 기존 User repo
+    private final UserRepository userRepository;
+    private final AdminRepository adminRepository;
     private final SimpMessageSendingOperations messagingTemplate;
 
     @Transactional
@@ -36,10 +39,10 @@ public class InquiryChatService {
         User user = userRepository.findById(userPk)
                 .orElseThrow(() -> new IllegalArgumentException("유저를 찾을 수 없습니다."));
 
-        // 관리자 계정 PK 고정값 (예: 11L) — 실제로는 설정(property)으로 관리 필요
+        // 관리자 계정 PK 고정값 (예: 1L) — 실제로는 설정(property)으로 관리 필요
         // 현재 db에 등록된 임시 관리자 Admin(임시)의 pk는 11번
-        Long ADMIN_PK = 11L;
-        User admin = userRepository.findById(ADMIN_PK)
+        Long ADMIN_PK = 1L;
+        Admin admin = adminRepository.findById(ADMIN_PK)
                 .orElseThrow(() -> new IllegalArgumentException("관리자를 찾을 수 없습니다."));
 
         InquiryChatRoom newRoom = InquiryChatRoom.builder()

@@ -27,9 +27,7 @@ export default function InquiryRoom({ roomId, roomName, username, onBack }: Inqu
 
     axios
       .get(`/api/inquiry/inquiry-room/${roomId}/messages`)
-      .then(res => {
-        setMessages(res.data);
-      })
+      .then(res => setMessages(res.data))
       .catch(err => console.error("기존 메시지를 불러오기 에러: ", err));
   }, [roomId]);
 
@@ -82,15 +80,16 @@ export default function InquiryRoom({ roomId, roomName, username, onBack }: Inqu
 
   return (
     <div className="flex flex-col gap-2">
-      <h3 className="flex gap-2 items-center">
-        {username === "Admin(임시)" && (
+      <h3 className="flex gap-4 items-center mb-2">
+        {username === "Admin" && (
           <Button
             variant="outline"
-            size="icon"
+            size="sm"
             className="rounded hover:bg-accent"
             onClick={handleBack}
           >
             <ArrowLeftToLine className="w-6 h-6" />
+            목록으로
           </Button>
         )}
 

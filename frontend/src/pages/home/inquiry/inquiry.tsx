@@ -1,3 +1,4 @@
+import { useAdminInfoStore } from "@/pages/account/admin-info-store";
 import { useInfoStore } from "@/pages/account/info-store";
 import InquiryRoom from "@/pages/chat/inquiry-room";
 import InquiryRoomList from "@/pages/chat/inquiry-room-list";
@@ -14,21 +15,28 @@ export interface InquiryChatRoomType {
 
 // 관리자와 채팅하기
 export default function Inquiry() {
+  const { adminPkID, adminName } = useAdminInfoStore();
   const { userPkID, userNickname } = useInfoStore();
   const [roomId, setRoomId] = useState("");
   const [roomName, setRoomName] = useState("");
   const [roomList, setRoomList] = useState<InquiryChatRoomType[]>([]);
 
+  // 로그인 상태 확인
+  const isAdminLoggedIn = !!adminPkID;
+  const isUserLoggedIn = !!userPkID;
+
   useEffect(() => {
-    if (userNickname === "Admin(임시)") {
+    if (isAdminLoggedIn) {
       // 관리자 → 모든 유저 채팅방 목록 불러오기
       axios
         .get("/api/inquiry/rooms")
         .then(res => setRoomList(res.data))
         .catch(err => console.error("채팅방 목록 불러오기 에러 ", err));
-    } else {
+      return;
+    }
+
+    if (isUserLoggedIn) {
       // 유저 → 본인 채팅방 불러오기
-      if (!userPkID) return;
       axios
         .get("/api/inquiry/room/me", { params: { userPkID } })
         .then(res => {
@@ -37,7 +45,7 @@ export default function Inquiry() {
         })
         .catch(err => console.error("채팅방 불러오기 에러 ", err));
     }
-  }, [userNickname, userPkID]);
+  }, [isAdminLoggedIn, isUserLoggedIn, userPkID]);
 
   // 방 선택 핸들러 (관리자 전용)
   const onSelectRoom = (roomId: string, roomName: string) => {
@@ -52,27 +60,24 @@ export default function Inquiry() {
   };
 
   // 로그인 안 된 경우 → 로그인 페이지로 리다이렉트
-  if (!userNickname) return <Navigate to="/log-in" replace />;
+  if (!isAdminLoggedIn && !isUserLoggedIn) return <Navigate to="/log-in" replace />;
 
   return (
-    <div className="container m-auto my-16 flex flex-col items-center min-h-[52vh]">
+    <div className="container m-auto my-16 flex flex-col items-center">
       <h1 className="font-bold text-2xl text-primary mb-8">관리자와 실시간 채팅</h1>
 
-      {userNickname === "Admin(임시)" ? (
+      {isAdminLoggedIn && adminName && (
         // 관리자 → 모든 유저 채팅방 목록 불러오기
         <>
           {roomId === "" ? (
             <InquiryRoomList roomList={roomList} onSelectRoom={onSelectRoom} />
           ) : (
-            <InquiryRoom
-              roomId={roomId}
-              roomName={roomName}
-              username={userNickname}
-              onBack={onBack}
-            />
+            <InquiryRoom roomId={roomId} roomName={roomName} username={adminName} onBack={onBack} />
           )}
         </>
-      ) : (
+      )}
+
+      {isUserLoggedIn && userNickname && (
         // 유저 → 본인 채팅방 바로 연결
         <InquiryRoom roomId={roomId} roomName={roomName} username={userNickname} />
       )}

@@ -1,5 +1,6 @@
 package com.study.ssd.entity.chat;
 
+import com.study.ssd.entity.Admin;
 import com.study.ssd.entity.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -22,7 +23,7 @@ public class InquiryChatRoom {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "admin_pk", nullable = false) // FK 컬럼명 = admin_pk
-    private User admin; // 관리자 User 엔티티 참조
+    private Admin admin; // 관리자 Admin 엔티티 참조
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_pk", nullable = false, unique = true)  // FK 컬럼명 = user_pk
