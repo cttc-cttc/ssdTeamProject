@@ -57,8 +57,10 @@ export default function PostDetail() {
   const getDDay = (deadline: string) => {
     const end = new Date(deadline).getTime();
     const now = new Date().getTime();
-    const diff = Math.ceil((end - now) / (1000 * 60 * 60 * 24));
-    return diff > 0 ? `D-${diff}` : "마감";
+    const diff = Math.floor((end - now) / (1000 * 60 * 60 * 24));
+
+    if (diff > 0) return `D-${diff}`;
+    if (diff === 0) return "오늘 마감";
   };
 
   const handleEdit = () => {
@@ -154,7 +156,7 @@ export default function PostDetail() {
         <div className="flex justify-between items-center border-b border-gray-300 pb-2 mb-4">
           <span className="text-gray-600">작성자: {post.userNickname}</span>
           <div className="flex flex-wrap gap-2 items-center">
-            {userPkIdNum !== post.userPkId && (
+            {userPkIdNum === post.userPkId && (
               <span>
                 <Button
                   onClick={handleEdit}

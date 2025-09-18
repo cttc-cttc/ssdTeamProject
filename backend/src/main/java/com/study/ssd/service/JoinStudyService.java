@@ -36,7 +36,7 @@ public class JoinStudyService {
                 .orElseThrow(() -> new IllegalArgumentException("Post not found: " + postId));
 
         if (post.getCurrentCount() >= post.getMaxCount()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "모집인원이 마감된 스터디입니다.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "모집 인원이 마감된 스터디입니다.");
         }
 
         JoinStudy joinStudy = JoinStudy.builder()
