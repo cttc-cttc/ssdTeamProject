@@ -19,7 +19,7 @@ interface AppSidebarProps {
 
 export function AppSidebar({ catParam, categoryName, categories, onTabChange }: AppSidebarProps) {
   return (
-    <Sidebar className="sticky top-40 h-fit">
+    <Sidebar className="fixed top-40 h-fit">
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel className="my-2">{categoryName}</SidebarGroupLabel>

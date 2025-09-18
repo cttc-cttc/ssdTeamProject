@@ -140,13 +140,11 @@ export default function StudyListMain() {
   if (!page) return <Navigate to={`/study/${catParam}/1`} replace />;
 
   return (
-    <div>
-      <SidebarLayout
-        catParam={catParam}
-        categoryName={studyCategoryName}
-        categories={studyCategory}
-        children={pageComponent()}
-      />
-    </div>
+    <SidebarLayout
+      catParam={catParam}
+      categoryName={studyCategoryName}
+      categories={studyCategory}
+      children={pageComponent()}
+    />
   );
 }
