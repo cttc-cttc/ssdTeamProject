@@ -2,8 +2,10 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Home from "./pages/home/home";
 import HomeMain from "./pages/home/main/home-main";
 import SignUp from "./pages/account/sign-up/sign-up";
+import AdminSignUp from "./pages/account/sign-up/admin-sign-up";
 import Page404 from "./pages/etc/page-404";
 import LogIn from "./pages/account/log-in/log-in";
+import AdminLogIn from "./pages/account/log-in/admin-log-in";
 import FindPassword from "./pages/account/find-password/find-password";
 import PasswordReset from "./pages/account/password-reset/password-reset";
 import MyPage from "./pages/account/my-page/my-page";
@@ -37,7 +39,9 @@ function App() {
           </Route>
 
           <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/admin-sign-up" element={<AdminSignUp />} />
           <Route path="/log-in" element={<LogIn />} />
+          <Route path="/admin-log-in" element={<AdminLogIn />} />
           <Route path="/find-password" element={<FindPassword />} />
           <Route path="/password-reset" element={<PasswordReset />} />
 

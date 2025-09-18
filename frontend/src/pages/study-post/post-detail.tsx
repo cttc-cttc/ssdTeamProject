@@ -121,6 +121,7 @@ export default function PostDetail() {
     }
   };
 
+  // 뒤로가기
   const backStep = () => {
     navigate(-1);
   };

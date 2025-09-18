@@ -2,16 +2,16 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useInfoStore } from "../info-store";
+import { useAdminInfoStore } from "../admin-info-store";
 import axios from "axios";
 
-export default function LogIn() {
+export default function AdminLogIn() {
   const navigate = useNavigate();
-  const { setInfoStore } = useInfoStore();
+  const { setInfoStore } = useAdminInfoStore();
 
   const [formData, setFormData] = useState({
-    userId: "",
-    userPassword: "",
+    adminId: "",
+    adminPassword: "",
   });
 
   // 로그인 로딩 상태 -> 유저의 복수 클릭을 방지
@@ -32,7 +32,7 @@ export default function LogIn() {
     e.preventDefault();
 
     // 로그인 유효성 검사
-    if (!formData.userId || !formData.userPassword) {
+    if (!formData.adminId || !formData.adminPassword) {
       alert("아이디와 비밀번호를 입력해주세요.");
       return;
     }
@@ -41,20 +41,23 @@ export default function LogIn() {
     setLoading(true);
 
     try {
-      const response = await axios.post("/api/users/login", formData);
+      const response = await axios.post("/api/admin/login", formData);
 
       if (response.status === 200) {
         const data = response.data;
 
         // 로그인 성공 시, 전역 상태에 사용자 정보 저장
         setInfoStore({
-          userPkID: data.id,
-          userName: data.userName,
-          userId: data.userId,
-          userNickname: data.userNickname,
-          userEmail: data.userEmail,
+          adminPkID: data.id,
+          adminName: data.adminName,
+          adminId: data.adminId,
         });
         alert("로그인 성공!");
+        //관리자 대시보드 생성 구역
+        //관리자 대시보드 생성 구역
+        //관리자 대시보드 생성 구역
+        //관리자 대시보드 생성 구역
+        //관리자 대시보드 생성 구역
         navigate("/");
       }
     } catch (error) {
@@ -73,21 +76,20 @@ export default function LogIn() {
     <div className="flex items-center justify-center min-h-screen px-4 py-12">
       <div className="max-w-md w-full space-y-8 border-2 border-[#2c5536] rounded-lg p-6 shadow-2xl">
         <div>
-          <h2 className="mt-6 text-3xl font-extrabold text-center">로그인</h2>
-          <p className="mt-2 text-sm text-center">SSD에 로그인하고 다양한 스터디를 경험해보세요!</p>
+          <h2 className="mt-6 text-3xl font-extrabold text-center">관리자 로그인</h2>
         </div>
 
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="space-y-4">
             <div>
-              <label htmlFor="userId" className="block text-sm font-medium">
+              <label htmlFor="adminId" className="block text-sm font-medium">
                 아이디 <span className="text-red-500">*</span>
               </label>
               <Input
-                id="userId"
-                name="userId"
+                id="adminId"
+                name="adminId"
                 type="text"
-                value={formData.userId}
+                value={formData.adminId}
                 onChange={handleInputChange}
                 placeholder="아이디를 입력해주세요."
                 className="mt-1"
@@ -95,14 +97,14 @@ export default function LogIn() {
             </div>
 
             <div>
-              <label htmlFor="userPassword" className="block text-sm font-medium">
+              <label htmlFor="adminPassword" className="block text-sm font-medium">
                 비밀번호 <span className="text-red-500">*</span>
               </label>
               <Input
-                id="userPassword"
-                name="userPassword"
+                id="adminPassword"
+                name="adminPassword"
                 type="password"
-                value={formData.userPassword}
+                value={formData.adminPassword}
                 onChange={handleInputChange}
                 placeholder="비밀번호를 입력해주세요."
                 className="mt-1"
@@ -112,27 +114,16 @@ export default function LogIn() {
 
           <div>
             <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? "로그인 중..." : "스터디 시작!"}
+              {loading ? "로그인 중..." : "로그인"}
             </Button>
           </div>
 
           <div className="text-center">
-            계정이 없으신가요?{" "}
             <Link
-              to="/sign-up"
+              to="/admin-sign-up"
               className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600"
             >
-              회원가입하기
-            </Link>
-          </div>
-
-          <div className="text-center">
-            혹시 비밀번호를 잊으셨나요?{" "}
-            <Link
-              to="/find-password"
-              className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600"
-            >
-              비밀번호찾기
+              관리자 계정생성
             </Link>
           </div>
         </form>
