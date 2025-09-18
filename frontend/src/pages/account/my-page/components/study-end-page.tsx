@@ -59,6 +59,7 @@ export default function StudyEndPage() {
     }
   };
 
+  // 뒤로가기
   const backStep = () => {
     navigate(-1);
   };

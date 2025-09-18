@@ -110,16 +110,16 @@ public class UserController {
     }
 
     // 로그아웃
-    @PostMapping("/logout/{userId}")
-    public ResponseEntity<?> logoutUser(@PathVariable String userId){
-        try {
-            userService.logoutUser(userId);
-
-            return ResponseEntity.ok("로그아웃 성공");
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
+//    @PostMapping("/logout/{userId}")
+//    public ResponseEntity<?> logoutUser(@PathVariable String userId){
+//        try {
+//            userService.logoutUser(userId);
+//
+//            return ResponseEntity.ok("로그아웃 성공");
+//        } catch (RuntimeException e) {
+//            return ResponseEntity.badRequest().body(e.getMessage());
+//        }
+//    }
     
     // 비밀번호 재설정 요청
     @PostMapping("/password-reset/request")
