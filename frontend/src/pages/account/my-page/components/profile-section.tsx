@@ -4,11 +4,13 @@ import { Input } from "@/components/ui/input";
 import axios from "axios";
 
 interface ProfileSectionProps {
+  userPkID: string;
   userName: string;
   userId: string;
   userNickname: string;
   userEmail: string;
   setInfoStore: (data: {
+    userPkID: string;
     userName: string;
     userId: string;
     userNickname: string;
@@ -17,6 +19,7 @@ interface ProfileSectionProps {
 }
 
 export default function ProfileSection({
+  userPkID,
   userName,
   userId,
   userNickname,
@@ -76,6 +79,7 @@ export default function ProfileSection({
 
       // 성공 시 상태 업데이트
       setInfoStore({
+        userPkID: userPkID || "",
         userName: userName || "",
         userId: userId || "",
         userNickname: formData.userNickname,

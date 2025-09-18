@@ -13,6 +13,7 @@ export default function OpenStudy() {
 
   // 페이지네이션 상태 추가
   const [currentPage, setCurrentPage] = useState(1);
+
   // 한 페이지에 보여줄 스터디 수
   const [studyPerPage] = useState(6);
 
