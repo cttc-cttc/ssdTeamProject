@@ -48,7 +48,7 @@ export default function AdminLogIn() {
 
         // 로그인 성공 시, 전역 상태에 사용자 정보 저장
         setInfoStore({
-          adminPkID: data.id,
+          adminPkID: data.userId,
           adminName: data.adminName,
           adminId: data.adminId,
         });

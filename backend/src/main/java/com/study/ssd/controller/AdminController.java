@@ -51,8 +51,8 @@ public class AdminController {
             
             AdminDTO.AdminResponse response = new AdminDTO.AdminResponse(
                     admin.getId(),
-                    admin.getAdminId(),
                     admin.getAdminName(),
+                    admin.getAdminId(),
                     admin.getAdminPassword()
             );
 
