@@ -184,7 +184,7 @@ export default function ClashMiniGameCSS() {
   }, [cheatActivated, outerSize, requiredKey, requiredSuccess, navigate, rerollTargetPos]);
 
   return (
-    <div className="bg-[#f5f5f5] text-black text-center pt-12 h-screen transition-all duration-500 relative overflow-hidden">
+    <div className="bg-[#f5f5f5] text-black text-center pt-12 transition-all duration-500 relative overflow-hidden">
       {!cheatActivated && (
         <>
           <h1>로그인 화면</h1>
