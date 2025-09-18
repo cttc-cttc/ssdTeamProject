@@ -1,5 +1,5 @@
 import { Monitor, ScrollText, Languages, BriefcaseBusiness, CircleEllipsis } from "lucide-react";
-import { UserRoundPen, Book, BookPlus, BookMarked } from "lucide-react";
+import { UserRoundPen, Book, BookPlus, BookMarked, MessageCircle } from "lucide-react";
 
 /**
  * 홈의 스터디 리스트, 마이 페이지, 관리자 페이지에서 사용할 사이드 바의 메뉴를 커스텀하는 파일입니다
@@ -89,5 +89,10 @@ export const mypageInnerSidebar = [
     title: "스터디 종료",
     url: "end-study",
     icon: BookPlus,
+  },
+  {
+    title: "그룹 채팅방",
+    url: "group-chat",
+    icon: MessageCircle,
   },
 ];

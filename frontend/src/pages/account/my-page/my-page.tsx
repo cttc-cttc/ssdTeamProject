@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { useInfoStore } from "../info-store";
 import {
   mypagePageName,
@@ -15,7 +15,6 @@ import ActivitySection from "./components/activity-section";
 import JoinStudy from "./join-study";
 import OpenStudy from "./open-study";
 import WishStudy from "./wish-study";
-import { Button } from "@/components/ui/button";
 
 export default function MyPage() {
   const navigate = useNavigate();
@@ -104,10 +103,6 @@ export default function MyPage() {
             />
           </div>
         </div>
-        {/* 채팅방 테스트 나중에 수정하세요 */}
-        <Button asChild>
-          <Link to="/testPage">임시 채팅방 입장</Link>
-        </Button>
       </div>
     );
   };

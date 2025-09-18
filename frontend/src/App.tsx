@@ -20,7 +20,6 @@ import PostDetail from "./pages/study-post/post-detail";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import "@toast-ui/editor/dist/theme/toastui-editor-dark.css";
 import PostingForm from "./pages/study-post/posting-form";
-import TestPage from "./pages/chat/test-page";
 import HiddenGame from "./pages/account/hidden-game";
 import StudyListDetail from "./pages/home/study-list/study-list-detail";
 import MyPageStudyListDetail from "./pages/account/my-page/components/my-page-study-list-detail";
@@ -66,7 +65,6 @@ function App() {
           <Route path="/guide" element={<Guide />} />
 
           <Route path="/inquiry" element={<Inquiry />} />
-          <Route path="/testPage" element={<TestPage />} />
           <Route path="/hidden-game" element={<HiddenGame />} />
           <Route path="/*" element={<Page404 />} />
         </Route>

@@ -3,6 +3,7 @@ import { mypageInnerSidebar, mypageInnerSidebarName } from "@/components/common/
 import { useParams, useNavigate } from "react-router-dom";
 import PostsDetail from "../../../study-post/post-detail";
 import StudyEndPage from "./study-end-page";
+import GroupChat from "./group-chat";
 
 export default function StudyListDetail() {
   const { cat, id } = useParams<{ cat: string; id: string }>();
@@ -17,10 +18,14 @@ export default function StudyListDetail() {
   };
 
   const pageComponent = () => {
-    if (innerSidebarParam === "end-study") {
-      return <StudyEndPage />;
+    switch (innerSidebarParam) {
+      case "study-detail":
+        return <PostsDetail />;
+      case "end-study":
+        return <StudyEndPage />;
+      case "group-chat":
+        return <GroupChat />;
     }
-    return <PostsDetail />;
   };
 
   return (
