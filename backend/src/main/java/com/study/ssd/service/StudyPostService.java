@@ -10,10 +10,12 @@ import com.study.ssd.repository.StudyPostRepository;
 import com.study.ssd.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -22,6 +24,24 @@ public class StudyPostService {
 
     private final StudyPostRepository studyPostRepository;
     private final UserRepository userRepository;
+
+    /**
+     * 크론 표현식으로 실행 주기 지정
+     * ex) (cron = "0 0 1 * * ?") -> 매일 새벽 1시에 실행
+     * ┌───────────── 초 (0-59)
+     * │ ┌─────────── 분 (0-59)
+     * │ │ ┌───────── 시 (0-23)
+     * │ │ │ ┌─────── 일 (1-31)
+     * │ │ │ │ ┌───── 월 (1-12)
+     * │ │ │ │ │ ┌─── 요일 (0-7, 일요일=0 또는 7)
+     * │ │ │ │ │ │
+     * 0 0 1 * * ?
+     */
+    @Scheduled(cron = "0 */5 * * * ?")  // 5분마다 계속 마감 처리
+    @Transactional
+    public void updateEndedStudies() {
+        studyPostRepository.updateEndedStudies(LocalDateTime.now());
+    }
 
     @Transactional
     public StudyPostResponse createPost (StudyPostRequest studyPostRequest) {
