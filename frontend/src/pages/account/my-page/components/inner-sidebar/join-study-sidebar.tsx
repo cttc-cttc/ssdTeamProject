@@ -5,9 +5,9 @@ import {
   mypageJoinStudyPageInnerName,
 } from "@/components/common/sidebar-menu-data";
 import { useNavigate, useParams } from "react-router-dom";
-import PostsDetail from "../../../study-post/post-detail";
-import GroupChat from "./group-chat";
+import PostsDetail from "../../../../study-post/post-detail";
 import CategoryBreadcrumb from "@/components/common/category-breadcrumb";
+import GroupChat from "../inner-page/group-chat";
 
 export default function JoinStudySidebar() {
   const { cat, id } = useParams<{ cat: string; id: string }>();

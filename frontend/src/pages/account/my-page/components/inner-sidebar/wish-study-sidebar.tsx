@@ -5,7 +5,7 @@ import {
   mypageWishStudyPageInnerName,
 } from "@/components/common/sidebar-menu-data";
 import { useNavigate, useParams } from "react-router-dom";
-import PostsDetail from "../../../study-post/post-detail";
+import PostsDetail from "../../../../study-post/post-detail";
 import CategoryBreadcrumb from "@/components/common/category-breadcrumb";
 
 export default function WishStudySidebar() {

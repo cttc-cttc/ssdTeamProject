@@ -5,12 +5,12 @@ import {
   mypageOpenStudyPageInnerName,
 } from "@/components/common/sidebar-menu-data";
 import { useParams, useNavigate } from "react-router-dom";
-import PostsDetail from "../../../study-post/post-detail";
-import StudyEndPage from "./study-end-page";
-import GroupChat from "./group-chat";
+import PostsDetail from "../../../../study-post/post-detail";
+import StudyEndPage from "../inner-page/study-end-page";
 import CategoryBreadcrumb from "@/components/common/category-breadcrumb";
+import GroupChat from "../inner-page/group-chat";
 
-export default function StudyListDetail() {
+export default function OpenStudySidebar() {
   const { cat, id } = useParams<{ cat: string; id: string }>();
   const navigate = useNavigate();
   const validUrls = mypageInnerOpenStudySidebar.map(c => c.url);

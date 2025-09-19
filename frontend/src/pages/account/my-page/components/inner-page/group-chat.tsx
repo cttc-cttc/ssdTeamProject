@@ -4,8 +4,8 @@ import axios from "axios";
 import { ArrowLeft } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useInfoStore } from "../../info-store";
 import GroupChatRoom from "@/pages/chat/group-chat-room";
+import { useInfoStore } from "@/pages/account/info-store";
 
 interface RoomData {
   exists: boolean;
