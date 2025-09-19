@@ -54,18 +54,17 @@ export default function GroupChatRoom({ roomId, userId, username }: GroupChatRoo
               }));
             }
           });
+          // 3-2. 과거 메시지 로드
+          const msgRes = await axios.get(`/api/chat/rooms/${roomId}/messages`);
+          setMessages(msgRes.data);
 
-          // 3-2. 입장 API 호출
+          // 3-3. 입장 API 호출
           await axios.post(`/api/chat/rooms/${roomId}/join`, { userId, username });
         };
 
         // 4. STOMP 연결 시작
         stompClient.activate();
         setClient(stompClient);
-
-        // 5. 과거 메시지 로드
-        const msgRes = await axios.get(`/api/chat/rooms/${roomId}/messages`);
-        setMessages(msgRes.data);
       } catch (err) {
         console.error("채팅 초기화 실패:", err);
       } finally {
@@ -117,7 +116,7 @@ export default function GroupChatRoom({ roomId, userId, username }: GroupChatRoo
         <Textarea
           className="max-h-48 w-xl max-w-xl"
           value={input}
-          placeholder="문의 내용을 입력하세요..."
+          placeholder="메시지를 입력하세요"
           onChange={e => setInput(e.target.value)}
           onKeyDown={e => {
             if (e.key === "Enter" && !e.shiftKey) {

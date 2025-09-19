@@ -54,7 +54,7 @@ export default function GroupChat() {
     checkStudyStatus();
   }, [id, currentRoomId]);
 
-  // RoomList에서 선택된 방을 받아 상태 변경
+  // CreateGroupChat에서 생성된 방을 받아 상태 변경
   const onSelectRoom = (roomId: string) => {
     setCurrentRoomId(roomId);
   };
@@ -77,10 +77,9 @@ export default function GroupChat() {
               <ArrowLeft className="w-4 h-4" />
               뒤로가기
             </Button>
-            {message !== "" && (
+            {message !== "" ? (
               <p className="text-center text-xl text-destructive font-semibold">{message}</p>
-            )}
-            {!isExistRoom ? (
+            ) : !isExistRoom ? (
               // 방이 없으면 새로 생성
               <CreateGroupChat onSelectRoom={onSelectRoom} postId={id} />
             ) : (

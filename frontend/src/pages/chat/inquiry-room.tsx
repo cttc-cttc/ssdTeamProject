@@ -103,7 +103,7 @@ export default function InquiryRoom({ roomId, roomName, username, onBack }: Inqu
         <Textarea
           className="max-h-48 w-xl max-w-xl"
           value={input}
-          placeholder="문의 내용을 입력하세요..."
+          placeholder="문의 내용을 입력하세요"
           onChange={e => setInput(e.target.value)}
           onKeyDown={e => {
             if (e.key === "Enter" && !e.shiftKey) {

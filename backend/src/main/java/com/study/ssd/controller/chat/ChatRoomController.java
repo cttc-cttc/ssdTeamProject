@@ -117,7 +117,7 @@ public class ChatRoomController {
             chatMessageRepository.save(joinMessage);
 
             // STOMP 구독자에게 실시간 전송
-            messagingTemplate.convertAndSend("/sub/groupChat" + roomId, joinMessage);
+            messagingTemplate.convertAndSend("/sub/groupChat/" + roomId, joinMessage);
         }
     }
 

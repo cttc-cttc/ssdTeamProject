@@ -48,6 +48,8 @@ public class ChatMessage {
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
-        this.messageType = MessageType.TEXT;
+        if (this.messageType == null) {
+            this.messageType = MessageType.TEXT;
+        }
     }
 }

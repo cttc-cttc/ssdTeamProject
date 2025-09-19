@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 
 /**
- * 그룹 채팅방 메세지 타입
+ * 그룹 채팅방 메시지 타입
  */
 export interface GroupChatMessage {
   roomId: string;
@@ -12,7 +12,7 @@ export interface GroupChatMessage {
 }
 
 /**
- * 문의하기 메세지 타입
+ * 문의하기 메시지 타입
  */
 export interface InquiryChatMessage {
   roomId: string;
