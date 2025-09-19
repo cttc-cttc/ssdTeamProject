@@ -77,6 +77,8 @@ export const mypageSidebar = [
 ];
 
 // 마이 페이지 내부 - 참여 스터디
+export const mypageInnerJoinStudySidebarName = "참여 스터디 사이드바";
+export const mypageJoinStudyPageInnerName = "참여 스터디";
 export const mypageInnerJoinStudySidebar = [
   {
     title: "스터디 상세",
@@ -90,10 +92,10 @@ export const mypageInnerJoinStudySidebar = [
   },
 ];
 
-// 마이 페이지 내부 - 스터디 상세 페이지
-export const mypageInnerSidebarName = "스터디 상세 페이지 사이드바";
-export const mypagePageInnerName = "스터디 상세 페이지";
-export const mypageInnerSidebar = [
+// 마이 페이지 내부 - 개설 스터디
+export const mypageInnerOpenStudySidebarName = "개설 스터디 사이드바";
+export const mypageOpenStudyPageInnerName = "개설 스터디";
+export const mypageInnerOpenStudySidebar = [
   {
     title: "스터디 상세",
     url: "study-detail",
@@ -108,5 +110,16 @@ export const mypageInnerSidebar = [
     title: "그룹 채팅방",
     url: "group-chat",
     icon: MessageCircle,
+  },
+];
+
+// 마이 페이지 내부 - 위시 스터디
+export const mypageInnerWishStudySidebarName = "위시 스터디 사이드바";
+export const mypageWishStudyPageInnerName = "위시 스터디";
+export const mypageInnerWishStudySidebar = [
+  {
+    title: "스터디 상세",
+    url: "study-detail",
+    icon: Book,
   },
 ];

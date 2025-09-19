@@ -1,25 +1,24 @@
 import SidebarLayout from "@/components/common/sidebar-layout";
 import {
-  mypageInnerJoinStudySidebar,
-  mypageInnerJoinStudySidebarName,
-  mypageJoinStudyPageInnerName,
+  mypageInnerWishStudySidebar,
+  mypageInnerWishStudySidebarName,
+  mypageWishStudyPageInnerName,
 } from "@/components/common/sidebar-menu-data";
 import { useNavigate, useParams } from "react-router-dom";
 import PostsDetail from "../../../study-post/post-detail";
-import GroupChat from "./group-chat";
 import CategoryBreadcrumb from "@/components/common/category-breadcrumb";
 
-export default function JoinStudySidebar() {
+export default function WishStudySidebar() {
   const { cat, id } = useParams<{ cat: string; id: string }>();
   const navigate = useNavigate();
-  const validUrls = mypageInnerJoinStudySidebar.map(c => c.url);
+  const validUrls = mypageInnerWishStudySidebar.map(c => c.url);
   const innerSidebarParam = cat && validUrls.includes(cat) ? cat : "study-detail";
   const catTitle =
-    mypageInnerJoinStudySidebar.find(c => c.url === innerSidebarParam)?.title ?? "스터디 상세";
+    mypageInnerWishStudySidebar.find(c => c.url === innerSidebarParam)?.title ?? "스터디 상세";
 
   const sideBarChange = (bar: string) => {
     if (id) {
-      navigate(`/my-page/join-study/${id}/${bar}`);
+      navigate(`/my-page/wish-study/${id}/${bar}`);
     }
   };
 
@@ -27,8 +26,6 @@ export default function JoinStudySidebar() {
     switch (innerSidebarParam) {
       case "study-detail":
         return <PostsDetail />;
-      case "group-chat":
-        return <GroupChat />;
     }
   };
 
@@ -36,7 +33,7 @@ export default function JoinStudySidebar() {
     return (
       <div className="relative flex flex-col w-full mt-10">
         <div className="absolute top-2 left-10">
-          <CategoryBreadcrumb catTitle={catTitle} pageTitle={mypageJoinStudyPageInnerName} />
+          <CategoryBreadcrumb catTitle={catTitle} pageTitle={mypageWishStudyPageInnerName} />
         </div>
         {category()}
       </div>
@@ -47,8 +44,8 @@ export default function JoinStudySidebar() {
     <div>
       <SidebarLayout
         catParam={innerSidebarParam}
-        categoryName={mypageInnerJoinStudySidebarName}
-        categories={mypageInnerJoinStudySidebar}
+        categoryName={mypageInnerWishStudySidebarName}
+        categories={mypageInnerWishStudySidebar}
         onTabChange={sideBarChange}
         children={pageComponent()}
       />

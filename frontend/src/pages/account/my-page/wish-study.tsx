@@ -105,7 +105,7 @@ export default function WishStudy() {
             {visibleStudies.map(study => (
               <Link
                 key={study.id}
-                to={`/posts/${study.id}`}
+                to={`/my-page/wish-study/${study.id}/study-detail`}
                 className="transition-all duration-200 ease-in-out hover:ring-3 ring-ring/50"
               >
                 <ListThumbnailGrid study={study} type="string" />

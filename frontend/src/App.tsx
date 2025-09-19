@@ -26,6 +26,7 @@ import MyPageStudyListDetail from "./pages/account/my-page/components/my-page-st
 import Inquiry from "./pages/home/inquiry/inquiry";
 import Guide from "./pages/guide/guide";
 import JoinStudySidebar from "./pages/account/my-page/components/join-study-sidebar";
+import WishStudySidebar from "./pages/account/my-page/components/wish-study-sidebar";
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
             <Route path=":sidebar" element={<MyPage />} />
             <Route path="join-study/:id/:cat" element={<JoinStudySidebar />} />
             <Route path="open-study/:id/:cat" element={<MyPageStudyListDetail />} />
+            <Route path="wish-study/:id/:cat" element={<WishStudySidebar />} />
           </Route>
 
           <Route element={<RootLayout />}>
