@@ -1,6 +1,6 @@
 import { useState } from "react";
 import RoomList from "./room-list";
-import ChatRoom from "./chat-room";
+import ChatRoom from "./group-chat-room";
 import { useInfoStore } from "../account/info-store";
 import { Navigate } from "react-router-dom";
 

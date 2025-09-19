@@ -5,7 +5,7 @@ import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowLeftToLine, SendHorizontal } from "lucide-react";
-import { scrollDown, type ChatMessageProps } from "./components/chat-utils";
+import { scrollDown, type InquiryChatMessage } from "./components/chat-utils";
 import RenderMessages from "./components/render-messages";
 
 interface InquiryRoomProps {
@@ -16,12 +16,12 @@ interface InquiryRoomProps {
 }
 
 export default function InquiryRoom({ roomId, roomName, username, onBack }: InquiryRoomProps) {
-  const [messages, setMessages] = useState<ChatMessageProps[]>([]);
+  const [messages, setMessages] = useState<InquiryChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [client, setClient] = useState<Client | null>(null);
   const rootRef = useRef<HTMLDivElement>(null);
 
-  // 1️⃣ 기존 메시지 로드
+  // 기존 메시지 로드
   useEffect(() => {
     if (!roomId) return; // roomId가 없으면 요청 안 보냄
 
@@ -31,7 +31,7 @@ export default function InquiryRoom({ roomId, roomName, username, onBack }: Inqu
       .catch(err => console.error("기존 메시지를 불러오기 에러: ", err));
   }, [roomId]);
 
-  // 2️⃣ WebSocket 연결
+  // WebSocket 연결
   useEffect(() => {
     if (!roomId) return;
 
@@ -41,7 +41,7 @@ export default function InquiryRoom({ roomId, roomName, username, onBack }: Inqu
       onConnect: () => {
         // 구독
         stompClient.subscribe(`/sub/inquiry/${roomId}`, (msg: IMessage) => {
-          const received: ChatMessageProps = JSON.parse(msg.body);
+          const received: InquiryChatMessage = JSON.parse(msg.body);
           setMessages(prev => [...prev, received]);
         });
       },

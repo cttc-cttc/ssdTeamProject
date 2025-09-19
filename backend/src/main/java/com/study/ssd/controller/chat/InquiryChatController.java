@@ -3,7 +3,6 @@ package com.study.ssd.controller.chat;
 import com.study.ssd.dto.chat.InquiryChatRoomResponseDto;
 import com.study.ssd.dto.chat.InquiryMessageResponseDto;
 import com.study.ssd.entity.chat.InquiryChatRoom;
-import com.study.ssd.repository.UserRepository;
 import com.study.ssd.repository.chat.InquiryChatMessageRepository;
 import com.study.ssd.repository.chat.InquiryChatRoomRepository;
 import com.study.ssd.service.chat.InquiryChatService;

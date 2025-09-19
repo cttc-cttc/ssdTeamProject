@@ -1,5 +1,6 @@
 package com.study.ssd.entity.chat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.study.ssd.entity.StudyPost;
 import jakarta.persistence.*;
 import lombok.*;
@@ -22,7 +23,8 @@ public class ChatRoom {
     private String name; // 채팅방 이름
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id", nullable = false, unique = true)
+    @JoinColumn(name = "post_id", nullable = false, unique = true)
+    @JsonIgnore
     private StudyPost studyPost; // 연결된 게시글
 
     @Column(nullable = false, updatable = false)

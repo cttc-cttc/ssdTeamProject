@@ -1,11 +1,16 @@
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { printDateSeparator, printTimeStamp, type ChatMessageProps } from "./chat-utils";
+import {
+  printDateSeparator,
+  printTimeStamp,
+  type GroupChatMessage,
+  type InquiryChatMessage,
+} from "./chat-utils";
 import React from "react";
 import { CalendarDays } from "lucide-react";
 
 interface RenderMessagesProps {
   rootRef: React.RefObject<HTMLDivElement | null>;
-  messages: ChatMessageProps[];
+  messages: GroupChatMessage[] | InquiryChatMessage[];
   username: string;
 }
 
@@ -33,21 +38,29 @@ export default function RenderMessages({ rootRef, messages, username }: RenderMe
                 // 내 매시지
                 <div className="flex items-baseline-last gap-2 self-end w-fit max-w-10/12">
                   {time && <div className="text-sm text-muted-foreground">{time}</div>}
-                  <div className="bg-primary text-white px-3 py-2 rounded-2xl shadow-sm whitespace-pre-wrap break-words break-all">
+                  <div className="bg-primary text-white px-3 py-2 rounded-2xl whitespace-pre-wrap break-words break-all">
                     {msg.content}
                   </div>
                 </div>
               ) : (
-                // 상대방 메시지
-                <div key={i} className="flex flex-col self-start max-w-10/12 gap-2">
-                  <span className="font-medium text-muted-foreground">{msg.sender}</span>
-                  <div className="flex items-baseline-last gap-2">
-                    <div className="bg-muted w-fit px-3 py-2 rounded-2xl shadow-sm whitespace-pre-wrap break-words break-all">
-                      {msg.content}
+                // 상대방 메시지 중 SYSTEM 메시지만 따로 처리
+                <>
+                  {msg.sender === "SYSTEM" ? (
+                    <div className="flex justify-center w-full">
+                      <div className="text-sm text-muted-foreground px-3 py-2">{msg.content}</div>
                     </div>
-                    {time && <div className="text-sm text-muted-foreground">{time}</div>}
-                  </div>
-                </div>
+                  ) : (
+                    <div key={i} className="flex flex-col self-start max-w-10/12 gap-2">
+                      <span className="font-medium text-muted-foreground">{msg.sender}</span>
+                      <div className="flex items-baseline-last gap-2">
+                        <div className="bg-muted w-fit px-3 py-2 rounded-2xl whitespace-pre-wrap break-words break-all">
+                          {msg.content}
+                        </div>
+                        {time && <div className="text-sm text-muted-foreground">{time}</div>}
+                      </div>
+                    </div>
+                  )}
+                </>
               )}
             </React.Fragment>
           );

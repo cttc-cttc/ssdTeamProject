@@ -38,11 +38,16 @@ public class ChatMessage {
     @Column(length = 1000, nullable = false)
     private String content; // 메시지 내용
 
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private MessageType messageType; // 메시지 타입 - TEXT, JOIN
+
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @PrePersist
-    protected void onCreate() { // DB에 데이터 등록 시 현재 시간을 자동으로 설정
+    protected void onCreate() {
         this.createdAt = LocalDateTime.now();
+        this.messageType = MessageType.TEXT;
     }
 }

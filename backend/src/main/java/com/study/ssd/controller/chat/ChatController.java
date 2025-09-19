@@ -20,9 +20,9 @@ public class ChatController {
      * 그룹 채팅창에서 메시지 작성 시 메시지 db에 등록
      * @param requestMessage
      */
-    @MessageMapping("/chat/message")
-    public void writeMessage(ChatMessageRequestDto requestMessage) {
-        chatService.writeMessage(requestMessage);
+    @MessageMapping("/groupChat/{roomId}/message")
+    public void sendGroupChatMessage(@DestinationVariable String roomId, ChatMessageRequestDto requestMessage) {
+        chatService.writeMessage(roomId, requestMessage);
     }
 
     /**
@@ -31,7 +31,7 @@ public class ChatController {
      * @param messageDto
      */
     @MessageMapping("/inquiry/{roomId}/message") // 클라이언트 → 서버
-    public void sendMessage(@DestinationVariable String roomId, InquiryMessageRequestDto messageDto) {
+    public void sendInquiryMessage(@DestinationVariable String roomId, InquiryMessageRequestDto messageDto) {
         inquiryChatService.writeMessage(roomId, messageDto);
     }
 }

@@ -1,40 +1,63 @@
 import { Button } from "@/components/ui/button";
-import ChatApp from "@/pages/chat/chat-app";
+import CreateGroupChat from "@/pages/chat/create-group-chat";
 import axios from "axios";
 import { ArrowLeft } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useInfoStore } from "../../info-store";
+import GroupChatRoom from "@/pages/chat/group-chat-room";
+
+interface RoomData {
+  exists: boolean;
+  roomId: string;
+  roomName: string;
+}
 
 export default function GroupChat() {
   const { id } = useParams();
+  const { userNickname, userPkID } = useInfoStore();
   const [message, setMessage] = useState("");
+  const [isExistRoom, setIsExistRoom] = useState(false);
+  const [currentRoomId, setCurrentRoomId] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
+  // 페이지에 새로 입장하거나 채팅방을 만들었을 때 실행
   useEffect(() => {
     const checkChatRoom = () => {
       axios
         .get("/api/chat/checkRoom", { params: { postId: id } })
         .then(res => {
-          if (res.data.exists) {
-            console.log("채팅방 있음:", res.data.roomId);
+          const room: RoomData = res.data;
+          if (room.exists) {
+            setIsExistRoom(room.exists);
+            setCurrentRoomId(room.roomId);
           } else {
-            console.log("채팅방 없음");
+            setIsExistRoom(room.exists);
           }
         })
-        .catch(err => console.error(err));
+        .catch(err => console.error(err))
+        .finally(() => setLoading(false));
     };
 
     const checkStudyStatus = async () => {
+      setLoading(true);
       const response = await axios.get(`/api/create-post/${id}`);
       if (response.data.ended) {
         setMessage("종료된 스터디는 채팅방에 입장할 수 없습니다.");
+        setLoading(false);
       } else {
         checkChatRoom();
       }
     };
 
     checkStudyStatus();
-  }, [id]);
+  }, [id, currentRoomId]);
+
+  // RoomList에서 선택된 방을 받아 상태 변경
+  const onSelectRoom = (roomId: string) => {
+    setCurrentRoomId(roomId);
+  };
 
   // 뒤로가기
   const backStep = () => {
@@ -44,18 +67,35 @@ export default function GroupChat() {
   return (
     <div className="w-full px-6 py-10">
       <div className="max-w-2xl mx-auto">
-        <Button
-          onClick={backStep}
-          variant="outline"
-          className="flex items-center gap-2 text-gray-600 hover:text-gray-800 mb-6"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          뒤로가기
-        </Button>
-        {message !== "" ? (
-          <p className="text-center text-xl text-destructive font-semibold">{message}</p>
-        ) : (
-          <ChatApp />
+        {!loading && (
+          <>
+            <Button
+              onClick={backStep}
+              variant="outline"
+              className="flex items-center gap-2 text-gray-600 hover:text-gray-800 mb-6"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              뒤로가기
+            </Button>
+            {message !== "" && (
+              <p className="text-center text-xl text-destructive font-semibold">{message}</p>
+            )}
+            {!isExistRoom ? (
+              // 방이 없으면 새로 생성
+              <CreateGroupChat onSelectRoom={onSelectRoom} postId={id} />
+            ) : (
+              // 방 정보와 로그인 유저 정보가 있으면 바로 채팅방 로드
+              currentRoomId &&
+              userPkID &&
+              userNickname && (
+                <GroupChatRoom
+                  roomId={currentRoomId}
+                  userId={parseInt(userPkID ?? "0", 10)}
+                  username={userNickname}
+                />
+              )
+            )}
+          </>
         )}
       </div>
     </div>
