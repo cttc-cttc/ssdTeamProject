@@ -25,6 +25,7 @@ import StudyListDetail from "./pages/home/study-list/study-list-detail";
 import MyPageStudyListDetail from "./pages/account/my-page/components/my-page-study-list-detail";
 import Inquiry from "./pages/home/inquiry/inquiry";
 import Guide from "./pages/guide/guide";
+import JoinStudySidebar from "./pages/account/my-page/components/join-study-sidebar";
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
           <Route path="/my-page">
             <Route index element={<Navigate to="manage-profile" replace />} />
             <Route path=":sidebar" element={<MyPage />} />
+            <Route path="join-study/:id/:cat" element={<JoinStudySidebar />} />
             <Route path="open-study/:id/:cat" element={<MyPageStudyListDetail />} />
           </Route>
 
