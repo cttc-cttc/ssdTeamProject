@@ -45,7 +45,13 @@ export default function RenderMessages({ rootRef, messages, username }: RenderMe
               ) : (
                 // 상대방 메시지 중 SYSTEM 메시지만 따로 처리
                 <>
-                  {msg.sender === "SYSTEM" ? (
+                  {msg.sender === "NOTICE" ? (
+                    <div className="flex justify-center w-full">
+                      <div className="text-sm text-primary font-semibold whitespace-break-spaces text-center px-3 py-2">
+                        {msg.content}
+                      </div>
+                    </div>
+                  ) : msg.sender === "SYSTEM" ? (
                     <div className="flex justify-center w-full">
                       <div className="text-sm text-muted-foreground px-3 py-2">{msg.content}</div>
                     </div>

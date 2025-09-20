@@ -1,5 +1,6 @@
 package com.study.ssd.entity.chat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,19 +29,24 @@ public class ChatMessage {
      * 부모 엔티티를 조회할 때 연관된 엔티티도 즉시 조회
      * 편리하지만 컬렉션이 많거나 join이 많으면 성능 저하 가능
      */
+    // 연결된 채팅방
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id")
-    private ChatRoom room; // 연결된 채팅방
+    @JsonIgnore
+    private ChatRoom room;
 
+    // 메시지 작성자
     @Column(length = 20, nullable = false)
-    private String sender; // 메시지 작성자
+    private String sender;
 
+    // 메시지 내용
     @Column(length = 1000, nullable = false)
-    private String content; // 메시지 내용
+    private String content;
 
+    // 메시지 타입 - TEXT, JOIN, SYSTEM
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private MessageType messageType; // 메시지 타입 - TEXT, JOIN
+    private MessageType messageType;
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;

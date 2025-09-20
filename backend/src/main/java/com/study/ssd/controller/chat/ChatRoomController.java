@@ -61,6 +61,16 @@ public class ChatRoomController {
         participant.setUserId(request.getCreatorId());
         participantRepository.save(participant);
 
+        // 스터디 시작 안내 메시지 발송
+        ChatMessage startMessage = new ChatMessage();
+        startMessage.setRoom(savedRoom);
+        startMessage.setSender("NOTICE");
+        startMessage.setMessageType(MessageType.SYSTEM);
+        startMessage.setContent("스터디가 시작 되었습니다. 🎉🎉\n팀원들과 소통하며 본격적으로 스터디를 진행해 보세요!");
+        chatMessageRepository.save(startMessage);
+
+        messagingTemplate.convertAndSend("/sub/groupChat/" + savedRoom.getId(), startMessage);
+
         // 입장 메시지 발송
         ChatMessage joinMessage = new ChatMessage();
         joinMessage.setRoom(savedRoom);

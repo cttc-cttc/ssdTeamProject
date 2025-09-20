@@ -8,6 +8,7 @@ import com.study.ssd.entity.StudyPost;
 import com.study.ssd.entity.User;
 import com.study.ssd.repository.StudyPostRepository;
 import com.study.ssd.repository.UserRepository;
+import com.study.ssd.service.chat.ChatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -24,6 +25,7 @@ public class StudyPostService {
 
     private final StudyPostRepository studyPostRepository;
     private final UserRepository userRepository;
+    private final ChatService chatService;
 
     /**
      * 크론 표현식으로 실행 주기 지정
@@ -126,7 +128,10 @@ public class StudyPostService {
         
         post.setEnded(true);
         StudyPost savedPost = studyPostRepository.save(post);
-        
+
+        // 채팅방 삭제 (Cascade로 참가자/메시지 자동 삭제)
+        chatService.sendEndMessageAndDeleteChatRoom(savedPost.getId());
+
         return StudyPostResponse.fromEntity(savedPost);
     }
 }
