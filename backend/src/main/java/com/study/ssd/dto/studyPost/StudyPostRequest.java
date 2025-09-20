@@ -12,7 +12,7 @@ import java.util.List;
 public class StudyPostRequest {
 
     @NotBlank
-    private String userNickname;
+    private String userId;
 
     @NotBlank(message = "제목을 입력하세요.")
     private String title;

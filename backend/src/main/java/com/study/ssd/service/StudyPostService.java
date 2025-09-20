@@ -5,9 +5,7 @@ import com.study.ssd.dto.studyPost.StudyPostResponse;
 import com.study.ssd.dto.studyPost.UpdateStudyPostRequest;
 import com.study.ssd.dto.studyPost.UpdateStudyPostResponse;
 import com.study.ssd.entity.StudyPost;
-import com.study.ssd.entity.User;
 import com.study.ssd.repository.StudyPostRepository;
-import com.study.ssd.repository.UserRepository;
 import com.study.ssd.service.chat.ChatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,7 +22,6 @@ import java.util.List;
 public class StudyPostService {
 
     private final StudyPostRepository studyPostRepository;
-    private final UserRepository userRepository;
     private final ChatService chatService;
 
     /**
@@ -53,7 +50,7 @@ public class StudyPostService {
         }
 
         StudyPost post = StudyPost.builder()
-                .userNickname(studyPostRequest.getUserNickname())
+                // .userId(studyPostRequest.getUserId())
                 .title(studyPostRequest.getTitle())
                 .content(studyPostRequest.getContent())
                 .mainCategory(studyPostRequest.getMainCategory())
@@ -110,7 +107,7 @@ public class StudyPostService {
 
     // 오픈 스터디 조회
     public List<StudyPostResponse> getOpenStudy(String userNickname) {
-        List<StudyPost> studyPosts = studyPostRepository.findByUserNicknameOrderByIdDesc(userNickname);
+        List<StudyPost> studyPosts = studyPostRepository.findByUserIdOrderByIdDesc(userNickname);
         return studyPosts.stream()
                 .map(StudyPostResponse::fromEntity)
                 .toList();

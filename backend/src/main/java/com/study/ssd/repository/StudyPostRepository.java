@@ -12,7 +12,7 @@ import java.util.List;
 public interface StudyPostRepository extends JpaRepository<StudyPost, Long> {
     
     // 특정 사용자가 개설한 스터디 목록 조회
-    List<StudyPost> findByUserNicknameOrderByIdDesc(String userNickname);
+    List<StudyPost> findByUserIdOrderByIdDesc(String userNickname);
 
     // 마감일이 지나면 자동으로 스터디 종료 처리
     @Modifying

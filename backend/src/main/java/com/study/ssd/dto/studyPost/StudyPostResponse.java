@@ -13,7 +13,7 @@ import java.util.List;
 @Builder
 public class StudyPostResponse {
     private Long id;
-    private String userNickname;
+    private String userId;
     private String title;
     private String content;
     private String mainCategory;
@@ -31,7 +31,7 @@ public class StudyPostResponse {
     public static StudyPostResponse fromEntity(StudyPost entity) {
         return StudyPostResponse.builder()
                 .id(entity.getId())
-                .userNickname(entity.getUserNickname())
+                .userId(entity.getUserId().getUserId())
                 .title(entity.getTitle())
                 .content(entity.getContent())
                 .mainCategory(entity.getMainCategory())

@@ -22,8 +22,9 @@ public class StudyPost {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
-    private String userNickname;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User userId;
 
     @Column(length = 100, nullable = false)
     private  String title;

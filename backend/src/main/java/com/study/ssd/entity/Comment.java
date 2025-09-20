@@ -26,6 +26,10 @@ public class Comment {
     @JoinColumn(name = "post_id")
     private StudyPost post;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User userId;
+
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
