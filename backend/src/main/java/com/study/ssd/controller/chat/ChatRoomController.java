@@ -19,15 +19,6 @@ public class ChatRoomController {
     // 존재하는 채팅방인지 확인, 있으면 채팅방 정보 반환
     @GetMapping("/checkRoom")
     public ResponseEntity<ChatRoomCheckResponse> checkRoom(@RequestParam Long postId) {
-//        return chatRoomRepository.findByStudyPostId(postId)
-//                .map(room -> ResponseEntity.ok(Map.of(
-//                        "exists", true,
-//                        "roomId", room.getId(),
-//                        "roomName", room.getName()
-//                        )))
-//                .orElse(ResponseEntity.ok(Map.of(
-//                        "exists", false
-//                )));
         return ResponseEntity.ok(chatService.checkRoom(postId));
     }
 
@@ -40,16 +31,6 @@ public class ChatRoomController {
     // 채팅방 정보 확인
     @GetMapping("/rooms/{roomId}/info")
     public ResponseEntity<ChatRoomInfoResponse> getRoomInfo(@PathVariable String roomId) {
-//        ChatRoom room = chatRoomRepository.findById(roomId).orElseThrow();
-//        int currentCount = participantRepository.countByRoomId(roomId);
-//        int maxCount = room.getStudyPost().getMaxCount() + 1; // 개설자 본인 추가
-//
-//        return Map.of(
-//                "roomId", roomId,
-//                "roomName", room.getName(),
-//                "currentCount", currentCount,
-//                "maxCount", maxCount
-//        );
         return ResponseEntity.ok(chatService.getRoomInfo(roomId));
     }
 

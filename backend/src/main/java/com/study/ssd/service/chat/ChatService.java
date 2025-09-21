@@ -11,14 +11,18 @@ import com.study.ssd.repository.chat.ChatMessageRepository;
 import com.study.ssd.repository.chat.ChatRoomParticipantRepository;
 import com.study.ssd.repository.chat.ChatRoomRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ChatService {
@@ -103,12 +107,6 @@ public class ChatService {
                 currentCount,
                 maxCount
         );
-//        return Map.of(
-//                "roomId", roomId,
-//                "roomName", room.getName(),
-//                "currentCount", currentCount,
-//                "maxCount", maxCount
-//        );
     }
 
     /**
@@ -116,6 +114,7 @@ public class ChatService {
      * @param roomId 채팅방 id
      * @param request 채팅방 참가자 Request Dto
      */
+    @Transactional
     public void joinRoom(String roomId, GroupChatJoinRequest request) {
         Long userId = request.userId();
         String username = request.username();
@@ -124,8 +123,7 @@ public class ChatService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         // 참여자 등록 (중복 체크)
-        boolean alreadyJoined = participantRepository.existsByRoomIdAndUserId(roomId, userId);
-        if (!alreadyJoined) {
+        try {
             ChatRoomParticipant participant = new ChatRoomParticipant();
             participant.setRoom(room);
             participant.setUserId(userId);
@@ -142,11 +140,16 @@ public class ChatService {
             // 채팅방 구독 주소: "/sub/groupChat/{roomId}"
             // STOMP 구독자에게 실시간 전송
             messagingTemplate.convertAndSend("/sub/groupChat/" + roomId, joinMessage);
+
+        } catch (DataIntegrityViolationException e) {
+            // 이미 존재하면 무시 (중복 입장 방지)
+            // 필요하면 로그 남기기
+            log.info("이미 입장한 사용자: roomId={}, userId={}", roomId, userId);
         }
     }
 
     /**
-     * 채팅 메시지 전송
+     * 그룹 채팅 메시지 전송
      * @param roomId 채팅방 id
      * @param requestMessage 채팅 메시지 전송 Request Dto
      */

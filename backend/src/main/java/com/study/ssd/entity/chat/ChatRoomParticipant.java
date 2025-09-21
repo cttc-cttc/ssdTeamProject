@@ -10,7 +10,12 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "chat_room_participant")
+@Table( // 채팅방에 첫 입장 시 중복으로 입장되는 경우가 있어서, 중복 입장을 방지하기 위한 unique 제약 조건 추가
+        name = "chat_room_participant",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "uq_room_user", columnNames = {"room_id", "user_id"})
+        }
+)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

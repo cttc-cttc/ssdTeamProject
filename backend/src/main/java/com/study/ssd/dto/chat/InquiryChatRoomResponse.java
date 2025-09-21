@@ -16,14 +16,14 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class InquiryChatRoomResponseDto {
+public class InquiryChatRoomResponse {
     private String roomId; // 방 id
     private String roomName; // 방 이름
     private Long userPk; // 유저 pk
     private LocalDateTime createdAt; // 방 생성일
 
-    public static InquiryChatRoomResponseDto fromEntity(InquiryChatRoom entity) {
-        return InquiryChatRoomResponseDto.builder()
+    public static InquiryChatRoomResponse fromEntity(InquiryChatRoom entity) {
+        return InquiryChatRoomResponse.builder()
                 .roomId(entity.getId())
                 .roomName(entity.getName())
                 .userPk(entity.getUser().getId())

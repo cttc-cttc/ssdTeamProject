@@ -1,7 +1,7 @@
 package com.study.ssd.controller.chat;
 
 import com.study.ssd.dto.chat.ChatMessageRequest;
-import com.study.ssd.dto.chat.InquiryMessageRequestDto;
+import com.study.ssd.dto.chat.InquiryMessageRequest;
 import com.study.ssd.service.chat.ChatService;
 import com.study.ssd.service.chat.InquiryChatService;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ public class ChatController {
     /**
      * 그룹 채팅창에서 메시지 작성 시 메시지를 db에 등록
      * @param roomId 채팅방 id
-     * @param requestMessage 채팅 메시지 전송 Request Dto
+     * @param requestMessage 그룹 채팅 메시지 전송 Request Dto
      */
     @MessageMapping("/groupChat/{roomId}/message")
     public void sendGroupChatMessage(@DestinationVariable String roomId, ChatMessageRequest requestMessage) {
@@ -29,10 +29,10 @@ public class ChatController {
     /**
      * 문의하기 채팅방에서 메시지 작성 시 메시지를 db에 등록
      * @param roomId 채팅방 id
-     * @param messageDto 채팅 메시지 전송 Request Dto
+     * @param requestMessage 문의하기 채팅 메시지 전송 Request Dto
      */
     @MessageMapping("/inquiry/{roomId}/message") // 클라이언트 → 서버
-    public void sendInquiryMessage(@DestinationVariable String roomId, InquiryMessageRequestDto messageDto) {
-        inquiryChatService.writeMessage(roomId, messageDto);
+    public void sendInquiryMessage(@DestinationVariable String roomId, InquiryMessageRequest requestMessage) {
+        inquiryChatService.sendMessage(roomId, requestMessage);
     }
 }
