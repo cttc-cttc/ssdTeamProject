@@ -28,7 +28,10 @@ public class Comment {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User userId;
+    private User user;
+
+    @Column(nullable = false)
+    private String userNickname;
 
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;

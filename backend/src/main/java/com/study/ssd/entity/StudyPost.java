@@ -8,6 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,9 +23,8 @@ public class StudyPost {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User userId;
+    @Column(nullable = false)
+    private String userNickname;
 
     @Column(length = 100, nullable = false)
     private  String title;
@@ -54,6 +54,10 @@ public class StudyPost {
     private int maxCount;
 
     @Builder.Default private int wishCount = 0;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<WishStudy> wishes = new ArrayList<>();
+
 
     // 스터디 종료
     @Column(name = "is_ended")

@@ -5,7 +5,10 @@ import com.study.ssd.dto.studyPost.StudyPostResponse;
 import com.study.ssd.dto.studyPost.UpdateStudyPostRequest;
 import com.study.ssd.dto.studyPost.UpdateStudyPostResponse;
 import com.study.ssd.entity.StudyPost;
+import com.study.ssd.entity.User;
 import com.study.ssd.repository.StudyPostRepository;
+import com.study.ssd.repository.UserRepository;
+import com.study.ssd.repository.WishStudyRepository;
 import com.study.ssd.service.chat.ChatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,7 +25,9 @@ import java.util.List;
 public class StudyPostService {
 
     private final StudyPostRepository studyPostRepository;
+    private final UserRepository userRepository;
     private final ChatService chatService;
+    private final WishStudyRepository wishStudyRepository;
 
     /**
      * 크론 표현식으로 실행 주기 지정
@@ -50,7 +55,7 @@ public class StudyPostService {
         }
 
         StudyPost post = StudyPost.builder()
-                // .userId(studyPostRequest.getUserId())
+                .userNickname(studyPostRequest.getUserNickname())
                 .title(studyPostRequest.getTitle())
                 .content(studyPostRequest.getContent())
                 .mainCategory(studyPostRequest.getMainCategory())
@@ -99,15 +104,19 @@ public class StudyPostService {
     }
 
     // 게시글 삭제
+    @Transactional
     public void deletePost(Long id) {
         StudyPost post = studyPostRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
+        wishStudyRepository.deleteAllByPostId(post.getId());
         studyPostRepository.delete(post);
     }
 
     // 오픈 스터디 조회
+    @Transactional
     public List<StudyPostResponse> getOpenStudy(String userNickname) {
-        List<StudyPost> studyPosts = studyPostRepository.findByUserIdOrderByIdDesc(userNickname);
+
+        List<StudyPost> studyPosts = studyPostRepository.findByUserNicknameOrderByIdDesc(userNickname);
         return studyPosts.stream()
                 .map(StudyPostResponse::fromEntity)
                 .toList();

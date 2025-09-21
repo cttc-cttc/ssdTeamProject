@@ -22,4 +22,7 @@ public interface WishStudyRepository extends JpaRepository<WishStudy, Long> {
     
     // 사용자가 찜한 스터디가 있는지 확인
     boolean existsByUserIdAndPostId(Long userId, Long postId);
+
+    // 스터디에 연결된 위시 삭제
+    void deleteAllByPostId(Long postId);
 }

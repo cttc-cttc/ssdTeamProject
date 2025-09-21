@@ -25,7 +25,7 @@ interface Post {
 
 export default function PostDetail() {
   const { id } = useParams();
-  const { userPkID } = useInfoStore();
+  const { userPkID, userNickname } = useInfoStore();
   const userPkIdNum = userPkID ? Number(userPkID) : null;
   const navigate = useNavigate(); // 삭제 후 메인 화면으로 이동
   const [post, setPost] = useState<Post | null>(null);
@@ -156,7 +156,7 @@ export default function PostDetail() {
         <div className="flex justify-between items-center border-b border-gray-300 pb-2 mb-4">
           <span className="text-gray-600">작성자: {post.userNickname}</span>
           <div className="flex flex-wrap gap-2 items-center">
-            {userPkIdNum === post.userPkId && (
+            {userNickname === post.userNickname && (
               <span>
                 <Button
                   onClick={handleEdit}
