@@ -172,7 +172,7 @@ export default function ClashMiniGameCSS() {
           cycleScoredRef.current = true;
           successCountRef.current += 1;
           if (successCountRef.current >= requiredSuccess) {
-            alert("축하드립니다. 당신은 자격을 얻으셨습니다!");
+            alert("환영합니다. 관리자님!");
             navigate("/admin-log-in");
           }
           setOuterSize(OUTER_START_SIZE);
