@@ -20,7 +20,7 @@ export default function ListThumbnailFlex({ posts }: { posts: studyProps }) {
   const stripHtml = (str: string) => str.replace(/<\/?[^>]+(>|$)/g, ""); // HTML 태그 제거
 
   return (
-    <div className="flex shadow-xl max-h-56">
+    <div className="flex shadow-xl max-h-56 overflow-hidden">
       <div className="flex-5 flex border-1 border-accent bg-white dark:bg-muted/50 p-4">
         {/* 왼쪽 : 정보 영역 */}
         <div className="flex-4 flex flex-col gap-2">
