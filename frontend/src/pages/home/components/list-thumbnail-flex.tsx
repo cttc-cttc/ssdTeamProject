@@ -3,7 +3,7 @@ import remarkGfm from "remark-gfm";
 import dayjs from "dayjs";
 import { categoryNameMap } from "@/components/common/mappings";
 import { Button } from "@/components/ui/button";
-import { ImageFrame } from "../study-list/image-frame";
+import { ImageFrame } from "./image-frame";
 import type { studyProps } from "../main/home-study-list";
 import { Bookmark } from "lucide-react";
 

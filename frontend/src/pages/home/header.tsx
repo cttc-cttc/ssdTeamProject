@@ -34,12 +34,14 @@ export default function Header() {
   const isUserLoggedIn = !!userId;
 
   return (
-    // transition-colors duration-500 ease-in-out
     <div className="w-full sticky top-0 z-50 bg-background">
-      <div className="flex items-center h-40 border-b border-primary dark:border-foreground/30 px-16">
+      <div className="flex items-center justify-center h-[clamp(5rem,20vw,10rem)] px-4 sm:px-8 md:px-12 lg:px-16 border-b border-primary dark:border-foreground/30">
         {/* 좌측: 로고 */}
         <div className="flex-shrink-0">
-          <Link to="/" className="flex items-center justify-center w-80 h-35">
+          <Link
+            to="/"
+            className="flex items-center justify-center w-[clamp(8rem,20vw,20rem)] h-[clamp(3rem,8vw,9rem)]"
+          >
             <img
               src={
                 theme === "dark" || (theme === "system" && isSystemDark)
@@ -53,7 +55,7 @@ export default function Header() {
         </div>
 
         {/* 중앙: 네비게이션 */}
-        <nav className="flex-1 flex justify-center gap-8">
+        <nav className="flex-1 flex justify-center gap-8 lg:gap-8 md:gap-4 sm:hidden md:flex">
           <Button asChild variant="ssd_nav">
             <Link to="/guide">이용가이드</Link>
           </Button>

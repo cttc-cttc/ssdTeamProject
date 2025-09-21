@@ -23,7 +23,7 @@ const buttonVariants = cva(
 
         // 프로젝트 전용 커스텀 버튼
         ssd_nav:
-          "text-2xl font-bold text-[#2c3e50] dark:text-foreground underline-offset-4 hover:underline hover:cursor-pointer",
+          "lg:text-2xl md:text-xl font-bold text-[#2c3e50] dark:text-foreground underline-offset-4 hover:underline hover:cursor-pointer",
         ssd_tag:
           "rounded-3xl bg-[#B9A5D4]/80 text-secondary-foreground border border-muted-foreground shadow-xs hover:cursor-pointer",
       },

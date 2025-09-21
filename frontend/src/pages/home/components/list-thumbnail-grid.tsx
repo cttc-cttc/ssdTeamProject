@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import { categoryNameMap } from "@/components/common/mappings";
-import { ImageFrame } from "../study-list/image-frame";
+import { ImageFrame } from "./image-frame";
 import type { studyProps } from "../main/home-study-list";
 import { Bookmark } from "lucide-react";
 import Countdown from "./countdown";
