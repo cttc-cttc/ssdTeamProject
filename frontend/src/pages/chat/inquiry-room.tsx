@@ -38,7 +38,7 @@ export default function InquiryRoom({ roomId, roomName, username, onBack }: Inqu
     if (!roomId) return;
 
     const stompClient = new Client({
-      webSocketFactory: () => new SockJS("/ws-chat"),
+      webSocketFactory: () => new SockJS(`${API_BASE}/ws-chat`),
       reconnectDelay: 5000,
       onConnect: () => {
         // 구독
@@ -55,7 +55,7 @@ export default function InquiryRoom({ roomId, roomName, username, onBack }: Inqu
     return () => {
       stompClient.deactivate();
     };
-  }, [roomId]);
+  }, [roomId, API_BASE]);
 
   // 메시지 보내기
   const sendMessage = () => {

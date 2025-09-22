@@ -54,7 +54,7 @@ public class StudyPostController {
         // 현재 요청의 host/ip + 포트 가져오기
         String serverUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
         String fileUrl = serverUrl + "/uploads/" + newFilename;
-        
+
         // 프론트로 보낼 URL
         return Map.of("url", fileUrl);
     }

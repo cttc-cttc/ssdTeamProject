@@ -36,7 +36,7 @@ export default function GroupChatRoom({ roomId, userId, username }: GroupChatRoo
         setRoomInfo(roomRes.data);
 
         // 2. WebSocket + STOMP 클라이언트 생성
-        const socket = new SockJS("/ws-chat");
+        const socket = new SockJS(`${API_BASE}/ws-chat`);
         stompClient = new Client({
           webSocketFactory: () => socket,
           reconnectDelay: 5000,
