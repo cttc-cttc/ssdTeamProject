@@ -5,5 +5,5 @@ interface ApiStore {
 }
 
 export const useApiStore = create<ApiStore>(() => ({
-  API_BASE: import.meta.env.MODE === "development" ? "/api" : import.meta.env.VITE_API_URL,
+  API_BASE: import.meta.env.MODE === "development" ? "" : import.meta.env.VITE_API_URL,
 }));
