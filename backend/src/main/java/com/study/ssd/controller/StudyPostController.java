@@ -16,13 +16,13 @@ import java.util.Map;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/posts")
 @RequiredArgsConstructor
 public class StudyPostController {
 
     private final StudyPostService studyPostService;
 
-    @PostMapping("/create-post")
+    @PostMapping
     public ResponseEntity<StudyPostResponse> createPost (
             @RequestBody StudyPostRequest studyPostRequest
     ) {
@@ -52,13 +52,13 @@ public class StudyPostController {
         return Map.of("url", "/uploads/" + newFilename);
     }
 
-    @GetMapping("/create-post/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<StudyPostResponse> getPost ( @PathVariable Long id) {
         StudyPostResponse studyPostResponse = studyPostService.getPost(id);
         return ResponseEntity.ok(studyPostResponse);
     }
 
-    @PutMapping("/update-post/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<UpdateStudyPostResponse> updatePost (
             @PathVariable Long id,
             @RequestBody UpdateStudyPostRequest updateStudyPostRequest) {
@@ -67,7 +67,7 @@ public class StudyPostController {
         return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/delete-post/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<DeleteStudyPostResponse> deletePost (@PathVariable Long id) {
         studyPostService.deletePost(id);
         return ResponseEntity.ok(new DeleteStudyPostResponse(true, "게시글이 삭제되었습니다."));
