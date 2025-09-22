@@ -22,4 +22,10 @@ public class NoticeRequest {
                 .content(this.content)
                 .build();
     }
+
+    // 기존 엔티티 업데이트 메서드
+    public void updateEntity(Notice notice) {
+        notice.setTitle(this.title);
+        notice.setContent(this.content);
+    }
 }

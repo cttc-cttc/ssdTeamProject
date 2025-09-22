@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import axios from "../../lib/api";
+import { useAdminInfoStore } from "../account/admin-info-store";
 
 type Notice = {
   id: number;
@@ -17,6 +18,7 @@ export default function NoticeDetail() {
   const { id } = useParams<{ id: string }>();
   const [notice, setNotice] = useState<Notice | null>(null);
   const navigate = useNavigate();
+  const { adminPkID } = useAdminInfoStore();
 
   useEffect(() => {
     if (!id) return;
@@ -66,15 +68,23 @@ export default function NoticeDetail() {
 
       <div className="whitespace-pre-wrap break-words">{notice.content}</div>
 
-      {/* 공지사항 삭제 버튼 */}
-      <div className="mt-6 flex gap-2">
-        <button
-          onClick={handleDelete}
-          className="bg-red-500 text-white px-4 py-1 rounded hover:bg-red-600"
-        >
-          삭제
-        </button>
-      </div>
+      {/* 공지사항 수정 & 삭제 */}
+      {adminPkID && (
+        <div className="mt-6 flex gap-2">
+          <button
+            onClick={() => navigate(`/notices/edit/${id}`)}
+            className="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600"
+          >
+            수정하기
+          </button>
+          <button
+            onClick={handleDelete}
+            className="bg-red-500 text-white px-4 py-1 rounded hover:bg-red-600"
+          >
+            삭제
+          </button>
+        </div>
+      )}
     </div>
   );
 }

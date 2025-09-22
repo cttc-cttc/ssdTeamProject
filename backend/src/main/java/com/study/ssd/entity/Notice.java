@@ -5,12 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Entity // JPA 엔티티로 지정
 @Table(name = "notices") // DB 테이블명
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -28,8 +30,16 @@ public class Notice {
     @Column(nullable = false)
     private LocalDateTime createdAt; // 작성일시
 
+    @Column
+    private LocalDateTime updatedAt; // 수정일시
+
     @PrePersist
     public void prePersist() {
         this.createdAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = LocalDateTime.now();
     }
 }

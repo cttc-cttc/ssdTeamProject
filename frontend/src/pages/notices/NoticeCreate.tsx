@@ -8,7 +8,7 @@ export default function NoticeCreate() {
   const [content, setContent] = useState("");
   const navigate = useNavigate();
   const { adminPkID, adminName } = useAdminInfoStore();
-
+  
   // 관리자 확인
   useEffect(() => {
     if (!adminPkID) {
