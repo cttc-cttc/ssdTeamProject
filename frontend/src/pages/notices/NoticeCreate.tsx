@@ -1,11 +1,21 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "../../lib/api";
 import { useNavigate } from "react-router-dom";
+import { useAdminInfoStore } from "../account/admin-info-store";
 
 export default function NoticeCreate() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const navigate = useNavigate();
+  const { adminPkID, adminName } = useAdminInfoStore();
+
+  // 관리자 확인
+  useEffect(() => {
+    if (!adminPkID) {
+      alert("관리자만 공지사항을 작성할 수 있습니다.");
+      navigate("/notices");
+    }
+  }, [adminPkID, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,7 +36,12 @@ export default function NoticeCreate() {
                     text-gray-900 dark:text-gray-100 
                     rounded shadow"
     >
-      <h1 className="text-xl font-bold mb-4">공지사항 등록</h1>
+      <div className="flex justify-between items-center mb-6 pb-4 border-b border-gray-200 dark:border-gray-700">
+        <div>
+          <h1 className="text-xl font-bold">공지사항 등록</h1>
+          <p className="text-sm text-gray-600 dark:text-gray-400 pt-2">관리자: {adminName}님</p>
+        </div>
+      </div>
       <form onSubmit={handleSubmit} className="space-y-3">
         <div>
           <label className="block mb-1">제목</label>

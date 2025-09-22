@@ -244,7 +244,7 @@ export default function ClashMiniGameCSS() {
                 left: `${targetPos.x}%`,
                 top: `${targetPos.y}%`,
                 transform: "translate(-50%, -50%)",
-              }}
+              }}  
             >
               {requiredKey}
             </div>
