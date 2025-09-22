@@ -11,6 +11,7 @@ public class NoticeResponse {
     private final String title;
     private final String content;
     private final LocalDateTime createdAt;
+    private final LocalDateTime updatedAt;
 
     // 엔티티 → DTO 변환 생성자
     public NoticeResponse(Notice notice) {
@@ -18,5 +19,6 @@ public class NoticeResponse {
         this.title = notice.getTitle();
         this.content = notice.getContent();
         this.createdAt = notice.getCreatedAt();
+        this.updatedAt = notice.getUpdatedAt();
     }
 }

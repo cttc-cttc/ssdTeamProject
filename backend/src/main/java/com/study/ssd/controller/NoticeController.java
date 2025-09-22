@@ -41,6 +41,17 @@ public class NoticeController {
         return noticeService.searchNotices(keyword);
     }
     
+    // 공지사항 수정
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateNotice(@PathVariable Long id, @Valid @RequestBody NoticeRequest request) {
+        try {
+            NoticeResponse response = noticeService.updateNotice(id, request);
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     // 공지사항 삭제
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteNotice(@PathVariable Long id) {

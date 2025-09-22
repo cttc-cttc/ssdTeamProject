@@ -45,6 +45,17 @@ public class NoticeService {
                 .toList();
     }
 
+    // 공지사항 수정
+    public NoticeResponse updateNotice(Long id, NoticeRequest request) {
+        Notice notice = noticeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("공지사항을 찾을 수 없습니다. id=" + id));
+        
+        request.updateEntity(notice);
+        Notice updatedNotice = noticeRepository.save(notice);
+        
+        return new NoticeResponse(updatedNotice);
+    }
+
     // 공지사항 삭제
     public void deleteNotice(Long id) {
         Notice notice = noticeRepository.findById(id)

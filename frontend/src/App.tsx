@@ -14,6 +14,7 @@ import RootLayout from "./pages/notices/RootLayout";
 import NoticeList from "./pages/notices/NoticeList";
 import NoticeDetail from "./pages/notices/NoticeDetail";
 import NoticeCreate from "./pages/notices/NoticeCreate";
+import NoticeEdit from "./pages/notices/NoticeEdit";
 import PostingPage from "./pages/study-post/posting-page";
 import PostDetail from "./pages/study-post/post-detail";
 
@@ -60,6 +61,7 @@ function App() {
             <Route path="/notices" element={<NoticeList />} />
             <Route path="/notices/:id" element={<NoticeDetail />} />
             <Route path="/notices/create" element={<NoticeCreate />} />
+            <Route path="/notices/edit/:id" element={<NoticeEdit />} />
           </Route>
 
           <Route path="/create" element={<PostingPage />} />
