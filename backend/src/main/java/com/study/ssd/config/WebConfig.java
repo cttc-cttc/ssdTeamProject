@@ -20,7 +20,10 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**")
-                .allowedOrigins("http://localhost:5173")  // 프론트 개발 서버 주소
+                .allowedOrigins(
+                        "http://localhost:5173",  // 개발 서버
+                        "http://localhost:4173"   // 배포 서버
+                )
                 .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE")
                 .allowCredentials(true);
     }
