@@ -2,6 +2,7 @@ package com.study.ssd.controller;
 
 import com.study.ssd.dto.studyPost.*;
 import com.study.ssd.service.StudyPostService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +32,8 @@ public class StudyPostController {
     }
 
     @PostMapping("/upload-image")
-    public Map<String, String> uploadImage(@RequestParam("file") MultipartFile file) throws IOException {
+    public Map<String, String> uploadImage(@RequestParam("file") MultipartFile file,
+                                           HttpServletRequest request) throws IOException {
         String uploadDir = System.getProperty("user.dir") + "/uploads";
 
         Path uploadPath = Paths.get(uploadDir);
@@ -48,8 +50,13 @@ public class StudyPostController {
         // 실제 저장
         Path filePath = uploadPath.resolve(newFilename);
         file.transferTo(filePath.toFile());
+
+        // 현재 요청의 host/ip + 포트 가져오기
+        String serverUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+        String fileUrl = serverUrl + "/uploads/" + newFilename;
+        
         // 프론트로 보낼 URL
-        return Map.of("url", "/uploads/" + newFilename);
+        return Map.of("url", fileUrl);
     }
 
     @GetMapping("/{id}")
