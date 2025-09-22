@@ -44,7 +44,7 @@ export default function NoticeDetail() {
   };
 
   if (!notice) return <div className="p-6"> 로딩중...</div>;
-
+  
   return (
     <div className="max-w-3xl mx-auto p-6 bg-white rounded shadow">
       <Link to="/notices" className="text-blue-500 hover:underline text-sm">

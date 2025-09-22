@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "../../lib/api";
 import { useAdminInfoStore } from "../account/admin-info-store";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
 
 type Notice = {
   id: number;
@@ -90,6 +92,11 @@ export default function NoticeEdit() {
     );
   }
 
+  // 뒤로가기
+  const backStep = () => {
+    navigate(-1);
+  };
+
   return (
     <div
       className="max-w-2xl mx-auto mt-10 p-6 
@@ -97,9 +104,14 @@ export default function NoticeEdit() {
                     text-gray-900 dark:text-gray-100 
                     rounded shadow"
     >
-      <Link to="/notices" className="text-blue-500 hover:underline text-sm">
-        ← 목록으로
-      </Link>
+      <Button
+        onClick={backStep}
+        variant="outline"
+        className="flex items-center gap-2 text-gray-600 hover:text-gray-800"
+      >
+        <ArrowLeft className="w-4 h-4" />
+        뒤로가기
+      </Button>
       <div className="flex justify-between items-center mb-6 pb-4 border-b border-gray-200 dark:border-gray-700">
         <div>
           <h1 className="text-xl font-bold">공지사항 수정</h1>
