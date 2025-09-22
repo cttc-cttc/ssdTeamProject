@@ -26,7 +26,7 @@ export default function NoticeDetail() {
       .catch(console.error);
   }, [id]);
 
-  // 🔽 삭제 버튼 클릭 시 실행
+  // 공지사항 삭제
   const handleDelete = async () => {
     if (!id) return;
     if (!window.confirm("정말 이 공지사항을 삭제하시겠습니까?")) return;
@@ -66,11 +66,11 @@ export default function NoticeDetail() {
 
       <div className="whitespace-pre-wrap break-words">{notice.content}</div>
 
-      {/* 🔽 삭제 버튼 추가 */}
+      {/* 공지사항 삭제 버튼 */}
       <div className="mt-6 flex gap-2">
         <button
           onClick={handleDelete}
-          className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+          className="bg-red-500 text-white px-4 py-1 rounded hover:bg-red-600"
         >
           삭제
         </button>

@@ -23,24 +23,28 @@ public class NoticeService {
                 .collect(Collectors.toList());
     }
 
+    // 공지사항 작성
     public NoticeResponse createNotice(NoticeRequest request) {
         Notice notice = request.toEntity();
         Notice savedNotice = noticeRepository.save(notice);
         return new NoticeResponse(savedNotice);
     }
 
+    // 공지사항 식별
     public NoticeResponse getNoticeById(Long id) {
         Notice notice = noticeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("공지사항을 찾을 수 없습니다. id=" + id));
         return new NoticeResponse(notice);
     }
-
+    
+    // 공지사항 검색
     public List<NoticeResponse> searchNotices(String keyword) {
         return noticeRepository.findByTitleContaining(keyword)
                 .stream()
                 .map(NoticeResponse::new)
                 .toList();
     }
+
     // 공지사항 삭제
     public void deleteNotice(Long id) {
         Notice notice = noticeRepository.findById(id)

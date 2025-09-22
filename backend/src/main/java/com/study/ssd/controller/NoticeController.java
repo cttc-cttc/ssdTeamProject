@@ -22,22 +22,26 @@ public class NoticeController {
     public List<NoticeResponse> getNotices() {
         return noticeService.getAllNotices();
     }
-
+    
+    // 공지사항 작성
     @PostMapping("/create")
     public NoticeResponse createNotice(@Valid @RequestBody NoticeRequest request) {
         return noticeService.createNotice(request);
     }
-
+    
+    // 공지사항 식별
     @GetMapping("/{id}")
     public NoticeResponse getNotice(@PathVariable Long id) {
         return noticeService.getNoticeById(id);
     }
-
+    
+    // 공지사항 검색
     @GetMapping("/search")
     public List<NoticeResponse> searchNotices(@RequestParam("q") String keyword) {
         return noticeService.searchNotices(keyword);
     }
-
+    
+    // 공지사항 삭제
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteNotice(@PathVariable Long id) {
         try {

@@ -61,11 +61,11 @@ export default function NoticeList() {
             }
           }}
         />
-        <Button className="border rounded #2C5536 text-white px-4 rounded" asChild>
+        <Button className="border rounded #2C5536 text-white px-4">
           <Link to="/notices/create">검색</Link>
         </Button>
 
-        <Button className="border rounded #2C5536 text-white px-4 rounded" asChild>
+        <Button className="border rounded #2C5536 text-white px-4">
           <Link to="/notices/create">공지 등록</Link>
         </Button>
       </div>
