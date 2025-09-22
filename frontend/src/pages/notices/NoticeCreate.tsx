@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "../../lib/api";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAdminInfoStore } from "../account/admin-info-store";
 
 export default function NoticeCreate() {
@@ -8,7 +8,7 @@ export default function NoticeCreate() {
   const [content, setContent] = useState("");
   const navigate = useNavigate();
   const { adminPkID, adminName } = useAdminInfoStore();
-  
+
   // 관리자 확인
   useEffect(() => {
     if (!adminPkID) {
@@ -36,6 +36,9 @@ export default function NoticeCreate() {
                     text-gray-900 dark:text-gray-100 
                     rounded shadow"
     >
+      <Link to="/notices" className="text-blue-500 hover:underline text-sm">
+        ← 목록으로
+      </Link>
       <div className="flex justify-between items-center mb-6 pb-4 border-b border-gray-200 dark:border-gray-700">
         <div>
           <h1 className="text-xl font-bold">공지사항 등록</h1>

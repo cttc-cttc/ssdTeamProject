@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import axios from "../../lib/api";
 import { useAdminInfoStore } from "../account/admin-info-store";
 
@@ -97,6 +97,9 @@ export default function NoticeEdit() {
                     text-gray-900 dark:text-gray-100 
                     rounded shadow"
     >
+      <Link to="/notices" className="text-blue-500 hover:underline text-sm">
+        ← 목록으로
+      </Link>
       <div className="flex justify-between items-center mb-6 pb-4 border-b border-gray-200 dark:border-gray-700">
         <div>
           <h1 className="text-xl font-bold">공지사항 수정</h1>
