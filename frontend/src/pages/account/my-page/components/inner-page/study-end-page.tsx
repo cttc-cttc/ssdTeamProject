@@ -16,7 +16,7 @@ export default function StudyEndPage() {
     const checkStudyStatus = async () => {
       if (!id) return;
       try {
-        const response = await axios.get(`${API_BASE}/api/create-post/${id}`);
+        const response = await axios.get(`${API_BASE}/api/posts/${id}`);
         // 마감일이 지났거나 사용자가 직접 종료한 경우
         const deadline = new Date(response.data.deadline);
         const now = new Date();
@@ -48,7 +48,7 @@ export default function StudyEndPage() {
       alert("스터디가 성공적으로 종료되었습니다.");
 
       // 종료 성공 후 상태를 다시 확인
-      const response = await axios.get(`${API_BASE}/api/create-post/${id}`);
+      const response = await axios.get(`${API_BASE}/api/posts/${id}`);
       setIsEnded(response.data.ended);
 
       // 페이지 새로고침으로 상태 업데이트 확인

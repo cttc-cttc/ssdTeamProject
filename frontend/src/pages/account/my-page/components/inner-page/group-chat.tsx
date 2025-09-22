@@ -45,7 +45,7 @@ export default function GroupChat() {
 
     const checkStudyStatus = async () => {
       setLoading(true);
-      const response = await axios.get(`${API_BASE}/api/create-post/${id}`);
+      const response = await axios.get(`${API_BASE}/api/posts/${id}`);
       setStudyOpener(response.data.userNickname);
 
       if (response.data.ended) {

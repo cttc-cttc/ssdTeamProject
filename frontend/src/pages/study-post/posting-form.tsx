@@ -57,7 +57,7 @@ function PostingForm() {
       const formData = new FormData();
       formData.append("file", blob);
 
-      const res = await axios.post(`${API_BASE}/api/upload-image`, formData, {
+      const res = await axios.post(`${API_BASE}/api/posts/upload-image`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
