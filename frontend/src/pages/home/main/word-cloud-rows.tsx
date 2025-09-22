@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
 import { SkeletonHomeTags } from "../components/skeleton/skeleton-home-tags";
+import { useApiStore } from "@/components/common/api-store";
 
 interface Word {
   name: string;
@@ -52,6 +53,7 @@ interface WordCloudRowsProps {
  * 합산 수치가 높은 순으로 [인기 태그 Top 30] 처럼 표시
  */
 function WordCloudRows({ selectedTags, onTagClick }: WordCloudRowsProps) {
+  const { API_BASE } = useApiStore();
   const [words, setWords] = useState<Word[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -59,7 +61,7 @@ function WordCloudRows({ selectedTags, onTagClick }: WordCloudRowsProps) {
     setLoading(true);
     const startTime = Date.now();
     axios
-      .get("/api/tags/popular")
+      .get(`${API_BASE}/api/tags/popular`)
       .then(res => {
         // console.log(res.data);
         setWords(res.data);
@@ -75,7 +77,7 @@ function WordCloudRows({ selectedTags, onTagClick }: WordCloudRowsProps) {
           setLoading(false);
         }
       });
-  }, []);
+  }, [API_BASE]);
 
   useEffect(() => {
     fetchTagData();
