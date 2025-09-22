@@ -2,8 +2,11 @@ import path from "path";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import dotenv from "dotenv";
 
-// https://vite.dev/config/
+// .env 파일 읽기
+dotenv.config({ path: `.env` });
+
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   resolve: {
@@ -14,15 +17,15 @@ export default defineConfig({
   server: {
     proxy: {
       "/ws-chat": {
-        target: "http://localhost:8080",
+        target: process.env.VITE_WS_URL,
         changeOrigin: true,
         ws: true, // 웹소켓 프록시 활성화
       },
       "/api": {
-        target: "http://localhost:8080",
+        target: process.env.VITE_API_URL,
         changeOrigin: true,
       },
-      "/uploads": "http://localhost:8080",
+      "/uploads": process.env.VITE_API_URL || "http://localhost:8080",
     },
   },
   define: {
