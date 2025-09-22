@@ -5,8 +5,10 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Editor } from "@toast-ui/react-editor";
 import { useTheme } from "@/components/theme-provider";
 import { useInfoStore } from "../account/info-store";
+import { useApiStore } from "@/components/common/api-store";
 
 function PostingForm() {
+  const { API_BASE } = useApiStore();
   const { theme } = useTheme();
   const { userNickname } = useInfoStore();
   const { id } = useParams();
@@ -29,7 +31,7 @@ function PostingForm() {
       setSubCategories(state.subCategories);
       setMaxCount(state.maxCount);
     } else if (id) {
-      axios.get(`/api/posts/${id}`).then(res => {
+      axios.get(`${API_BASE}/api/posts/${id}`).then(res => {
         setTitle(res.data.title);
         setContent(res.data.content);
         setMainCategory(res.data.mainCategory);
@@ -37,7 +39,7 @@ function PostingForm() {
         setMaxCount(res.data.maxCount);
       });
     }
-  }, [id, state]);
+  }, [id, state, API_BASE]);
 
   // 수정 모드일 때 content가 바뀌면 Editor에 반영
   // dark/light 테마 변경 시 글쓰던 내용이 유지되도록 함
@@ -55,7 +57,7 @@ function PostingForm() {
       const formData = new FormData();
       formData.append("file", blob);
 
-      const res = await axios.post("/api/upload-image", formData, {
+      const res = await axios.post(`${API_BASE}/api/upload-image`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
@@ -100,7 +102,7 @@ function PostingForm() {
 
     try {
       if (id) {
-        await axios.put(`/api/posts/${id}`, {
+        await axios.put(`${API_BASE}/api/posts/${id}`, {
           title,
           content: markdownContent,
           mainCategory,
@@ -110,7 +112,7 @@ function PostingForm() {
         alert("게시글이 수정되었습니다.");
         navigate(`/posts/${id}`);
       } else {
-        const res = await axios.post("/api/posts", {
+        const res = await axios.post(`${API_BASE}/api/posts`, {
           userNickname,
           title,
           content: markdownContent,

@@ -13,8 +13,10 @@ import ListThumbnailFlex from "../components/list-thumbnail-flex";
 import StudyListPagination from "../components/study-list-pagination";
 import type { studyProps } from "../main/home-study-list";
 import { SkeletonHomeStudy } from "../components/skeleton/skeleton-home-study";
+import { useApiStore } from "@/components/common/api-store";
 
 export default function StudyListMain() {
+  const { API_BASE } = useApiStore();
   const { cat, page } = useParams<{ cat: string; page?: string }>();
   const navigate = useNavigate();
 
@@ -46,7 +48,7 @@ export default function StudyListMain() {
     };
 
     axios
-      .get("/api/studyList", { params: query })
+      .get(`${API_BASE}/api/studyList`, { params: query })
       .then(res => {
         setStudyList(res.data.content || []); // 결과 없으면 빈 배열
         setTotalPages(res.data.totalPages || 1);
@@ -59,7 +61,7 @@ export default function StudyListMain() {
       .finally(() => {
         setLoading(false);
       });
-  }, [catParam, currentPage, searchQuery]);
+  }, [catParam, currentPage, searchQuery, API_BASE]);
 
   useEffect(() => {
     fetchData();

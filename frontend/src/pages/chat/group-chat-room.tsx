@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { SendHorizontal } from "lucide-react";
 import RenderMessages from "./components/render-messages";
 import { scrollDown, type GroupChatMessage } from "./components/chat-utils";
+import { useApiStore } from "@/components/common/api-store";
 
 interface GroupChatRoomProps {
   roomId: string;
@@ -15,6 +16,7 @@ interface GroupChatRoomProps {
 }
 
 export default function GroupChatRoom({ roomId, userId, username }: GroupChatRoomProps) {
+  const { API_BASE } = useApiStore();
   const [messages, setMessages] = useState<GroupChatMessage[]>([]);
   const [roomInfo, setRoomInfo] = useState({ roomName: "", currentCount: 0, maxCount: 0 });
   const [input, setInput] = useState("");
@@ -30,7 +32,7 @@ export default function GroupChatRoom({ roomId, userId, username }: GroupChatRoo
     const initChat = async () => {
       try {
         // 1. 방 정보 가져오기
-        const roomRes = await axios.get(`/api/chat/rooms/${roomId}/info`);
+        const roomRes = await axios.get(`${API_BASE}/api/chat/rooms/${roomId}/info`);
         setRoomInfo(roomRes.data);
 
         // 2. WebSocket + STOMP 클라이언트 생성
@@ -55,11 +57,11 @@ export default function GroupChatRoom({ roomId, userId, username }: GroupChatRoo
             }
           });
           // 3-2. 과거 메시지 로드
-          const msgRes = await axios.get(`/api/chat/rooms/${roomId}/messages`);
+          const msgRes = await axios.get(`${API_BASE}/api/chat/rooms/${roomId}/messages`);
           setMessages(msgRes.data);
 
           // 3-3. 입장 API 호출
-          await axios.post(`/api/chat/rooms/${roomId}/join`, { userId, username });
+          await axios.post(`${API_BASE}/api/chat/rooms/${roomId}/join`, { userId, username });
         };
 
         // 4. STOMP 연결 시작
@@ -80,7 +82,7 @@ export default function GroupChatRoom({ roomId, userId, username }: GroupChatRoo
         stompClient.deactivate().catch(() => {});
       }
     };
-  }, [roomId, userId, username]);
+  }, [roomId, userId, username, API_BASE]);
   // -------------------------------------
 
   // 메세지 보내기

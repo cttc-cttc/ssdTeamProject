@@ -6,8 +6,10 @@ import ListThumbnailGrid from "../../home/components/list-thumbnail-grid";
 import type { studyProps } from "../../home/main/home-study-list";
 import axios from "axios";
 import { useInfoStore } from "../info-store";
+import { useApiStore } from "@/components/common/api-store";
 
 export default function WishStudy() {
+  const { API_BASE } = useApiStore();
   // 사용자 정보 가져오기
   const { userPkID } = useInfoStore();
   const userPkIdNum = userPkID ? Number(userPkID) : null;
@@ -35,7 +37,7 @@ export default function WishStudy() {
       setLoading(true);
       try {
         // 백엔드 API 호출
-        const response = await axios.get(`/api/wish/list`, {
+        const response = await axios.get(`${API_BASE}/api/wish/list`, {
           params: { userId: userPkIdNum },
         });
 
@@ -54,7 +56,7 @@ export default function WishStudy() {
     };
 
     fetchWishStudies();
-  }, [userPkIdNum, currentPage, studyPerPage]);
+  }, [userPkIdNum, currentPage, studyPerPage, API_BASE]);
 
   // 페이지네이션 로직
   const indexOfLastStudy = currentPage * studyPerPage;

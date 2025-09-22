@@ -3,8 +3,10 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { ArrowLeft } from "lucide-react";
+import { useApiStore } from "@/components/common/api-store";
 
 export default function StudyEndPage() {
+  const { API_BASE } = useApiStore();
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -14,7 +16,7 @@ export default function StudyEndPage() {
     const checkStudyStatus = async () => {
       if (!id) return;
       try {
-        const response = await axios.get(`/api/create-post/${id}`);
+        const response = await axios.get(`${API_BASE}/api/create-post/${id}`);
         // 마감일이 지났거나 사용자가 직접 종료한 경우
         const deadline = new Date(response.data.deadline);
         const now = new Date();
@@ -29,7 +31,7 @@ export default function StudyEndPage() {
       }
     };
     checkStudyStatus();
-  }, [id]);
+  }, [id, API_BASE]);
 
   const handleEndStudy = async () => {
     if (!id) return;
@@ -42,11 +44,11 @@ export default function StudyEndPage() {
 
     setIsLoading(true);
     try {
-      await axios.post(`/api/posts/end-study/${id}`);
+      await axios.post(`${API_BASE}/api/posts/end-study/${id}`);
       alert("스터디가 성공적으로 종료되었습니다.");
 
       // 종료 성공 후 상태를 다시 확인
-      const response = await axios.get(`/api/create-post/${id}`);
+      const response = await axios.get(`${API_BASE}/api/create-post/${id}`);
       setIsEnded(response.data.ended);
 
       // 페이지 새로고침으로 상태 업데이트 확인

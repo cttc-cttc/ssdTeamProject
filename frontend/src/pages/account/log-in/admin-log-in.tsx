@@ -4,8 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAdminInfoStore } from "../admin-info-store";
 import axios from "axios";
+import { useApiStore } from "@/components/common/api-store";
 
 export default function AdminLogIn() {
+  const { API_BASE } = useApiStore();
   const navigate = useNavigate();
   const { setInfoStore } = useAdminInfoStore();
 
@@ -41,7 +43,7 @@ export default function AdminLogIn() {
     setLoading(true);
 
     try {
-      const response = await axios.post("/api/admin/login", formData);
+      const response = await axios.post(`${API_BASE}/api/admin/login`, formData);
 
       if (response.status === 200) {
         const data = response.data;

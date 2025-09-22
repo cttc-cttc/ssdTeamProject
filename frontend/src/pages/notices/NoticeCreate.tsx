@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import axios from "../../lib/api";
 import { Link, useNavigate } from "react-router-dom";
 import { useAdminInfoStore } from "../account/admin-info-store";
+import { useApiStore } from "@/components/common/api-store";
 
 export default function NoticeCreate() {
+  const { API_BASE } = useApiStore();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const navigate = useNavigate();
@@ -20,7 +22,7 @@ export default function NoticeCreate() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post("/api/notices/create", { title, content });
+      await axios.post(`${API_BASE}/api/notices/create`, { title, content });
       alert("공지사항 등록 완료!");
       navigate("/notices"); // 등록 후 목록으로 이동
     } catch (err) {

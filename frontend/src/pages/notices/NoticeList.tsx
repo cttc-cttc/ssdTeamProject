@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "../../lib/api";
 import { Button } from "@/components/ui/button";
+import { useApiStore } from "@/components/common/api-store";
 
 type Notice = {
   id: number;
@@ -22,20 +23,21 @@ const fmt = (iso?: string) => {
 };
 
 export default function NoticeList() {
+  const { API_BASE } = useApiStore();
   const [q, setQ] = useState("");
   const [page, setPage] = useState(0);
   const [data, setData] = useState<Notice[]>([]);
 
   const load = async () => {
-    let url = `/api/notices`;
+    let url = `${API_BASE}/api/notices`;
     if (q.trim()) {
-      url = `/api/notices/search?q=${encodeURIComponent(q.trim())}`;
+      url = `${API_BASE}/api/notices/search?q=${encodeURIComponent(q.trim())}`;
     } else {
       // 검색어가 없으면 전체 목록 API (페이지네이션 포함)
       const params = new URLSearchParams({ page: String(page), size: "10" });
       params.append("sort", "pinned,desc");
       params.append("sort", "createdAt,desc");
-      url = `/api/notices/list?${params.toString()}`;
+      url = `${API_BASE}/api/notices/list?${params.toString()}`;
     }
 
     const res = await axios.get<Notice[]>(url);

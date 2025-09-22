@@ -4,6 +4,7 @@ import axios from "axios";
 import type { studyProps } from "./home-study-list";
 import ListThumbnailFlex from "../components/list-thumbnail-flex";
 import { SkeletonHomeStudy } from "../components/skeleton/skeleton-home-study";
+import { useApiStore } from "@/components/common/api-store";
 
 interface SliceResponse<T> {
   content: T[];
@@ -11,6 +12,7 @@ interface SliceResponse<T> {
 }
 
 export default function TagSearchList({ tags }: { tags: string[] }) {
+  const { API_BASE } = useApiStore();
   const [studyPosts, setStudyPosts] = useState<studyProps[]>([]);
   const [lastId, setLastId] = useState<number | null>(null);
   const [hasNext, setHasNext] = useState(true);
@@ -32,7 +34,7 @@ export default function TagSearchList({ tags }: { tags: string[] }) {
       const query = tags.map(tag => `tags=${encodeURIComponent(tag)}`).join("&");
       const lastIdQuery = lastId ? `&lastId=${lastId}` : "";
       const res = await axios.get<SliceResponse<studyProps>>(
-        `/api/posts/search?${query}${lastIdQuery}&size=10`
+        `${API_BASE}/api/posts/search?${query}${lastIdQuery}&size=10`
       );
 
       const { content, hasNext: newHasNext } = res.data;

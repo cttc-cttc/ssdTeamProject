@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import axios from "../../lib/api";
 import { useAdminInfoStore } from "../account/admin-info-store";
+import { useApiStore } from "@/components/common/api-store";
 
 type Notice = {
   id: number;
@@ -15,6 +16,7 @@ type Notice = {
 };
 
 export default function NoticeDetail() {
+  const { API_BASE } = useApiStore();
   const { id } = useParams<{ id: string }>();
   const [notice, setNotice] = useState<Notice | null>(null);
   const navigate = useNavigate();
@@ -23,10 +25,10 @@ export default function NoticeDetail() {
   useEffect(() => {
     if (!id) return;
     axios
-      .get<Notice>(`/api/notices/${id}?inc=true`)
+      .get<Notice>(`${API_BASE}/api/notices/${id}?inc=true`)
       .then(res => setNotice(res.data))
       .catch(console.error);
-  }, [id]);
+  }, [id, API_BASE]);
 
   // 공지사항 삭제
   const handleDelete = async () => {
@@ -34,7 +36,7 @@ export default function NoticeDetail() {
     if (!window.confirm("정말 삭제하시겠습니까?")) return;
 
     try {
-      await axios.delete(`/api/notices/${id}`);
+      await axios.delete(`${API_BASE}/api/notices/${id}`);
       alert("공지사항이 삭제되었습니다.");
       navigate("/notices"); // 삭제 후 목록으로 이동
     } catch (error) {

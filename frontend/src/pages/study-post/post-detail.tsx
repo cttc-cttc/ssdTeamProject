@@ -7,6 +7,7 @@ import { categoryNameMap } from "@/components/common/mappings";
 import { Button } from "@/components/ui/button";
 import { useInfoStore } from "../account/info-store";
 import { ArrowLeft } from "lucide-react";
+import { useApiStore } from "@/components/common/api-store";
 
 // 백엔드 response dto
 interface Post {
@@ -24,6 +25,7 @@ interface Post {
 }
 
 export default function PostDetail() {
+  const { API_BASE } = useApiStore();
   const { id } = useParams();
   const { userPkID, userNickname } = useInfoStore();
   const userPkIdNum = userPkID ? Number(userPkID) : null;
@@ -33,26 +35,26 @@ export default function PostDetail() {
   const [isJoined, setIsJoined] = useState(false);
 
   useEffect(() => {
-    axios.get(`/api/posts/${id}`).then(res => setPost(res.data));
-  }, [id]);
+    axios.get(`${API_BASE}/api/posts/${id}`).then(res => setPost(res.data));
+  }, [id, API_BASE]);
 
   useEffect(() => {
     if (userPkIdNum && id) {
       axios
-        .get(`/api/wish/check?userId=${userPkIdNum}&postId=${id}`)
+        .get(`${API_BASE}/api/wish/check?userId=${userPkIdNum}&postId=${id}`)
         .then(res => setIsWished(res.data.isWished))
         .catch(console.error);
     }
-  }, [userPkIdNum, id]);
+  }, [userPkIdNum, id, API_BASE]);
 
   useEffect(() => {
     if (userPkIdNum && id) {
       axios
-        .get(`/api/join/check?userId=${userPkIdNum}&postId=${id}`)
+        .get(`${API_BASE}/api/join/check?userId=${userPkIdNum}&postId=${id}`)
         .then(res => setIsJoined(res.data.isJoined))
         .catch(console.error);
     }
-  }, [userPkIdNum, id]);
+  }, [userPkIdNum, id, API_BASE]);
 
   const getDDay = (deadline: string) => {
     const end = new Date(deadline).getTime();
@@ -72,7 +74,7 @@ export default function PostDetail() {
       const ok = window.confirm("정말 삭제하시겠습니까?");
       if (!ok) return;
 
-      await axios.delete(`/api/delete-post/${postId}`);
+      await axios.delete(`${API_BASE}/api/delete-post/${postId}`);
       alert("게시글이 삭제되었습니다.");
       navigate("/");
     } catch (error) {
@@ -86,11 +88,11 @@ export default function PostDetail() {
 
     try {
       if (isWished) {
-        await axios.delete(`/api/wish?userId=${userPkIdNum}&postId=${post.id}`);
+        await axios.delete(`${API_BASE}/api/wish?userId=${userPkIdNum}&postId=${post.id}`);
         setIsWished(false);
         setPost({ ...post, wishCount: post.wishCount - 1 });
       } else {
-        await axios.post(`/api/wish?userId=${userPkIdNum}&postId=${post.id}`);
+        await axios.post(`${API_BASE}/api/wish?userId=${userPkIdNum}&postId=${post.id}`);
         setIsWished(true);
         setPost({ ...post, wishCount: post.wishCount + 1 });
       }
@@ -104,14 +106,14 @@ export default function PostDetail() {
 
     try {
       if (isJoined) {
-        const res = await axios.delete("/api/join", {
+        const res = await axios.delete(`${API_BASE}/api/join`, {
           params: { userId: userPkIdNum, postId: post.id },
         });
         alert(res.data.message || "스터디 탈퇴 완료");
         setIsJoined(false);
         setPost({ ...post, currentCount: post.currentCount - 1 });
       } else {
-        const res = await axios.post("/api/join", null, {
+        const res = await axios.post(`${API_BASE}/api/join`, null, {
           params: { userId: userPkIdNum, postId: post.id },
         });
         alert(res.data.message || "스터디 참여 완료");

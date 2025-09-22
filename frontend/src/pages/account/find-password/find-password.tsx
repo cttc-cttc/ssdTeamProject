@@ -3,8 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import axios from "axios";
+import { useApiStore } from "@/components/common/api-store";
 
 export default function FindPassword() {
+  const { API_BASE } = useApiStore();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -64,10 +66,7 @@ export default function FindPassword() {
     setLoading(true);
 
     try {
-      const response = await axios.post(
-        "http://localhost:8080/api/users/password-reset/request",
-        formData
-      );
+      const response = await axios.post(`${API_BASE}/api/users/password-reset/request`, formData);
 
       if (response.status === 200) {
         alert("비밀번호 재설정 링크가 이메일로 전송되었습니다. 이메일을 확인해주세요.");
@@ -129,7 +128,6 @@ export default function FindPassword() {
               로그인하기
             </Link>
           </div>
-
 
           <div className="text-center">
             계정이 없으신가요?{" "}

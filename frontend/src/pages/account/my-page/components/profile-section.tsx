@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import axios from "axios";
+import { useApiStore } from "@/components/common/api-store";
 
 interface ProfileSectionProps {
   userPkID: string;
@@ -26,6 +27,7 @@ export default function ProfileSection({
   userEmail,
   setInfoStore,
 }: ProfileSectionProps) {
+  const { API_BASE } = useApiStore();
   const [formData, setFormData] = useState({
     userNickname: userNickname || "",
     userEmail: userEmail || "",
@@ -73,7 +75,7 @@ export default function ProfileSection({
 
     try {
       // 닉네임 변경을 서버에 요청
-      await axios.put(`/api/users/${userId}`, {
+      await axios.put(`${API_BASE}/api/users/${userId}`, {
         userNickname: formData.userNickname,
       });
 

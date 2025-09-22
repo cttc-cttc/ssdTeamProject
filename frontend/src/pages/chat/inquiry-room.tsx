@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { ArrowLeftToLine, SendHorizontal } from "lucide-react";
 import { scrollDown, type InquiryChatMessage } from "./components/chat-utils";
 import RenderMessages from "./components/render-messages";
+import { useApiStore } from "@/components/common/api-store";
 
 interface InquiryRoomProps {
   roomId: string;
@@ -16,6 +17,7 @@ interface InquiryRoomProps {
 }
 
 export default function InquiryRoom({ roomId, roomName, username, onBack }: InquiryRoomProps) {
+  const { API_BASE } = useApiStore();
   const [messages, setMessages] = useState<InquiryChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [client, setClient] = useState<Client | null>(null);
@@ -26,10 +28,10 @@ export default function InquiryRoom({ roomId, roomName, username, onBack }: Inqu
     if (!roomId) return; // roomId가 없으면 요청 안 보냄
 
     axios
-      .get(`/api/inquiry/inquiry-room/${roomId}/messages`)
+      .get(`${API_BASE}/api/inquiry/inquiry-room/${roomId}/messages`)
       .then(res => setMessages(res.data))
       .catch(err => console.error("기존 메시지를 불러오기 에러: ", err));
-  }, [roomId]);
+  }, [roomId, API_BASE]);
 
   // WebSocket 연결
   useEffect(() => {

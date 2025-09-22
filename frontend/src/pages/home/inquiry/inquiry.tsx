@@ -1,3 +1,4 @@
+import { useApiStore } from "@/components/common/api-store";
 import { useAdminInfoStore } from "@/pages/account/admin-info-store";
 import { useInfoStore } from "@/pages/account/info-store";
 import InquiryRoom from "@/pages/chat/inquiry-room";
@@ -15,6 +16,7 @@ export interface InquiryChatRoomType {
 
 // 관리자와 채팅하기
 export default function Inquiry() {
+  const { API_BASE } = useApiStore();
   const { adminPkID, adminName } = useAdminInfoStore();
   const { userPkID, userNickname } = useInfoStore();
   const [roomId, setRoomId] = useState("");
@@ -29,7 +31,7 @@ export default function Inquiry() {
     if (isAdminLoggedIn) {
       // 관리자 → 모든 유저 채팅방 목록 불러오기
       axios
-        .get("/api/inquiry/rooms")
+        .get(`${API_BASE}/api/inquiry/rooms`)
         .then(res => setRoomList(res.data))
         .catch(err => console.error("채팅방 목록 불러오기 에러 ", err));
       return;
@@ -38,14 +40,14 @@ export default function Inquiry() {
     if (isUserLoggedIn) {
       // 유저 → 본인 채팅방 불러오기
       axios
-        .get("/api/inquiry/room/me", { params: { userPkID } })
+        .get(`${API_BASE}/api/inquiry/room/me`, { params: { userPkID } })
         .then(res => {
           setRoomId(res.data.roomId);
           setRoomName(res.data.roomName);
         })
         .catch(err => console.error("채팅방 불러오기 에러 ", err));
     }
-  }, [isAdminLoggedIn, isUserLoggedIn, userPkID]);
+  }, [isAdminLoggedIn, isUserLoggedIn, userPkID, API_BASE]);
 
   // 방 선택 핸들러 (관리자 전용)
   const onSelectRoom = (roomId: string, roomName: string) => {

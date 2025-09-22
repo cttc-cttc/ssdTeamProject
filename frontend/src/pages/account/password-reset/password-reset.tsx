@@ -3,8 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import axios from "axios";
+import { useApiStore } from "@/components/common/api-store";
 
 export default function PasswordReset() {
+  const { API_BASE } = useApiStore();
   const navigate = useNavigate();
 
   const [token, setToken] = useState("");
@@ -88,7 +90,7 @@ export default function PasswordReset() {
     setLoading(true);
 
     try {
-      const response = await axios.post("http://localhost:8080/api/users/password-reset/confirm", {
+      const response = await axios.post(`${API_BASE}/api/users/password-reset/confirm`, {
         token: token,
         newPassword: formData.newPassword,
       });

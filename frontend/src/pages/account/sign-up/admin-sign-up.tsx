@@ -3,8 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import axios from "axios";
+import { useApiStore } from "@/components/common/api-store";
 
 export default function SignUp() {
+  const { API_BASE } = useApiStore();
   const [formData, setFormData] = useState({
     adminName: "",
     adminId: "",
@@ -89,7 +91,7 @@ export default function SignUp() {
     setLoading(true);
 
     try {
-      const response = await axios.post("/api/admin/signUp", formData);
+      const response = await axios.post(`${API_BASE}/api/admin/signUp`, formData);
 
       if (response.status === 200) {
         alert("관리자 계정생성 성공!");

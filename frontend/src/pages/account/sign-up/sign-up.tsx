@@ -3,8 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import axios from "axios";
+import { useApiStore } from "@/components/common/api-store";
 
 export default function SignUp() {
+  const { API_BASE } = useApiStore();
   const [formData, setFormData] = useState({
     userName: "",
     userNickname: "",
@@ -107,7 +109,7 @@ export default function SignUp() {
     setLoading(true);
 
     try {
-      const response = await axios.post("/api/users/signUp", formData);
+      const response = await axios.post(`${API_BASE}/api/users/signUp`, formData);
 
       if (response.status === 200) {
         alert("회원가입 성공!");

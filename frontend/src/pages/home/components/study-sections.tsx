@@ -6,6 +6,7 @@ import ListThumbnailGrid from "./list-thumbnail-grid";
 import { Button } from "@/components/ui/button";
 import { BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { SkeletonHomeMain } from "./skeleton/skeleton-home-main";
+import { useApiStore } from "@/components/common/api-store";
 
 interface StudySectionProps {
   type: "deadline" | "popular" | "recent"; // 어떤 섹션인지 구분
@@ -19,6 +20,7 @@ interface StudySectionProps {
  * recent   : studyPost 테이블의 id 값 내림차순 기준
  */
 export default function StudySections({ type, title, studyCount }: StudySectionProps) {
+  const { API_BASE } = useApiStore();
   const [list, setList] = useState<studyProps[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -33,7 +35,7 @@ export default function StudySections({ type, title, studyCount }: StudySectionP
     const startTime = Date.now();
 
     axios
-      .get("/api/studyList/studySections", { params: query })
+      .get(`${API_BASE}/api/studyList/studySections`, { params: query })
       .then(res => {
         // console.log(res.data.content);
         setList(res.data.content);
@@ -49,7 +51,7 @@ export default function StudySections({ type, title, studyCount }: StudySectionP
           setLoading(false);
         }
       });
-  }, [type, studyCount]);
+  }, [type, studyCount, API_BASE]);
 
   return (
     <div className="flex flex-col items-center">

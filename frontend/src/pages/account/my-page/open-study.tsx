@@ -6,8 +6,10 @@ import ListThumbnailGrid from "../../home/components/list-thumbnail-grid";
 import type { studyProps } from "../../home/main/home-study-list";
 import axios from "axios";
 import { useInfoStore } from "../info-store";
+import { useApiStore } from "@/components/common/api-store";
 
 export default function OpenStudy() {
+  const { API_BASE } = useApiStore();
   // 사용자 정보 가져오기
   const { userNickname } = useInfoStore();
 
@@ -35,7 +37,7 @@ export default function OpenStudy() {
       setLoading(true);
       try {
         // 백엔드 API 호출
-        const response = await axios.get("/api/posts/open-study", {
+        const response = await axios.get(`${API_BASE}/api/posts/open-study`, {
           params: { userNickname },
         });
 
@@ -54,7 +56,7 @@ export default function OpenStudy() {
     };
 
     fetchMyStudies();
-  }, [userNickname, currentPage, studyPerPage]);
+  }, [userNickname, currentPage, studyPerPage, API_BASE]);
 
   // 페이지네이션 로직
   const indexOfLastStudy = currentPage * studyPerPage;

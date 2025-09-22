@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import GroupChatRoom from "@/pages/chat/group-chat-room";
 import { useInfoStore } from "@/pages/account/info-store";
+import { useApiStore } from "@/components/common/api-store";
 
 interface RoomData {
   exists: boolean;
@@ -14,6 +15,7 @@ interface RoomData {
 }
 
 export default function GroupChat() {
+  const { API_BASE } = useApiStore();
   const { id } = useParams();
   const { userNickname, userPkID } = useInfoStore();
   const [studyOpener, setStudyOpener] = useState(null);
@@ -27,7 +29,7 @@ export default function GroupChat() {
   useEffect(() => {
     const checkChatRoom = () => {
       axios
-        .get("/api/chat/checkRoom", { params: { postId: id } })
+        .get(`${API_BASE}/api/chat/checkRoom`, { params: { postId: id } })
         .then(res => {
           const room: RoomData = res.data;
           if (room.exists) {
@@ -43,7 +45,7 @@ export default function GroupChat() {
 
     const checkStudyStatus = async () => {
       setLoading(true);
-      const response = await axios.get(`/api/create-post/${id}`);
+      const response = await axios.get(`${API_BASE}/api/create-post/${id}`);
       setStudyOpener(response.data.userNickname);
 
       if (response.data.ended) {
@@ -55,7 +57,7 @@ export default function GroupChat() {
     };
 
     checkStudyStatus();
-  }, [id, currentRoomId]);
+  }, [id, currentRoomId, API_BASE]);
 
   // CreateGroupChat에서 생성된 방을 받아 상태 변경
   const onSelectRoom = (roomId: string) => {

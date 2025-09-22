@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useApiStore } from "./common/api-store";
 
 export default function NoticeForm() {
+  const { API_BASE } = useApiStore();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
@@ -11,7 +13,7 @@ export default function NoticeForm() {
 
     try {
       // 서버에 POST 요청 보내기
-      const response = await axios.post("http://localhost:8080/api/notices", {
+      const response = await axios.post(`${API_BASE}/api/notices`, {
         title,
         content,
       });

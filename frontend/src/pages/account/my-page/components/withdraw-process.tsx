@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
+import { useApiStore } from "@/components/common/api-store";
 
 interface WithdrawProcessProps {
   isOpen: boolean;
@@ -9,7 +10,13 @@ interface WithdrawProcessProps {
   onSuccess: () => void;
 }
 
-export default function WithdrawProcess({ isOpen, onClose, userId, onSuccess }: WithdrawProcessProps) {
+export default function WithdrawProcess({
+  isOpen,
+  onClose,
+  userId,
+  onSuccess,
+}: WithdrawProcessProps) {
+  const { API_BASE } = useApiStore();
   const [withdrawPassword, setWithdrawPassword] = useState("");
   const [loadingWithdraw, setLoadingWithdraw] = useState(false);
   const [withdrawError, setWithdrawError] = useState<string>("");
@@ -22,7 +29,7 @@ export default function WithdrawProcess({ isOpen, onClose, userId, onSuccess }: 
     setWithdrawError("");
     setLoadingWithdraw(true);
     try {
-      await axios.delete(`/api/users/${userId}`, {
+      await axios.delete(`${API_BASE}/api/users/${userId}`, {
         data: {
           password: withdrawPassword,
         },

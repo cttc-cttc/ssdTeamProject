@@ -4,8 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useInfoStore } from "../info-store";
 import axios from "axios";
+import { useApiStore } from "@/components/common/api-store";
 
 export default function LogIn() {
+  const { API_BASE } = useApiStore();
   const navigate = useNavigate();
   const { setInfoStore } = useInfoStore();
 
@@ -41,7 +43,7 @@ export default function LogIn() {
     setLoading(true);
 
     try {
-      const response = await axios.post("/api/users/login", formData);
+      const response = await axios.post(`${API_BASE}/api/users/login`, formData);
 
       if (response.status === 200) {
         const data = response.data;

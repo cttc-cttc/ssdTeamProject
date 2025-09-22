@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import axios from "axios";
 import { useState } from "react";
 import { useInfoStore } from "../account/info-store";
+import { useApiStore } from "@/components/common/api-store";
 
 interface CreateGroupChatProps {
   onSelectRoom: (roomId: string) => void;
@@ -10,6 +11,7 @@ interface CreateGroupChatProps {
 }
 
 export default function CreateGroupChat({ onSelectRoom, postId }: CreateGroupChatProps) {
+  const { API_BASE } = useApiStore();
   const { userPkID, userNickname } = useInfoStore();
   const [newRoomName, setNewRoomName] = useState("");
 
@@ -25,7 +27,7 @@ export default function CreateGroupChat({ onSelectRoom, postId }: CreateGroupCha
   const createRoom = async () => {
     if (!newRoomName) return;
     await axios
-      .post(`/api/chat/rooms`, {
+      .post(`${API_BASE}/api/chat/rooms`, {
         roomName: newRoomName,
         postId: parseInt(postId ?? "0", 10),
         creatorId: userPkID,

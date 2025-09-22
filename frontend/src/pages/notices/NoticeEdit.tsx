@@ -4,6 +4,7 @@ import axios from "../../lib/api";
 import { useAdminInfoStore } from "../account/admin-info-store";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
+import { useApiStore } from "@/components/common/api-store";
 
 type Notice = {
   id: number;
@@ -17,6 +18,7 @@ type Notice = {
 };
 
 export default function NoticeEdit() {
+  const { API_BASE } = useApiStore();
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { adminPkID, adminName } = useAdminInfoStore();
@@ -39,7 +41,7 @@ export default function NoticeEdit() {
 
     const loadNotice = async () => {
       try {
-        const res = await axios.get<Notice>(`/api/notices/${id}`);
+        const res = await axios.get<Notice>(`${API_BASE}/api/notices/${id}`);
         setTitle(res.data.title);
         setContent(res.data.content);
       } catch (error) {
@@ -50,7 +52,7 @@ export default function NoticeEdit() {
     };
 
     loadNotice();
-  }, [id, adminPkID, navigate]);
+  }, [id, adminPkID, navigate, API_BASE]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -59,7 +61,7 @@ export default function NoticeEdit() {
 
     setLoading(true);
     try {
-      await axios.put(`/api/notices/${id}`, { title, content });
+      await axios.put(`${API_BASE}/api/notices/${id}`, { title, content });
       alert("공지사항 수정 완료!");
       navigate(`/notices/${id}`); // 수정 후 상세 페이지로 이동
     } catch (err) {
