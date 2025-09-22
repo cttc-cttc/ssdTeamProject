@@ -12,7 +12,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "comment")
-@Data @Getter @Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -26,23 +26,11 @@ public class Comment {
     @JoinColumn(name = "post_id")
     private StudyPost post;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
-
     @Column(nullable = false)
     private String userNickname;
 
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_id")
-    private Comment parent;
-
-    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = false)
-    @Builder.Default
-    private List<Comment> children = new ArrayList<>();
 
     @CreationTimestamp
     @Column(nullable = false, updatable = false)

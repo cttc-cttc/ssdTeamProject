@@ -29,7 +29,7 @@ function PostingForm() {
       setSubCategories(state.subCategories);
       setMaxCount(state.maxCount);
     } else if (id) {
-      axios.get(`/api/create-post/${id}`).then(res => {
+      axios.get(`/api/posts/${id}`).then(res => {
         setTitle(res.data.title);
         setContent(res.data.content);
         setMainCategory(res.data.mainCategory);
@@ -100,7 +100,7 @@ function PostingForm() {
 
     try {
       if (id) {
-        await axios.put(`/api/update-post/${id}`, {
+        await axios.put(`/api/posts/${id}`, {
           title,
           content: markdownContent,
           mainCategory,
@@ -110,7 +110,7 @@ function PostingForm() {
         alert("게시글이 수정되었습니다.");
         navigate(`/posts/${id}`);
       } else {
-        const res = await axios.post("/api/create-post", {
+        const res = await axios.post("/api/posts", {
           userNickname,
           title,
           content: markdownContent,

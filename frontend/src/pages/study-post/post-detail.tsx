@@ -33,7 +33,7 @@ export default function PostDetail() {
   const [isJoined, setIsJoined] = useState(false);
 
   useEffect(() => {
-    axios.get(`/api/create-post/${id}`).then(res => setPost(res.data));
+    axios.get(`/api/posts/${id}`).then(res => setPost(res.data));
   }, [id]);
 
   useEffect(() => {

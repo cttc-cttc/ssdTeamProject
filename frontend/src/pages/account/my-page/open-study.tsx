@@ -35,7 +35,7 @@ export default function OpenStudy() {
       setLoading(true);
       try {
         // 백엔드 API 호출
-        const response = await axios.get("/api/open-study", {
+        const response = await axios.get("/api/posts/open-study", {
           params: { userNickname },
         });
 

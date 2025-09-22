@@ -42,7 +42,7 @@ export default function StudyEndPage() {
 
     setIsLoading(true);
     try {
-      await axios.post(`/api/end-study/${id}`);
+      await axios.post(`/api/posts/end-study/${id}`);
       alert("스터디가 성공적으로 종료되었습니다.");
 
       // 종료 성공 후 상태를 다시 확인
