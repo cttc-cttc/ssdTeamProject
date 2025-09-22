@@ -23,7 +23,7 @@ export default function Header() {
   };
 
   const handleAdminLogout = () => {
-    if (confirm("관리자 로그아웃 하시겠습니까?")) {
+    if (confirm("로그아웃 하시겠습니까?")) {
       clearAdminInfoStore();
       navigate("/");
     }
