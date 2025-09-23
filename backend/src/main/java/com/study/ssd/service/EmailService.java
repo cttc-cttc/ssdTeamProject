@@ -1,5 +1,6 @@
 package com.study.ssd.service;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -23,8 +24,18 @@ public class EmailService {
     @Value("${spring.mail.username}")
     private String fromEmail;
 
-    public void sendPasswordResetEmail(String to, String resetToken, String userNickname) {
-        String resetUrl = "http://localhost:5173/password-reset?token=" + resetToken;
+    public void sendPasswordResetEmail(HttpServletRequest httpRequest, String to, String resetToken, String userNickname) {
+        // 현재 요청의 host/ip + 포트 가져오기
+        String serverUrl = "";
+        String serverName = httpRequest.getServerName();
+        if (serverName.equals("localhost")) {
+            // spring boot 로컬 환경일 경우 프론트 주소
+            serverUrl = "http://localhost:5173";
+        } else {
+            // spring boot aws 환경일 경우 프론트 주소
+            serverUrl = "http://localhost:4173";
+        }
+        String resetUrl = serverUrl + "/password-reset?token=" + resetToken;
 
         // 실제 이메일 전송 (HTML 형식)
         try {

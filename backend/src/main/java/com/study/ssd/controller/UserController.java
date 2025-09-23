@@ -3,6 +3,7 @@ package com.study.ssd.controller;
 import com.study.ssd.dto.UserDTO;
 import com.study.ssd.entity.User;
 import com.study.ssd.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -123,9 +124,10 @@ public class UserController {
     
     // 비밀번호 재설정 요청
     @PostMapping("/password-reset/request")
-    public ResponseEntity<?> requestPasswordReset(@RequestBody UserDTO.PasswordResetRequest request) {
+    public ResponseEntity<?> requestPasswordReset(@RequestBody UserDTO.PasswordResetRequest request,
+                                                    HttpServletRequest httpRequest) {
         try {
-            userService.requestPasswordReset(request.getUserEmail());
+            userService.requestPasswordReset(request.getUserEmail(), httpRequest);
             return ResponseEntity.ok("비밀번호 재설정 이메일이 전송되었습니다.");
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

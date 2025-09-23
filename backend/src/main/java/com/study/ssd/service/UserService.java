@@ -4,6 +4,7 @@ import com.study.ssd.entity.PasswordResetToken;
 import com.study.ssd.entity.User;
 import com.study.ssd.repository.PasswordResetTokenRepository;
 import com.study.ssd.repository.UserRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -130,7 +131,7 @@ public class UserService {
     }
     
     // 비밀번호 재설정 요청
-    public void requestPasswordReset(String userEmail) {
+    public void requestPasswordReset(String userEmail, HttpServletRequest httpRequest) {
         User user = userRepository.findByUserEmail(userEmail)
                 .orElseThrow(() -> new RuntimeException("해당 이메일로 등록된 사용자를 찾을 수 없습니다."));
         
@@ -143,7 +144,7 @@ public class UserService {
         passwordResetTokenRepository.save(resetToken);
         
         // 이메일 전송
-        emailService.sendPasswordResetEmail(user.getUserEmail(), token, user.getUserNickname());
+        emailService.sendPasswordResetEmail(httpRequest, user.getUserEmail(), token, user.getUserNickname());
     }
     
     // 비밀번호 재설정 토큰 검증 및 비밀번호 변경
