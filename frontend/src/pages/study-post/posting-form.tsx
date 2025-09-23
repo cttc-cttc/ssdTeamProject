@@ -10,7 +10,7 @@ import { useApiStore } from "@/components/common/api-store";
 function PostingForm() {
   const { API_BASE } = useApiStore();
   const { theme } = useTheme();
-  const { userNickname } = useInfoStore();
+  const { userPkID } = useInfoStore();
   const { id } = useParams();
   const { state } = useLocation();
 
@@ -112,8 +112,13 @@ function PostingForm() {
         alert("게시글이 수정되었습니다.");
         navigate(`/posts/${id}`);
       } else {
+        const userIdNum = userPkID ? Number(userPkID) : null;
+        if (!userIdNum) {
+          alert("로그인이 필요합니다.");
+          return;
+        }
         const res = await axios.post(`${API_BASE}/api/posts`, {
-          userNickname,
+          id: userIdNum,
           title,
           content: markdownContent,
           mainCategory,

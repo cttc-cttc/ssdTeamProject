@@ -54,8 +54,12 @@ public class StudyPostService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "최대 3개까지 가능합니다.");
         }
 
+        User author = userRepository.findById(studyPostRequest.getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "사용자를 찾을 수 없습니다."));
+
         StudyPost post = StudyPost.builder()
-                .userNickname(studyPostRequest.getUserNickname())
+                .userId(author.getId())
+                .userNickname(author.getUserNickname())
                 .title(studyPostRequest.getTitle())
                 .content(studyPostRequest.getContent())
                 .mainCategory(studyPostRequest.getMainCategory())
@@ -112,11 +116,10 @@ public class StudyPostService {
         studyPostRepository.delete(post);
     }
 
-    // 오픈 스터디 조회
+    // 오픈 스터디 조회 (유저 PK 기준 직접 조회)
     @Transactional
-    public List<StudyPostResponse> getOpenStudy(String userNickname) {
-
-        List<StudyPost> studyPosts = studyPostRepository.findByUserNicknameOrderByIdDesc(userNickname);
+    public List<StudyPostResponse> getOpenStudyByUserId(Long id) {
+        List<StudyPost> studyPosts = studyPostRepository.findByUserIdOrderByIdDesc(id);
         return studyPosts.stream()
                 .map(StudyPostResponse::fromEntity)
                 .toList();

@@ -11,8 +11,8 @@ import java.util.List;
 @Getter @Setter
 public class StudyPostRequest {
 
-    @NotBlank
-    private String userNickname;
+    @NotNull
+    private Long id;
 
     @NotBlank(message = "제목을 입력하세요.")
     private String title;
