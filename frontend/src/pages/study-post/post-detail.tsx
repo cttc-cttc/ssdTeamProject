@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { useInfoStore } from "../account/info-store";
 import { ArrowLeft } from "lucide-react";
 import { useApiStore } from "@/components/common/api-store";
+import Comments from "./comments";
 
 // 백엔드 response dto
 interface Post {
@@ -27,9 +28,12 @@ interface Post {
 export default function PostDetail() {
   const { API_BASE } = useApiStore();
   const { id } = useParams();
+  const postId = id ? Number(id) : null; // 파라미터 타입 변경
   const { userPkID, userNickname } = useInfoStore();
   const userPkIdNum = userPkID ? Number(userPkID) : null;
+
   const navigate = useNavigate(); // 삭제 후 메인 화면으로 이동
+
   const [post, setPost] = useState<Post | null>(null);
   const [isWished, setIsWished] = useState(false);
   const [isJoined, setIsJoined] = useState(false);
@@ -211,6 +215,8 @@ export default function PostDetail() {
           <Button onClick={handleJoin}>{isJoined ? "스터디 탈퇴" : "참여하기"}</Button>
         )}
       </div>
+
+      {postId && <Comments postId={postId} />}
     </div>
   );
 }
