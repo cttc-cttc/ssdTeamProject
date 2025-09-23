@@ -60,7 +60,7 @@ public class StudyPost {
     @Builder.Default private int wishCount = 0;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<WishStudy> wishes = new ArrayList<>();
+    @Builder.Default private List<WishStudy> wishes = new ArrayList<>();
 
 
     // 스터디 종료
