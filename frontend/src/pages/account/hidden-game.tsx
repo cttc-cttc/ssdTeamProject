@@ -6,10 +6,10 @@ const CHEAT_CODE = [
   "ArrowDown",
   "ArrowUp",
   "ArrowUp",
-  // "ArrowLeft",
-  // "ArrowRight",
-  // "ArrowLeft",
-  // "ArrowRight",
+  "ArrowLeft",
+  "ArrowRight",
+  "ArrowLeft",
+  "ArrowRight",
 ];
 
 export default function ClashMiniGameCSS() {
