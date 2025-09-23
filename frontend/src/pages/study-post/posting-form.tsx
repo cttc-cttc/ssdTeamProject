@@ -17,7 +17,7 @@ function PostingForm() {
   const [title, setTitle] = useState("");
   const [mainCategory, setMainCategory] = useState("");
   const [subCategories, setSubCategories] = useState<string[]>([]);
-  const [maxCount, setMaxCount] = useState<number>(2);
+  const [maxCount, setMaxCount] = useState<number>(1);
   const [content, setContent] = useState("");
 
   const navigate = useNavigate();
@@ -95,7 +95,7 @@ function PostingForm() {
       return;
     }
 
-    if (maxCount < 2 || maxCount > 50) {
+    if (maxCount < 1 || maxCount > 50) {
       alert("참여인원을 입력하세요.");
       return;
     }
