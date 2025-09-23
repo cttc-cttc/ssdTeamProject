@@ -150,7 +150,7 @@ export default function NoticeEdit() {
           <button
             type="submit"
             disabled={loading}
-            className="bg-blue-500 hover:bg-blue-600 
+            className="bg-green-800 hover:bg-green-700 
                        text-white px-4 py-2 rounded
                        disabled:opacity-50 disabled:cursor-not-allowed"
           >
