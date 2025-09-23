@@ -43,6 +43,7 @@ export default function NoticeDetail() {
     }
   };
 
+  
   if (!notice) return <div className="p-6"> 로딩중...</div>;
 
   return (
