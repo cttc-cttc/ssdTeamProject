@@ -168,8 +168,8 @@ function PostingForm() {
           }}
           className="w-[calc(100%-5rem)] px-3 py-2 border rounded-md"
         />
-        {(maxCount < 2 || maxCount > 50) && (
-          <span className="text-red-500 text-sm ml-2">참여인원은 2 ~ 50명 사이로 입력하세요.</span>
+        {(maxCount < 1 || maxCount > 50) && (
+          <span className="text-red-500 text-sm ml-2">참여인원은 1 ~ 50명 사이로 입력하세요.</span>
         )}
       </div>
       <div className="mb-5">
