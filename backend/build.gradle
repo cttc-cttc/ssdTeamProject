@@ -47,3 +47,8 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+tasks.named('bootRun') {
+	// JVM 옵션 추가
+	jvmArgs = ['-Duser.timezone=Asia/Seoul']
+}
