@@ -1,4 +1,9 @@
 import dayjs from "dayjs";
+// import utc from "dayjs/plugin/utc";
+// import timezone from "dayjs/plugin/timezone";
+
+// dayjs.extend(utc);
+// dayjs.extend(timezone);
 
 /**
  * 그룹 채팅방 메시지 타입
