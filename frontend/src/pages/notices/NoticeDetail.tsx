@@ -75,7 +75,7 @@ export default function NoticeDetail() {
         <div className="mt-6 flex gap-2">
           <button
             onClick={() => navigate(`/notices/edit/${id}`)}
-            className="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600"
+            className="bg-green-800 text-white px-4 py-1 rounded hover:bg-green-700"
           >
             수정하기
           </button>
