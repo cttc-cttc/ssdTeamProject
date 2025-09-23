@@ -80,10 +80,10 @@ public class StudyPostController {
         return ResponseEntity.ok(new DeleteStudyPostResponse(true, "게시글이 삭제되었습니다."));
     }
 
-     // 오픈 스터디 조회
+     // 오픈 스터디 조회 (유저 PK 기반)
      @GetMapping("/open-study")
-     public ResponseEntity<List<StudyPostResponse>> getOpenStudy(@RequestParam String userNickname) {
-         return ResponseEntity.ok(studyPostService.getOpenStudy(userNickname));
+     public ResponseEntity<List<StudyPostResponse>> getOpenStudy(@RequestParam Long id) {
+         return ResponseEntity.ok(studyPostService.getOpenStudyByUserId(id));
      }
 
      // 스터디 종료

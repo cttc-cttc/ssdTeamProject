@@ -23,6 +23,10 @@ public class StudyPost {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // 작성자 PK (User.id)
+    @Column(name = "user_id")
+    private Long userId;
+
     @Column(nullable = false)
     private String userNickname;
 

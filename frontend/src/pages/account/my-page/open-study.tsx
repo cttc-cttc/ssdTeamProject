@@ -11,7 +11,8 @@ import { useApiStore } from "@/components/common/api-store";
 export default function OpenStudy() {
   const { API_BASE } = useApiStore();
   // 사용자 정보 가져오기
-  const { userNickname } = useInfoStore();
+  const { userPkID } = useInfoStore();
+  const userPkIdNum = userPkID ? Number(userPkID) : null;
 
   // 페이지네이션 상태 추가
   const [currentPage, setCurrentPage] = useState(1);
@@ -27,8 +28,8 @@ export default function OpenStudy() {
   // 개설한 스터디 데이터 가져오기
   useEffect(() => {
     const fetchMyStudies = async () => {
-      if (!userNickname) {
-        console.error("사용자 닉네임이 없습니다.");
+      if (!userPkIdNum) {
+        console.error("사용자 ID가 없습니다.");
         setStudies([]);
         setTotalPages(1);
         return;
@@ -38,7 +39,7 @@ export default function OpenStudy() {
       try {
         // 백엔드 API 호출
         const response = await axios.get(`${API_BASE}/api/posts/open-study`, {
-          params: { userNickname },
+          params: { id: userPkIdNum },
         });
 
         // 실제 API 데이터만 사용 (개설한 스터디가 없으면 빈 배열)
@@ -56,7 +57,7 @@ export default function OpenStudy() {
     };
 
     fetchMyStudies();
-  }, [userNickname, currentPage, studyPerPage, API_BASE]);
+  }, [userPkIdNum, currentPage, studyPerPage, API_BASE]);
 
   // 페이지네이션 로직
   const indexOfLastStudy = currentPage * studyPerPage;

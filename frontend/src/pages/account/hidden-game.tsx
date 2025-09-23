@@ -1,16 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
-const CHEAT_CODE = [
-  "ArrowDown",
-  "ArrowDown",
-  "ArrowUp",
-  "ArrowUp",
-  "ArrowLeft",
-  "ArrowRight",
-  "ArrowLeft",
-  "ArrowRight",
-];
+const CHEAT_CODE = ["ArrowDown", "ArrowDown", "ArrowUp", "ArrowUp"];
 
 export default function ClashMiniGameCSS() {
   const navigate = useNavigate();
