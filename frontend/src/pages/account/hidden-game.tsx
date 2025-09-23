@@ -189,24 +189,20 @@ export default function ClashMiniGameCSS() {
   }, [cheatActivated, outerSize, requiredKey, requiredSuccess, navigate, rerollTargetPos]);
 
   return (
-    <div className="text-black text-center pt-12 transition-all duration-500 relative overflow-hidden">
+    <div
+      className="text-center pt-12 transition-all duration-500 relative overflow-hidden 
+                font-black tracking-widest italic drop-shadow-[2px_2px_6px_rgba(0,0,0,0.9)]"
+    >
       {!cheatActivated && (
         <>
-          <p>You have to go back</p>
+          <p>9와 3/4 승강장</p>
         </>
       )}
 
       {cheatActivated && (
         <>
-          <h1
-            className="text-4xl md:text-5xl font-extrabold text-red-600"
-            style={{
-              textShadow:
-                "0 0 8px rgba(255,0,0,0.6), 0 0 16px rgba(255,0,0,0.4), 0 0 24px rgba(255,0,0,0.25)",
-              animation: "red-glow 1.2s ease-in-out infinite",
-            }}
-          >
-            격돌
+          <h1 className="font-black tracking-widest italic drop-shadow-[2px_2px_4px_rgba(0,0,0,0.7)]">
+            9와 3/4 승강장
           </h1>
 
           {/* 수축 원 UI */}
@@ -244,7 +240,7 @@ export default function ClashMiniGameCSS() {
                 left: `${targetPos.x}%`,
                 top: `${targetPos.y}%`,
                 transform: "translate(-50%, -50%)",
-              }}  
+              }}
             >
               {requiredKey}
             </div>
