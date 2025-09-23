@@ -44,6 +44,7 @@ export default function GuidePage() {
           스터디카페 이용방법
         </button>
       </div>
+      <p>{selected}</p>
 
       {guide && (
         <div className="bg-white p-4 rounded shadow">
