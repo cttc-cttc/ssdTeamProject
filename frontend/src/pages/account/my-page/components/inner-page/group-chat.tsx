@@ -45,14 +45,13 @@ export default function GroupChat() {
 
     const checkStudyStatus = async () => {
       setLoading(true);
-      const response = await axios.get(`${API_BASE}/api/posts/${id}`);
-      setStudyOpener(response.data.userNickname);
-
-      if (response.data.ended) {
-        setMessage("종료된 스터디는 채팅방에 입장할 수 없습니다.");
-        setLoading(false);
-      } else {
+      try {
+        const response = await axios.get(`${API_BASE}/api/posts/${id}`);
+        setStudyOpener(response.data.userNickname);
+        setMessage("");
         checkChatRoom();
+      } catch {
+        setLoading(false);
       }
     };
 

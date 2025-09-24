@@ -138,9 +138,6 @@ public class StudyPostService {
         post.setEnded(true);
         StudyPost savedPost = studyPostRepository.save(post);
 
-        // 채팅방 삭제 (Cascade로 참가자/메시지 자동 삭제)
-        chatService.sendEndMessageAndDeleteChatRoom(savedPost.getId());
-
         return StudyPostResponse.fromEntity(savedPost);
     }
 }
