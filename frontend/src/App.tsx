@@ -24,7 +24,7 @@ import PostingForm from "./pages/study-post/posting-form";
 import HiddenGame from "./pages/account/hidden-game";
 import StudyListDetail from "./pages/home/study-list/study-list-detail";
 import Inquiry from "./pages/home/inquiry/inquiry";
-import Guide from "./pages/guide/guide";
+import Guide from "./pages/guide/guidePage";
 import JoinStudySidebar from "./pages/account/my-page/components/inner-sidebar/join-study-sidebar";
 import WishStudySidebar from "./pages/account/my-page/components/inner-sidebar/wish-study-sidebar";
 import OpenStudySidebar from "./pages/account/my-page/components/inner-sidebar/open-study-sidebar";

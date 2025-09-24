@@ -78,7 +78,7 @@ export default function PostDetail() {
       const ok = window.confirm("정말 삭제하시겠습니까?");
       if (!ok) return;
 
-      await axios.delete(`${API_BASE}/api/delete-post/${postId}`);
+      await axios.delete(`${API_BASE}/api/posts/${postId}`);
       alert("게시글이 삭제되었습니다.");
       navigate("/");
     } catch (error) {
