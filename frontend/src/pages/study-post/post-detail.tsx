@@ -6,7 +6,7 @@ import "./post-detail.css";
 import { categoryNameMap } from "@/components/common/mappings";
 import { Button } from "@/components/ui/button";
 import { useInfoStore } from "../account/info-store";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Bookmark } from "lucide-react";
 import { useApiStore } from "@/components/common/api-store";
 import Comments from "./comments";
 
@@ -206,12 +206,13 @@ export default function PostDetail() {
             현재 참여 인원: {post.currentCount} / {post.maxCount}
           </span>
           {!post.isEnded && userPkIdNum !== post.userPkId && (
-            <Button
-              onClick={handleWish}
-              className={`px-3 py-1 rounded ${isWished ? "bg-red-400 text-white" : "bg-gray-200"}`}
-            >
-              {isWished ? "위시 취소" : "위시 추가"} {post.wishCount}
-            </Button>
+            <div className="flex text-sm">
+              <Bookmark
+                onClick={handleWish}
+                className={`${isWished ? "text-yellow-500 fill-yellow-200" : "text-yellow-500"} `}
+              />
+              찜하기 {post.wishCount}
+            </div>
           )}
         </div>
 
