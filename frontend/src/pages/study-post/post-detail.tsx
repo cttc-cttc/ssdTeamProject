@@ -67,7 +67,7 @@ export default function PostDetail() {
   }
 
   const getDDay = (deadline: string, isEnded: boolean) => {
-    if (isEnded) return { text: "마감", isRed: true };
+    if (isEnded) return { text: "종료", isRed: true };
 
     const end = new Date(deadline).getTime();
     const now = new Date().getTime();

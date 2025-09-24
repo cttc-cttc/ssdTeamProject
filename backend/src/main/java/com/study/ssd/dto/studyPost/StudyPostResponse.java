@@ -1,5 +1,6 @@
 package com.study.ssd.dto.studyPost;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.study.ssd.entity.StudyPost;
 import com.study.ssd.entity.User;
 import lombok.*;
@@ -26,7 +27,9 @@ public class StudyPostResponse {
     @Builder.Default private int currentCount = 0;
     @Builder.Default private int maxCount = 0;
     @Builder.Default private int wishCount = 0;
-    @Builder.Default private boolean isEnded = false;
+    @JsonProperty("isEnded")
+    @Builder.Default
+    private boolean isEnded = false;
 
     // StudyPost -> StudyPostResponse 변환
     public static StudyPostResponse fromEntity(StudyPost entity) {
