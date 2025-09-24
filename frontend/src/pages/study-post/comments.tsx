@@ -115,7 +115,9 @@ export default function Comments({ postId, isEnded, deadline }: CommentsProps) {
 
   return (
     <section className="max-w-4xl mx-auto px-6 pb-12">
-      <h2 className="text-xl font-semibold mt-10 mb-4 border-b border-gray-300 pb-2">댓글</h2>
+      <h2 className="text-xl font-semibold mt-10 mb-4 border-b border-gray-300 pb-2">
+        댓글 {comments.length}
+      </h2>
 
       {/* 목록 */}
       {loading ? (
