@@ -15,19 +15,22 @@ export default function StudyEndPage() {
   useEffect(() => {
     const checkStudyStatus = async () => {
       if (!id) return;
+      setIsLoading(true);
       try {
         const response = await axios.get(`${API_BASE}/api/posts/${id}`);
         // 마감일이 지났거나 사용자가 직접 종료한 경우
         const deadline = new Date(response.data.deadline);
         const now = new Date();
         const isDeadlinePassed = deadline < now;
-        const isManuallyEnded = response.data.ended;
+        const isManuallyEnded = response.data.isEnded;
 
         setIsEnded(isDeadlinePassed || isManuallyEnded);
       } catch (error) {
         console.error("스터디 상태 확인 실패:", error);
         // API 실패 시 임시로 false 설정
         setIsEnded(false);
+      } finally {
+        setIsLoading(false);
       }
     };
     checkStudyStatus();
@@ -65,6 +68,8 @@ export default function StudyEndPage() {
   const backStep = () => {
     navigate(-1);
   };
+
+  if (isLoading) return <div></div>;
 
   return (
     <div className="w-full px-6 py-10">
