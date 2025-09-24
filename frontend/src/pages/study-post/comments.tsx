@@ -7,6 +7,7 @@ import { useInfoStore } from "../account/info-store";
 type Comment = {
   id: number;
   postId: number;
+  userPkId: number;
   userNickname: string;
   content: string;
   createdAt: string;
@@ -16,10 +17,13 @@ type Comment = {
 // 이 컴포넌트 쓸 때 넘겨야 하는 데이터
 interface CommentsProps {
   postId: number;
+  isEnded: boolean;
 }
 
-export default function Comments({ postId }: CommentsProps) {
-  const { userNickname } = useInfoStore(); // 로그인 유저 닉네임
+export default function Comments({ postId, isEnded }: CommentsProps) {
+  const { userPkID, userNickname } = useInfoStore();
+  const userPkIdNum = userPkID ? Number(userPkID) : null;
+
   const [comments, setComments] = useState<Comment[]>([]);
   const [loading, setLoading] = useState(true);
   const [newContent, setNewContent] = useState("");
@@ -50,7 +54,8 @@ export default function Comments({ postId }: CommentsProps) {
 
     try {
       const res = await axios.post<Comment>(`/api/posts/${postId}/comments`, {
-        userNickname, // 서버 유저 연동 안 하고 닉네임 문자열만 저장
+        userPkId: userPkIdNum,
+        userNickname,
         content,
       });
       setComments(prev => [...prev, res.data]);
@@ -102,19 +107,21 @@ export default function Comments({ postId }: CommentsProps) {
 
   return (
     <section className="max-w-4xl mx-auto px-6 pb-12">
-      <h2 className="text-xl font-semibold mt-10 mb-4">댓글</h2>
+      <h2 className="text-xl font-semibold mt-10 mb-4 border-b border-gray-300 pb-2">댓글</h2>
 
-      <div className="flex gap-2 items-start mb-6">
-        <input
-          value={newContent}
-          onChange={e => setNewContent(e.target.value)}
-          placeholder="댓글을 입력하세요."
-          className="flex-1 px-3 py-2 border rounded"
-        />
-        <Button onClick={handleCreate} className="shrink-0">
-          등록
-        </Button>
-      </div>
+      {!isEnded && userNickname && (
+        <div className="flex gap-2 items-start mb-6">
+          <input
+            value={newContent}
+            onChange={e => setNewContent(e.target.value)}
+            placeholder="댓글을 입력하세요."
+            className="flex-1 px-3 py-2 border rounded"
+          />
+          <Button onClick={handleCreate} className="shrink-0">
+            등록
+          </Button>
+        </div>
+      )}
 
       {/* 목록 */}
       {loading ? (
@@ -122,7 +129,7 @@ export default function Comments({ postId }: CommentsProps) {
       ) : (
         <ul className="divide-y divide-gray-200">
           {comments.map(c => {
-            const isMine = c.userNickname === userNickname;
+            const isMine = c.userPkId === userPkIdNum;
             const isEditing = editingId === c.id;
 
             return (

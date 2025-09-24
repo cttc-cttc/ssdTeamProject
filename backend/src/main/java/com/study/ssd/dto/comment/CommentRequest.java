@@ -5,13 +5,14 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-
 @Getter @Setter
 public class CommentRequest {
 
     @NotNull
     private Long postId;
+
+    @NotNull
+    private Long userPkId;
 
     @NotBlank
     private String userNickname;

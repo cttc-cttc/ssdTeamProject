@@ -30,6 +30,7 @@ public class CommentService {
 
         Comment comment = Comment.builder()
                 .post(post)
+                .userId(commentRequest.getUserPkId()) // ()안에 있는 애들이 Entity에서 정의된 이름으로 씀
                 .userNickname(commentRequest.getUserNickname())
                 .content(commentRequest.getContent())
                 .depth(0)

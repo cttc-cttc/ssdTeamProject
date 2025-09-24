@@ -26,6 +26,10 @@ public class Comment {
     @JoinColumn(name = "post_id")
     private StudyPost post;
 
+    // 작성자 PK (User.id)
+    @Column(name = "user_id")
+    private Long userId;
+
     @Column(nullable = false)
     private String userNickname;
 
