@@ -51,9 +51,10 @@ export default function CreateGroupChat({ onSelectRoom, postId }: CreateGroupCha
             <div className="mt-2 text-sm text-muted-foreground">
               <ul className="list-disc list-inside space-y-1">
                 <li>채팅방은 게시글당 하나만 개설할 수 있습니다.</li>
-                <li>채팅방 생성 후 삭제하거나 다른 게시글로 옮길 수 없습니다.</li>
+                <li>채팅방은 생성 후 삭제하거나 다른 게시글로 옮길 수 없습니다.</li>
                 <li>채팅방 이름은 생성 시 지정되며, 변경은 제한됩니다.</li>
                 <li>채팅방은 해당 스터디 참여자들만 이용할 수 있습니다.</li>
+                <li>채팅방은 스터디 모집 기간이 종료된 이후에도 계속 이용 가능합니다.</li>
               </ul>
             </div>
           </div>

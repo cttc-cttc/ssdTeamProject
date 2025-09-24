@@ -184,28 +184,4 @@ public class ChatService {
                 .map(ChatMessageResponse::fromEntity)
                 .collect(Collectors.toList());
     }
-
-    /**
-     * 스터디 종료 후 종료 메시지 전송
-     * @param postId 종료 대상 스터디 게시글 id
-     */
-    public void sendEndMessageAndDeleteChatRoom(Long postId) {
-        ChatRoom room = chatRoomRepository.findByStudyPostId(postId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-
-        // 스터디 종료 메시지 발송
-        ChatMessage endMessage = new ChatMessage();
-        endMessage.setRoom(room);
-        endMessage.setSender("NOTICE");
-        endMessage.setMessageType(MessageType.SYSTEM);
-        endMessage.setContent("스터디가 종료 되었습니다.\n종료 이후에는 메시지를 입력할 수 없으며, 채팅방이 삭제됩니다.");
-        chatMessageRepository.save(endMessage);
-
-        // 채팅방 구독 주소: "/sub/groupChat/{roomId}"
-        // STOMP 구독자에게 실시간 전송
-        messagingTemplate.convertAndSend("/sub/groupChat/" + room.getId(), endMessage);
-
-        // 채팅방 삭제 (Cascade로 참가자/메시지 자동 삭제)
-        chatRoomRepository.delete(room);
-    }
 }
