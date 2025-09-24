@@ -14,6 +14,9 @@ public class StudyPostRequest {
     @NotNull
     private Long id;
 
+    @NotNull
+    private Long userPkId;
+
     @NotBlank(message = "제목을 입력하세요.")
     private String title;
 

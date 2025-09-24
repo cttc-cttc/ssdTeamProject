@@ -23,6 +23,7 @@ interface Post {
   content: string;
   deadline: string;
   wishCount: number;
+  isEnded: boolean;
 }
 
 export default function PostDetail() {
@@ -60,13 +61,16 @@ export default function PostDetail() {
     }
   }, [userPkIdNum, id, API_BASE]);
 
-  const getDDay = (deadline: string) => {
+  const getDDay = (deadline: string, isEnded: boolean) => {
+    if (isEnded) return "마감";
+
     const end = new Date(deadline).getTime();
     const now = new Date().getTime();
     const diff = Math.floor((end - now) / (1000 * 60 * 60 * 24));
 
     if (diff > 0) return `D-${diff}`;
     if (diff === 0) return "오늘 마감";
+    return "마감";
   };
 
   const handleEdit = () => {
@@ -191,14 +195,16 @@ export default function PostDetail() {
             ))}
           </div>
 
-          <span className="text-gray-600">마감까지 {getDDay(post.deadline)}</span>
+          <span className={`font-medium ${post.isEnded ? "text-red-500" : "text-gray-600"}`}>
+            마감까지 {getDDay(post.deadline, post.isEnded)}
+          </span>
         </div>
 
         <div className="flex justify-between items-center border-b border-gray-300 pb-2 mb-6">
           <span className="text-gray-700">
             현재 참여 인원: {post.currentCount} / {post.maxCount}
           </span>
-          {userPkIdNum !== post.userPkId && (
+          {!post.isEnded && userPkIdNum !== post.userPkId && (
             <Button
               onClick={handleWish}
               className={`px-3 py-1 rounded ${isWished ? "bg-red-400 text-white" : "bg-gray-200"}`}
@@ -211,12 +217,12 @@ export default function PostDetail() {
         <div className="border border-gray-300 rounded-md p-6 mb-6">
           <CustomViewer contents={post.content} />
         </div>
-        {userPkIdNum !== post.userPkId && (
+        {!post.isEnded && userPkIdNum !== post.userPkId && (
           <Button onClick={handleJoin}>{isJoined ? "스터디 탈퇴" : "참여하기"}</Button>
         )}
       </div>
 
-      {postId && <Comments postId={postId} />}
+      {postId && <Comments postId={postId} isEnded={post.isEnded} />}
     </div>
   );
 }

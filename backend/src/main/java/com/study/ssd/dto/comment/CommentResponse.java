@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 public class CommentResponse {
     private Long id;
     private Long postId;
+    private Long userPkId;
     private String userNickname;
     private String content;
     private LocalDateTime createdAt;
@@ -21,6 +22,7 @@ public class CommentResponse {
         return CommentResponse.builder()
                 .id(entity.getId())
                 .postId(entity.getPost().getId())
+                .userPkId(entity.getUserId())
                 .userNickname(entity.getUserNickname())
                 .content(entity.getContent())
                 .createdAt(entity.getCreatedAt())
