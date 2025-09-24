@@ -109,20 +109,6 @@ export default function Comments({ postId, isEnded }: CommentsProps) {
     <section className="max-w-4xl mx-auto px-6 pb-12">
       <h2 className="text-xl font-semibold mt-10 mb-4 border-b border-gray-300 pb-2">댓글</h2>
 
-      {!isEnded && userNickname && (
-        <div className="flex gap-2 items-start mb-6">
-          <input
-            value={newContent}
-            onChange={e => setNewContent(e.target.value)}
-            placeholder="댓글을 입력하세요."
-            className="flex-1 px-3 py-2 border rounded"
-          />
-          <Button onClick={handleCreate} className="shrink-0">
-            등록
-          </Button>
-        </div>
-      )}
-
       {/* 목록 */}
       {loading ? (
         <div className="text-gray-500">댓글을 불러오고 있습니다.</div>
@@ -135,15 +121,27 @@ export default function Comments({ postId, isEnded }: CommentsProps) {
             return (
               <li key={c.id} className="py-3">
                 <div className="flex items-center justify-between mb-1">
-                  <span className="text-sm font-medium text-gray-700">{c.userNickname}</span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm font-medium text-gray-700">{c.userNickname}</span>
+                    {isMine && !isEditing && (
+                      <div className="mt-1 flex gap-2">
+                        <Button size="sm" onClick={() => startEdit(c)}>
+                          수정
+                        </Button>
+                        <Button size="sm" variant="outline" onClick={() => deleteComment(c.id)}>
+                          삭제
+                        </Button>
+                      </div>
+                    )}
+                  </div>
                   <span className="text-xs text-gray-400">
                     {new Date(c.createdAt).toLocaleString()}
                   </span>
                 </div>
 
                 {isEditing ? (
-                  <div className="flex gap-2">
-                    <input
+                  <div className="flex gap-2 mt-1">
+                    <textarea
                       value={editingContent}
                       onChange={e => setEditingContent(e.target.value)}
                       className="flex-1 px-3 py-2 border rounded"
@@ -158,22 +156,28 @@ export default function Comments({ postId, isEnded }: CommentsProps) {
                 ) : (
                   <p className="text-gray-800 whitespace-pre-wrap">{c.content}</p>
                 )}
-
-                {/* 본인 댓글만 버튼 */}
-                {isMine && !isEditing && (
-                  <div className="mt-1 flex gap-2">
-                    <Button size="sm" onClick={() => startEdit(c)}>
-                      수정
-                    </Button>
-                    <Button size="sm" variant="outline" onClick={() => deleteComment(c.id)}>
-                      삭제
-                    </Button>
-                  </div>
-                )}
               </li>
             );
           })}
         </ul>
+      )}
+
+      {/* 입력창 */}
+      {!isEnded && userNickname && (
+        <div className="flex gap-2 items-start mt-8 mb-6">
+          <textarea
+            value={newContent}
+            onChange={e => setNewContent(e.target.value)}
+            placeholder="댓글을 입력하세요."
+            className="flex-1 px-3 py-2 border rounded"
+            rows={3}
+          />
+          <div className="flex justify-end">
+            <Button onClick={handleCreate} className="shrink-0">
+              등록
+            </Button>
+          </div>
+        </div>
       )}
     </section>
   );
