@@ -90,6 +90,7 @@ export default function SignUp() {
     // 회원가입 처리 시작
     setLoading(true);
 
+    
     try {
       const response = await axios.post(`${API_BASE}/api/admin/signUp`, formData);
 
