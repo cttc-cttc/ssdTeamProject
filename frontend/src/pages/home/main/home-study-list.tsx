@@ -13,7 +13,7 @@ export interface studyProps {
   currentCount: number;
   maxCount: number;
   wishCount: number;
-  ended: boolean;
+  isEnded: boolean;
 }
 
 export default function HomeStudyList() {
