@@ -61,17 +61,24 @@ export default function PostDetail() {
     }
   }, [userPkIdNum, id, API_BASE]);
 
+  // post 가 null 일 때 렌더링 중단, 값이 있을 때 하단 실행
+  if (!post) {
+    return <div>게시글을 불러오고 있습니다...</div>;
+  }
+
   const getDDay = (deadline: string, isEnded: boolean) => {
-    if (isEnded) return "마감";
+    if (isEnded) return { text: "마감", isRed: true };
 
     const end = new Date(deadline).getTime();
     const now = new Date().getTime();
     const diff = Math.floor((end - now) / (1000 * 60 * 60 * 24));
 
-    if (diff > 0) return `D-${diff}`;
-    if (diff === 0) return "오늘 마감";
-    return "마감";
+    if (diff > 0) return { text: `마감까지 D-${diff}`, isRed: false };
+    if (diff === 0) return { text: "오늘 마감", isRed: true };
+    return { text: "마감", isRed: true };
   };
+
+  const { text: dDayText, isRed } = getDDay(post.deadline, post.isEnded);
 
   const handleEdit = () => {
     navigate(`/edit/${post!.id}`, { state: post });
@@ -167,17 +174,11 @@ export default function PostDetail() {
           <span className="text-gray-600">작성자: {post.userNickname}</span>
           <div className="flex flex-wrap gap-2 items-center">
             {userNickname === post.userNickname && (
-              <span>
-                <Button
-                  onClick={handleEdit}
-                  className="px-3 py-1 text-sm text-white bg-blue-500 rounded hover:bg-blue-600"
-                >
+              <span className="mt-1 flex gap-1">
+                <Button size="sm" onClick={handleEdit}>
                   수정
                 </Button>
-                <Button
-                  onClick={() => handleDelete(post.id)}
-                  className="px-3 py-1 text-sm text-white bg-blue-500 rounded hover:bg-blue-600"
-                >
+                <Button size="sm" variant="outline" onClick={() => handleDelete(post.id)}>
                   삭제
                 </Button>
               </span>
@@ -195,8 +196,8 @@ export default function PostDetail() {
             ))}
           </div>
 
-          <span className={`font-medium ${post.isEnded ? "text-red-500" : "text-gray-600"}`}>
-            마감까지 {getDDay(post.deadline, post.isEnded)}
+          <span className={`font-medium ${isRed ? "text-red-600" : "text-gray-600"}`}>
+            {dDayText}
           </span>
         </div>
 

@@ -31,20 +31,19 @@ export default function Comments({ postId, isEnded }: CommentsProps) {
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editingContent, setEditingContent] = useState("");
 
-  const fetchComments = async () => {
-    try {
-      setLoading(true);
-      const res = await axios.get<Comment[]>(`/api/posts/${postId}/comments`);
-      setComments(res.data);
-    } catch (e) {
-      console.error(e);
-      alert("댓글을 불러오지 못했습니다.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        setLoading(true);
+        const res = await axios.get<Comment[]>(`/api/posts/${postId}/comments`);
+        setComments(res.data);
+      } catch (e) {
+        console.error(e);
+        alert("댓글을 불러오지 못했습니다.");
+      } finally {
+        setLoading(false);
+      }
+    };
     if (postId) fetchComments();
   }, [postId]);
 
@@ -124,7 +123,7 @@ export default function Comments({ postId, isEnded }: CommentsProps) {
                   <div className="flex items-center gap-2">
                     <span className="text-sm font-medium text-gray-700">{c.userNickname}</span>
                     {isMine && !isEditing && (
-                      <div className="mt-1 flex gap-2">
+                      <div className="mt-1 flex gap-1">
                         <Button size="sm" onClick={() => startEdit(c)}>
                           수정
                         </Button>
