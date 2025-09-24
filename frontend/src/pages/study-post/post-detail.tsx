@@ -215,6 +215,7 @@ export default function PostDetail() {
           <span className="text-gray-700">
             현재 참여 인원: {post.currentCount} / {post.maxCount}
           </span>
+          {/* 종료되거나 기간 마감된 스터디에 버튼 노출 X*/}
           {!post.isEnded &&
             new Date(post.deadline) > new Date() &&
             userPkIdNum !== post.userPkId && (
@@ -231,6 +232,7 @@ export default function PostDetail() {
         <div className="border border-gray-300 rounded-md p-6 mb-6">
           <CustomViewer contents={post.content} />
         </div>
+        {/* 종료되거나 기간 마감된 스터디에 버튼 노출 X*/}
         {!post.isEnded && new Date(post.deadline) > new Date() && userPkIdNum !== post.userPkId && (
           <Button onClick={handleJoin}>{isJoined ? "스터디 탈퇴" : "참여하기"}</Button>
         )}
