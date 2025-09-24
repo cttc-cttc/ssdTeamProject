@@ -205,26 +205,28 @@ export default function PostDetail() {
           <span className="text-gray-700">
             현재 참여 인원: {post.currentCount} / {post.maxCount}
           </span>
-          {!post.isEnded && userPkIdNum !== post.userPkId && (
-            <div className="flex text-sm">
-              <Bookmark
-                onClick={handleWish}
-                className={`${isWished ? "text-yellow-500 fill-yellow-200" : "text-yellow-500"} `}
-              />
-              찜하기 {post.wishCount}
-            </div>
-          )}
+          {!post.isEnded &&
+            new Date(post.deadline) > new Date() &&
+            userPkIdNum !== post.userPkId && (
+              <div className="flex text-sm">
+                <Bookmark
+                  onClick={handleWish}
+                  className={`${isWished ? "text-yellow-500 fill-yellow-200" : "text-yellow-500"} `}
+                />
+                찜하기 {post.wishCount}
+              </div>
+            )}
         </div>
 
         <div className="border border-gray-300 rounded-md p-6 mb-6">
           <CustomViewer contents={post.content} />
         </div>
-        {!post.isEnded && userPkIdNum !== post.userPkId && (
+        {!post.isEnded && new Date(post.deadline) > new Date() && userPkIdNum !== post.userPkId && (
           <Button onClick={handleJoin}>{isJoined ? "스터디 탈퇴" : "참여하기"}</Button>
         )}
       </div>
 
-      {postId && <Comments postId={postId} isEnded={post.isEnded} />}
+      {postId && <Comments postId={postId} isEnded={post.isEnded} deadline={post.deadline} />}
     </div>
   );
 }

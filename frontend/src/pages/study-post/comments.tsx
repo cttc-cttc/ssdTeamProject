@@ -19,12 +19,16 @@ type Comment = {
 interface CommentsProps {
   postId: number;
   isEnded: boolean;
+  deadline: string;
 }
 
-export default function Comments({ postId, isEnded }: CommentsProps) {
+export default function Comments({ postId, isEnded, deadline }: CommentsProps) {
   const { API_BASE } = useApiStore();
   const { userPkID, userNickname } = useInfoStore();
   const userPkIdNum = userPkID ? Number(userPkID) : null;
+  const now = new Date();
+  const deadlineDate = new Date(deadline);
+  const isClosed = isEnded || deadlineDate < now;
 
   const [comments, setComments] = useState<Comment[]>([]);
   const [loading, setLoading] = useState(true);
@@ -167,7 +171,7 @@ export default function Comments({ postId, isEnded }: CommentsProps) {
       )}
 
       {/* 입력창 */}
-      {!isEnded && userNickname && (
+      {!isClosed && userNickname && (
         <div className="flex gap-2 items-start mt-8 mb-6">
           <textarea
             value={newContent}
