@@ -99,7 +99,12 @@ export default function PostDetail() {
   };
 
   const handleWish = async () => {
-    if (!post || !userPkIdNum) return;
+    if (!post) return;
+
+    if (!userPkIdNum) {
+      alert("로그인 후 이용해 주세요.");
+      return;
+    }
 
     try {
       if (isWished) {
@@ -117,7 +122,12 @@ export default function PostDetail() {
   };
 
   const handleJoin = async () => {
-    if (!post || !userPkIdNum) return;
+    if (!post) return;
+
+    if (!userPkIdNum) {
+      alert("로그인 후 이용해 주세요.");
+      return;
+    }
 
     try {
       if (isJoined) {
