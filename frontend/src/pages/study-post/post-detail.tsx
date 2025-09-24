@@ -211,7 +211,7 @@ export default function PostDetail() {
               <div className="flex text-sm">
                 <Bookmark
                   onClick={handleWish}
-                  className={`${isWished ? "text-yellow-500 fill-yellow-200" : "text-yellow-500"} `}
+                  className={`${isWished ? "text-yellow-500 fill-yellow-200" : "text-yellow-500"} hover:cursor-pointer`}
                 />
                 찜하기 {post.wishCount}
               </div>
