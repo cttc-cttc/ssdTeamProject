@@ -19,13 +19,13 @@ public class JoinStudyController {
     @PostMapping
     public ResponseEntity<?> join (@RequestParam Long userId, @RequestParam Long postId) {
         joinStudyService.join(userId, postId);
-        return ResponseEntity.ok(Map.of("message", "join successfully"));
+        return ResponseEntity.ok(Map.of("message", "스터디 참여 완료"));
     }
 
     @DeleteMapping
     public ResponseEntity<?> leaveStudy (@RequestParam Long userId, @RequestParam Long postId) {
         joinStudyService.leaveStudy(userId, postId);
-        return ResponseEntity.ok(Map.of("message", "Join Deleted Successfully"));
+        return ResponseEntity.ok(Map.of("message", "스터디 탈퇴 완료"));
     }
 
     @GetMapping("/check")

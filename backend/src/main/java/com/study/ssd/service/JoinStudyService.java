@@ -26,6 +26,7 @@ public class JoinStudyService {
 
     @Transactional
     public void join (Long userId, Long postId) {
+        // 비정상 호출 대비
         if (joinStudyRepository.existsByUserIdAndPostId(userId, postId)) {
             throw new IllegalStateException("이미 참여한 스터디입니다.");
         }
@@ -34,6 +35,11 @@ public class JoinStudyService {
                 .orElseThrow(() -> new IllegalArgumentException("User not found" + userId));
         StudyPost post = studyPostRepository.findById(postId)
                 .orElseThrow(() -> new IllegalArgumentException("Post not found: " + postId));
+
+        // Entity studyPost 의 userId 와 user의 id(PK) 를 비교
+        if (post.getUserId().equals(user.getId())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "나의 개설 스터디입니다.");
+        }
 
         if (post.getCurrentCount() >= post.getMaxCount()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "모집 인원이 마감된 스터디입니다.");
