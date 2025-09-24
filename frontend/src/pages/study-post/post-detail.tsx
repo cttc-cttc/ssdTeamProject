@@ -200,8 +200,8 @@ export default function PostDetail() {
           <div className="flex flex-wrap gap-2 items-center">
             <span className="text-gray-600 font-medium">{categoryNameMap[post.mainCategory]}</span>
             {post.subCategories?.map((sub, idx) => (
-              <span key={idx} className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">
-                {sub}
+              <span key={idx} className="bg-[#cac18e] text-white px-3 py-1 rounded-full text-sm">
+                #{sub}
               </span>
             ))}
           </div>
