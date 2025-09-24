@@ -21,6 +21,7 @@ interface CommentsProps {
 }
 
 export default function Comments({ postId, isEnded }: CommentsProps) {
+  const { API_BASE } = useApiStore();
   const { userPkID, userNickname } = useInfoStore();
   const userPkIdNum = userPkID ? Number(userPkID) : null;
 
@@ -35,7 +36,7 @@ export default function Comments({ postId, isEnded }: CommentsProps) {
     const fetchComments = async () => {
       try {
         setLoading(true);
-        const res = await axios.get<Comment[]>(`/api/posts/${postId}/comments`);
+        const res = await axios.get<Comment[]>(`${API_BASE}/api/posts/${postId}/comments`);
         setComments(res.data);
       } catch (e) {
         console.error(e);
