@@ -185,10 +185,14 @@ export default function PostDetail() {
           <div className="flex flex-wrap gap-2 items-center">
             {userNickname === post.userNickname && (
               <span className="mt-1 flex gap-1">
-                <Button size="sm" onClick={handleEdit}>
+                <Button className="w-12 h-6" variant="yellow_btn" onClick={handleEdit}>
                   수정
                 </Button>
-                <Button size="sm" variant="outline" onClick={() => handleDelete(post.id)}>
+                <Button
+                  className="w-12 h-6"
+                  variant="yellow_btn_outline"
+                  onClick={() => handleDelete(post.id)}
+                >
                   삭제
                 </Button>
               </span>

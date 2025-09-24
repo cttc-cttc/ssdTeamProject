@@ -137,10 +137,18 @@ export default function Comments({ postId, isEnded, deadline }: CommentsProps) {
                     <span className="text-sm font-medium text-gray-700">{c.userNickname}</span>
                     {isMine && !isEditing && (
                       <div className="mt-1 flex gap-1">
-                        <Button size="sm" onClick={() => startEdit(c)}>
+                        <Button
+                          className="w-12 h-6"
+                          variant="yellow_btn"
+                          onClick={() => startEdit(c)}
+                        >
                           수정
                         </Button>
-                        <Button size="sm" variant="outline" onClick={() => deleteComment(c.id)}>
+                        <Button
+                          className="w-12 h-6"
+                          variant="yellow_btn_outline"
+                          onClick={() => deleteComment(c.id)}
+                        >
                           삭제
                         </Button>
                       </div>

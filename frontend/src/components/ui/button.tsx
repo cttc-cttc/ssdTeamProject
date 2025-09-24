@@ -26,6 +26,10 @@ const buttonVariants = cva(
           "lg:text-2xl md:text-xl font-bold text-[#2c3e50] dark:text-foreground underline-offset-4 hover:underline hover:cursor-pointer",
         ssd_tag:
           "rounded-3xl bg-[#B9A5D4]/80 text-secondary-foreground border border-muted-foreground shadow-xs hover:cursor-pointer",
+        yellow_btn:
+          "bg-[#cac18e] text-white font-semibold shadow-xs hover:bg-[#cac18e]/90 hover:cursor-pointer",
+        yellow_btn_outline:
+          "border-1 border-[#cac18e] text-[#cac18e] dark:text-foreground bg-background shadow-xs font-semibold hover:bg-accent dark:bg-input/30 dark:border-input dark:hover:bg-input/50 hover:cursor-pointer",
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",
