@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useInfoStore } from "../account/info-store";
+import { useApiStore } from "@/components/common/api-store";
 
 // 댓글 객체가 가지는 속성
 type Comment = {
@@ -53,7 +54,7 @@ export default function Comments({ postId, isEnded }: CommentsProps) {
     if (!content) return;
 
     try {
-      const res = await axios.post<Comment>(`/api/posts/${postId}/comments`, {
+      const res = await axios.post<Comment>(`${API_BASE}/api/posts/${postId}/comments`, {
         userPkId: userPkIdNum,
         userNickname,
         content,
@@ -81,9 +82,12 @@ export default function Comments({ postId, isEnded }: CommentsProps) {
     if (!content) return;
 
     try {
-      const res = await axios.put<Comment>(`/api/posts/${postId}/comments/${commentId}`, {
-        content,
-      });
+      const res = await axios.put<Comment>(
+        `${API_BASE}/api/posts/${postId}/comments/${commentId}`,
+        {
+          content,
+        }
+      );
       setComments(prev => prev.map(c => (c.id === commentId ? res.data : c)));
       cancelEdit();
     } catch (e) {
@@ -97,7 +101,7 @@ export default function Comments({ postId, isEnded }: CommentsProps) {
     if (!ok) return;
 
     try {
-      await axios.delete(`/api/posts/${postId}/comments/${commentId}`);
+      await axios.delete(`${API_BASE}/api/posts/${postId}/comments/${commentId}`);
       setComments(prev => prev.filter(c => c.id !== commentId));
     } catch (e) {
       console.error(e);
