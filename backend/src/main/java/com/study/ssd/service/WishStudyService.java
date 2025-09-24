@@ -9,7 +9,9 @@ import com.study.ssd.repository.UserRepository;
 import com.study.ssd.repository.WishStudyRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -31,6 +33,11 @@ public class WishStudyService {
                 .orElseThrow(() -> new IllegalArgumentException("User not found: " + userId));
         StudyPost post = studyPostRepository.findById(postId)
                 .orElseThrow(() -> new IllegalArgumentException("Post not found: " + postId));
+
+        // Entity studyPost 의 userId 와 user의 id(PK) 를 비교
+        if (post.getUserId().equals(user.getId())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "나의 개설 스터디입니다.");
+        }
 
         WishStudy wishStudy = WishStudy.builder()
                 .user(user)
