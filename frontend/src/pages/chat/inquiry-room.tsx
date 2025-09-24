@@ -13,10 +13,17 @@ interface InquiryRoomProps {
   roomId: string;
   roomName: string;
   username: string;
+  type?: string;
   onBack?: () => void;
 }
 
-export default function InquiryRoom({ roomId, roomName, username, onBack }: InquiryRoomProps) {
+export default function InquiryRoom({
+  roomId,
+  roomName,
+  username,
+  type,
+  onBack,
+}: InquiryRoomProps) {
   const { API_BASE } = useApiStore();
   const [messages, setMessages] = useState<InquiryChatMessage[]>([]);
   const [input, setInput] = useState("");
@@ -83,7 +90,7 @@ export default function InquiryRoom({ roomId, roomName, username, onBack }: Inqu
   return (
     <div className="flex flex-col gap-2">
       <h3 className="flex gap-4 items-center mb-2">
-        {username === "Admin" && (
+        {type === "Admin" && (
           <Button
             variant="outline"
             size="sm"

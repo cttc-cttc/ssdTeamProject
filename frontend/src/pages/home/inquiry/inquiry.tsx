@@ -74,7 +74,13 @@ export default function Inquiry() {
           {roomId === "" ? (
             <InquiryRoomList roomList={roomList} onSelectRoom={onSelectRoom} />
           ) : (
-            <InquiryRoom roomId={roomId} roomName={roomName} username={adminName} onBack={onBack} />
+            <InquiryRoom
+              roomId={roomId}
+              roomName={roomName}
+              username={adminName}
+              type={"Admin"}
+              onBack={onBack}
+            />
           )}
         </>
       )}
