@@ -158,13 +158,13 @@ export default function PostDetail() {
   return (
     <div>
       <div className="max-w-4xl mx-auto px-6 py-10">
-        <div className="mb-6">
+        <div className="mb-15 mt-7">
           <Button
             onClick={backStep}
             variant="outline"
             className="flex items-center gap-2 text-gray-600 hover:text-gray-800"
           >
-            <ArrowLeft className="w-4 h-4" />
+            <ArrowLeft className="w-4 h-4 " />
             뒤로가기
           </Button>
         </div>

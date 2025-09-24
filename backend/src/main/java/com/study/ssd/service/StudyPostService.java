@@ -6,6 +6,7 @@ import com.study.ssd.dto.studyPost.UpdateStudyPostRequest;
 import com.study.ssd.dto.studyPost.UpdateStudyPostResponse;
 import com.study.ssd.entity.StudyPost;
 import com.study.ssd.entity.User;
+import com.study.ssd.repository.JoinStudyRepository;
 import com.study.ssd.repository.StudyPostRepository;
 import com.study.ssd.repository.UserRepository;
 import com.study.ssd.repository.WishStudyRepository;
@@ -28,6 +29,7 @@ public class StudyPostService {
     private final UserRepository userRepository;
     private final ChatService chatService;
     private final WishStudyRepository wishStudyRepository;
+    private final JoinStudyRepository joinStudyRepository;
 
     /**
      * 크론 표현식으로 실행 주기 지정
@@ -113,6 +115,7 @@ public class StudyPostService {
         StudyPost post = studyPostRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
         wishStudyRepository.deleteAllByPostId(post.getId());
+        joinStudyRepository.deleteAllByPostId(post.getId());
         studyPostRepository.delete(post);
     }
 

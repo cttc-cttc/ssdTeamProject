@@ -33,6 +33,10 @@ public class StudyPost {
     @Column(length = 100, nullable = false)
     private  String title;
 
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private List<Comment> comments = new ArrayList<>();
+
     @Column(length = 4000, nullable = false)
     private  String content;
 

@@ -120,6 +120,8 @@ export default function Comments({ postId, isEnded, deadline }: CommentsProps) {
       {/* 목록 */}
       {loading ? (
         <div className="text-gray-500">댓글을 불러오고 있습니다.</div>
+      ) : comments.length === 0 ? (
+        <div className="text-gray-500">댓글이 없습니다.</div>
       ) : (
         <ul className="divide-y divide-gray-200">
           {comments.map(c => {

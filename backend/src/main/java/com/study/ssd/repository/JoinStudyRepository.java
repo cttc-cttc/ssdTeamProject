@@ -22,4 +22,7 @@ public interface JoinStudyRepository extends JpaRepository<JoinStudy, Long> {
     
     // 특정 사용자가 특정 스터디에 참여했는지 확인
     boolean existsByUserIdAndPostId(Long userId, Long postId);
+
+    // 스터디에 연결된 조인 삭제
+    void deleteAllByPostId(Long postId);
 }
