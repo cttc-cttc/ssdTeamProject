@@ -47,7 +47,7 @@ export default function Comments({ postId, isEnded }: CommentsProps) {
       }
     };
     if (postId) fetchComments();
-  }, [postId]);
+  }, [postId, API_BASE]);
 
   const handleCreate = async () => {
     const content = newContent.trim();
