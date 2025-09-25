@@ -5,7 +5,7 @@ import { categoryNameMap } from "@/components/common/mappings";
 import { Button } from "@/components/ui/button";
 import { ImageFrame } from "./image-frame";
 import type { studyProps } from "../main/home-study-list";
-import { Bookmark } from "lucide-react";
+import { Bookmark, MessageSquareText } from "lucide-react";
 
 export default function ListThumbnailFlex({ posts }: { posts: studyProps }) {
   // 첫 번째 이미지 추출 (정규식)
@@ -64,6 +64,10 @@ export default function ListThumbnailFlex({ posts }: { posts: studyProps }) {
           </div>
           <div className="flex text-sm">
             <Bookmark className="text-yellow-500 fill-yellow-200" /> 찜하기: {posts.wishCount}
+          </div>
+          <div className="flex items-center text-sm gap-1">
+            <MessageSquareText className="text-muted-foreground w-5 h-5" />
+            댓글: {posts.commentCount}
           </div>
         </div>
       </div>

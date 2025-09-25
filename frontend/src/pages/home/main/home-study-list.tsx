@@ -14,6 +14,7 @@ export interface studyProps {
   maxCount: number;
   wishCount: number;
   isEnded: boolean;
+  commentCount: number;
 }
 
 export default function HomeStudyList() {

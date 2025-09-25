@@ -30,6 +30,13 @@ public class StudyPostResponse {
     @JsonProperty("isEnded")
     @Builder.Default
     private boolean isEnded = false;
+    /**
+     * Repository 메소드와 상관없이, DTO 변환 과정(fromEntity)에서 comments.size() 같은 접근을 하고 있다면
+     * 카테고리/검색 조회에서도 댓글 갯수가 "알아서" 들어가게 됩니다.
+     * .size() 를 호출하면 Hibernate 가 SELECT COUNT(*) FROM comment WHERE post_id = ? 쿼리를 따로 실행해서 채웁니다.
+     */
+    @Builder.Default
+    private long commentCount = 0;
 
     // StudyPost -> StudyPostResponse 변환
     public static StudyPostResponse fromEntity(StudyPost entity) {
@@ -48,6 +55,7 @@ public class StudyPostResponse {
                 .maxCount(entity.getMaxCount())
                 .wishCount(entity.getWishCount())
                 .isEnded(entity.isEnded())
+                .commentCount(entity.getComments() != null ? (long) entity.getComments().size() : 0)
                 .build();
     }
 }
