@@ -122,6 +122,10 @@ public class ChatService {
         ChatRoom room = chatRoomRepository.findById(roomId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
+        if (participantRepository.existsByRoomIdAndUserId(roomId, userId)) {
+            return;
+        }
+
         // 참여자 등록 (중복 체크)
         try {
             ChatRoomParticipant participant = new ChatRoomParticipant();
