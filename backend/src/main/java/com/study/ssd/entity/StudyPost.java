@@ -1,6 +1,7 @@
 package com.study.ssd.entity;
 
 
+import com.study.ssd.entity.chat.ChatRoom;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -65,6 +66,9 @@ public class StudyPost {
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default private List<WishStudy> wishes = new ArrayList<>();
+
+    @OneToOne(mappedBy = "studyPost", cascade = CascadeType.ALL, orphanRemoval = true)
+    private ChatRoom chatRoom;
 
 
     // 스터디 종료
