@@ -150,7 +150,7 @@ export default function PostDetail() {
         if (error.response.status === 400) {
           alert("모집 인원이 마감된 스터디입니다."); // 400 잘못된 요청
         } else {
-          alert("참여 중 오류가 발생했습니다."); // 400 외 서버 에러
+          alert("모집 인원이 마감된 스터디입니다."); // 400 외 서버 에러
         }
       } else {
         alert("서버와 통신할 수 없습니다."); // 서버 연결 문제
