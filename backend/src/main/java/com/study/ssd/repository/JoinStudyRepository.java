@@ -25,4 +25,7 @@ public interface JoinStudyRepository extends JpaRepository<JoinStudy, Long> {
 
     // 스터디에 연결된 조인 삭제
     void deleteAllByPostId(Long postId);
+
+    // 특정 유저가 참여한 스터디 수
+    long countByUserId(Long userId);
 }

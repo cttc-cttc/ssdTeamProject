@@ -1,14 +1,33 @@
+import { useApiStore } from "@/components/common/api-store";
+import axios from "axios";
+import { useCallback, useEffect, useState } from "react";
+
 interface ActivitySectionProps {
-  participatedStudies?: number;
-  createdStudies?: number;
-  wishStudies?: number;
+  userPkID: number;
 }
 
-export default function ActivitySection({
-  participatedStudies = 1,
-  createdStudies = 2,
-  wishStudies = 3,
-}: ActivitySectionProps) {
+export default function ActivitySection({ userPkID }: ActivitySectionProps) {
+  const { API_BASE } = useApiStore();
+  const [participatedStudies, setParticipatedStudies] = useState(0);
+  const [createdStudies, setCreatedStudies] = useState(0);
+  const [wishStudies, setWishStudies] = useState(0);
+
+  const fetchListCount = useCallback(() => {
+    axios
+      .get(`${API_BASE}/api/users/activity/${userPkID}`)
+      .then(res => {
+        // console.log(res.data);
+        setParticipatedStudies(res.data.participatedStudies);
+        setCreatedStudies(res.data.createdStudies);
+        setWishStudies(res.data.wishStudies);
+      })
+      .catch(err => console.error("활동 통계 조회 실패: ", err));
+  }, [userPkID, API_BASE]);
+
+  useEffect(() => {
+    fetchListCount();
+  }, [fetchListCount]);
+
   return (
     <div className="px-6 py-6 border-t">
       <h2 className="text-lg font-semibold mb-4">활동 통계</h2>

@@ -25,4 +25,7 @@ public interface WishStudyRepository extends JpaRepository<WishStudy, Long> {
 
     // 스터디에 연결된 위시 삭제
     void deleteAllByPostId(Long postId);
+
+    // 특정 유저가 북마크 한 스터디 수
+    long countByUserId(Long userId);
 }

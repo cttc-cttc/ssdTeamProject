@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
@@ -143,6 +145,12 @@ public class UserController {
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+    // 활동 통계
+    @GetMapping("/activity/{userPkID}")
+    public ResponseEntity<UserDTO.ActivityResponse> getActivity(@PathVariable Long userPkID) {
+        return ResponseEntity.ok(userService.getActivity(userPkID));
     }
 }
 /*
