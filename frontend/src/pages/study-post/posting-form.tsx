@@ -136,9 +136,12 @@ function PostingForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-xl mx-auto mt-10 p-6 rounded-lg bg-white shadow">
-      <div className="mb-5">
-        <label className="inline-block w-20 font-medium">제목</label>
+    <form
+      onSubmit={handleSubmit}
+      className="max-w-2xl mx-auto my-10 p-6 rounded-lg bg-white shadow"
+    >
+      <div className="flex items-center gap-2 mb-5">
+        <label className="w-25 max-w-25 font-medium">제목</label>
         <input
           type="text"
           placeholder="제목을 입력하세요."
@@ -154,8 +157,8 @@ function PostingForm() {
           onChange={handleCategory}
         />
       </div>
-      <div className="mb-5">
-        <label className="inline-block w-20 font-medium">참여인원</label>
+      <div className="flex items-center gap-2 mb-5">
+        <label className="w-24 max-w-24 font-medium">참여인원</label>
         <input
           type="text"
           value={maxCount}
@@ -166,7 +169,7 @@ function PostingForm() {
               setMaxCount(Number(value));
             }
           }}
-          className="w-[calc(100%-5rem)] px-3 py-2 border rounded-md"
+          className="w-60 px-3 py-2 border rounded-md"
         />
         {(maxCount < 1 || maxCount > 50) && (
           <span className="text-red-500 text-sm ml-2">참여인원은 1 ~ 50명 사이로 입력하세요.</span>

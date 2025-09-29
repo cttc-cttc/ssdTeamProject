@@ -48,22 +48,24 @@ function CategoryInput({ onChange, initialMain = "", initialSubs = [] }: Categor
   };
 
   return (
-    <div className="mb-5">
-      <label className="inline-block w-20 font-medium">메인 카테고리</label>
-      <select
-        value={mainCategory}
-        onChange={handleMainChange}
-        className="w-[calc(100%-5rem)] px-3 py-2 border rounded-md bg-white text-gray-700"
-      >
-        <option value="">-- 선택 --</option>
-        <option value="lang-cert">어학/자격증</option>
-        <option value="it-dev">IT/개발</option>
-        <option value="career">취업</option>
-        <option value="etc">기타</option>
-      </select>
+    <div className="mb-2">
+      <div className="flex items-center gap-2 mt-4">
+        <label className="w-24 min-w-24 font-medium">메인 카테고리</label>
+        <select
+          value={mainCategory}
+          onChange={handleMainChange}
+          className="w-full px-3 py-2 border rounded-md bg-white text-gray-700"
+        >
+          <option value="">-- 선택 --</option>
+          <option value="lang-cert">어학/자격증</option>
+          <option value="it-dev">IT/개발</option>
+          <option value="career">취업</option>
+          <option value="etc">기타</option>
+        </select>
+      </div>
 
-      <div className="mt-4">
-        <label className="inline-block w-24 font-medium">서브 카테고리</label>
+      <div className="flex items-center gap-2 mt-4">
+        <label className="w-24 min-w-24 font-medium">서브 카테고리</label>
         <input
           type="text"
           placeholder="서브 카테고리 입력 후 Enter"
@@ -71,12 +73,12 @@ function CategoryInput({ onChange, initialMain = "", initialSubs = [] }: Categor
           onChange={e => setInputValue(e.target.value)}
           onKeyDown={handleKeyDown}
           maxLength={20}
-          className="px-3 py-2 border rounded-md min-w-[200px]"
+          className="w-60 px-3 py-2 border rounded-md min-w-[200px]"
         />
         {error && <span className="text-red-500 text-sm ml-3">{error}</span>}
       </div>
 
-      <div className="ml-24 mt-2 flex gap-2 flex-wrap">
+      <div className="ml-26 mt-2 flex gap-2 flex-wrap">
         {subCategories.map(sub => (
           <span
             key={sub}
