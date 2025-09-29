@@ -72,7 +72,7 @@ export default function MyPage() {
             setInfoStore={setInfoStore}
           />
           <AccountSection onWithdrawClick={openWithdrawModal} />
-          <ActivitySection />
+          <ActivitySection userPkID={parseInt(userPkID ?? "0", 10)} />
         </>
       );
     }

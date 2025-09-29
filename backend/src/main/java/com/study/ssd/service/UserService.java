@@ -1,9 +1,9 @@
 package com.study.ssd.service;
 
+import com.study.ssd.dto.UserDTO;
 import com.study.ssd.entity.PasswordResetToken;
 import com.study.ssd.entity.User;
-import com.study.ssd.repository.PasswordResetTokenRepository;
-import com.study.ssd.repository.UserRepository;
+import com.study.ssd.repository.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,6 +27,15 @@ public class UserService {
     
     @Autowired
     private EmailService emailService;
+
+    @Autowired
+    private JoinStudyRepository joinStudyRepository; // 참여 스터디
+
+    @Autowired
+    private StudyPostRepository studyPostRepository; // 개설 스터디
+
+    @Autowired
+    private WishStudyRepository wishStudyRepository; // 위시 스터디
 
     // ID 확인 및 유저 조회
     private User findByUserId(String userId){
@@ -184,6 +195,14 @@ public class UserService {
         }
         
         return token.toString();
+    }
+
+    public UserDTO.ActivityResponse getActivity(Long userPkID) {
+        long participatedStudiesCount = joinStudyRepository.countByUserId(userPkID);
+        long createdStudiesCount = studyPostRepository.countByUserId(userPkID);
+        long wishStudiesCount = wishStudyRepository.countByUserId(userPkID);
+
+        return new UserDTO.ActivityResponse(participatedStudiesCount, createdStudiesCount, wishStudiesCount);
     }
 }
 

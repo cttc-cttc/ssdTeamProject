@@ -1,7 +1,6 @@
 package com.study.ssd.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDate;
 
@@ -60,5 +59,16 @@ public class UserDTO {
     public static class PasswordResetConfirmRequest {
         private String token;
         private String newPassword;
+    }
+
+    // 활동 통계 Response DTO
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class ActivityResponse {
+        private Long participatedStudies;
+        private Long createdStudies;
+        private Long wishStudies;
     }
 }

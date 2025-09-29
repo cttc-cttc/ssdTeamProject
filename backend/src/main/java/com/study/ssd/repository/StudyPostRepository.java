@@ -18,4 +18,7 @@ public interface StudyPostRepository extends JpaRepository<StudyPost, Long> {
     @Modifying
     @Query("UPDATE StudyPost p SET p.isEnded = true WHERE p.deadline <:today AND p.isEnded = false")
     int updateEndedStudies(@Param("today") LocalDateTime today);
+
+    // 특정 유저가 개설한 스터디 수
+    long countByUserId(Long userId);
 }
