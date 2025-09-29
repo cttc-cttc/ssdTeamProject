@@ -25,7 +25,7 @@ public class StudyPost {
     private Long id;
 
     // 작성자 PK (User.id)
-    @Column(name = "user_id")
+    @Column(name = "user_id", nullable = false)
     private Long userId;
 
     @Column(nullable = false)
