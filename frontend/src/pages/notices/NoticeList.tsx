@@ -97,7 +97,7 @@ export default function NoticeList() {
               </span>
             </li>
           ))}
-        <li className="py-6 text-center text-gray-500">목록이 비었습니다.</li>
+        {/* <li className="py-6 text-center text-gray-500">목록이 비었습니다.</li> */}
       </ul>
     </div>
   );
