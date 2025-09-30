@@ -56,12 +56,12 @@ export default function GroupChatRoom({ roomId, userId, username }: GroupChatRoo
               }));
             }
           });
-          // 3-2. 과거 메시지 로드
+          // 3-2. 입장 API 호출
+          await axios.post(`${API_BASE}/api/chat/rooms/${roomId}/join`, { userId, username });
+
+          // 3-3. 과거 메시지 로드
           const msgRes = await axios.get(`${API_BASE}/api/chat/rooms/${roomId}/messages`);
           setMessages(msgRes.data);
-
-          // 3-3. 입장 API 호출
-          await axios.post(`${API_BASE}/api/chat/rooms/${roomId}/join`, { userId, username });
         };
 
         // 4. STOMP 연결 시작
