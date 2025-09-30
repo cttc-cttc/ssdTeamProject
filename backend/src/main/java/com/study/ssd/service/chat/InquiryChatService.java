@@ -47,8 +47,7 @@ public class InquiryChatService {
         User user = userRepository.findById(userPk)
                 .orElseThrow(() -> new IllegalArgumentException("유저를 찾을 수 없습니다."));
 
-        // 관리자 계정 PK 고정값 (예: 1L) — 실제로는 설정(property)으로 관리 필요
-        // 현재 db에 등록된 임시 관리자 Admin(임시)의 pk는 11번
+        // 관리자 계정 PK 1로 고정 : 유저별 채팅방을 모든 관리자가 공유하기 위해
         Long ADMIN_PK = 1L;
         Admin admin = adminRepository.findById(ADMIN_PK)
                 .orElseThrow(() -> new IllegalArgumentException("관리자를 찾을 수 없습니다."));
@@ -96,6 +95,8 @@ public class InquiryChatService {
 
         InquiryChatMessage entity = InquiryChatMessage.builder()
                 .room(room)
+                .senderType(requestMessage.senderType())
+                .senderId(requestMessage.senderId())
                 .sender(requestMessage.sender())
                 .content(requestMessage.content())
                 .build();
@@ -103,6 +104,6 @@ public class InquiryChatService {
 
         // 채팅방 구독 주소: "/sub/inquiry/{roomId}"
         // 해당 방 구독자에게 메시지 발행
-        messagingTemplate.convertAndSend("/sub/inquiry/" + roomId, requestMessage);
+        messagingTemplate.convertAndSend("/sub/inquiry/" + room.getId(), requestMessage);
     }
 }

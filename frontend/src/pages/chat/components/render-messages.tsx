@@ -11,10 +11,16 @@ import { CalendarDays } from "lucide-react";
 interface RenderMessagesProps {
   rootRef: React.RefObject<HTMLDivElement | null>;
   messages: GroupChatMessage[] | InquiryChatMessage[];
-  username: string;
+  senderId: number;
+  senderType: "USER" | "ADMIN";
 }
 
-export default function RenderMessages({ rootRef, messages, username }: RenderMessagesProps) {
+export default function RenderMessages({
+  rootRef,
+  messages,
+  senderId,
+  senderType,
+}: RenderMessagesProps) {
   return (
     <ScrollArea ref={rootRef} className="w-xl max-w-xl rounded-md h-96 border">
       <div className="w-xl max-w-xl flex flex-col gap-4 p-4">
@@ -34,7 +40,7 @@ export default function RenderMessages({ rootRef, messages, username }: RenderMe
                   </div>
                 </div>
               )}
-              {msg.sender === username ? (
+              {msg.senderId === senderId && msg.senderType === senderType ? (
                 // 내 매시지
                 <div className="flex items-baseline-last gap-2 self-end w-fit max-w-10/12">
                   {time && <div className="text-sm text-muted-foreground">{time}</div>}

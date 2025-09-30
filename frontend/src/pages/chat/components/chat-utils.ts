@@ -5,10 +5,12 @@ import dayjs from "dayjs";
  */
 export interface GroupChatMessage {
   roomId: string;
+  senderId: number;
   sender: string;
   content: string;
   createdAt: Date;
   messageType: "TEXT" | "JOIN";
+  senderType: "USER";
 }
 
 /**
@@ -16,8 +18,10 @@ export interface GroupChatMessage {
  */
 export interface InquiryChatMessage {
   roomId: string;
+  senderId: number;
   sender: string;
   content: string;
+  senderType: "USER" | "ADMIN";
   createdAt: Date;
 }
 

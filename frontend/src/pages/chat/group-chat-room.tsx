@@ -92,7 +92,9 @@ export default function GroupChatRoom({ roomId, userId, username }: GroupChatRoo
       destination: `/pub/groupChat/${roomId}/message`,
       body: JSON.stringify({
         sender: username,
+        senderId: userId,
         content: input,
+        senderType: "USER",
       }),
     });
     setInput("");
@@ -112,7 +114,7 @@ export default function GroupChatRoom({ roomId, userId, username }: GroupChatRoo
       )}
 
       {/* 채팅 메시지 랜더링 */}
-      <RenderMessages rootRef={rootRef} messages={messages} username={username} />
+      <RenderMessages rootRef={rootRef} messages={messages} senderId={userId} senderType={"USER"} />
 
       <div className="flex flex-col gap-1">
         <Textarea

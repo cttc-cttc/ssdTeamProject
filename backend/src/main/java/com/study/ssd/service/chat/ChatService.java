@@ -67,6 +67,7 @@ public class ChatService {
         // 스터디 시작 안내 메시지 발송
         ChatMessage startMessage = new ChatMessage();
         startMessage.setRoom(savedRoom);
+        startMessage.setSenderId(0L); // 시스템 메시지는 0 고정
         startMessage.setSender("NOTICE");
         startMessage.setMessageType(MessageType.SYSTEM);
         startMessage.setContent("스터디가 시작 되었습니다. 🎉🎉\n팀원들과 소통하며 본격적으로 스터디를 진행해 보세요!");
@@ -78,6 +79,7 @@ public class ChatService {
         // 입장 메시지 발송
         ChatMessage joinMessage = new ChatMessage();
         joinMessage.setRoom(savedRoom);
+        joinMessage.setSenderId(0L); // 시스템 메시지는 0 고정
         joinMessage.setSender("SYSTEM");
         joinMessage.setMessageType(MessageType.JOIN);
         joinMessage.setContent(request.creatorName() + "님이 입장했습니다.");
@@ -136,6 +138,7 @@ public class ChatService {
             // 입장 메시지 발송
             ChatMessage joinMessage = new ChatMessage();
             joinMessage.setRoom(room);
+            joinMessage.setSenderId(0L); // 시스템 메시지는 0 고정
             joinMessage.setSender("SYSTEM");
             joinMessage.setMessageType(MessageType.JOIN);
             joinMessage.setContent(username + "님이 입장했습니다.");
@@ -143,7 +146,7 @@ public class ChatService {
 
             // 채팅방 구독 주소: "/sub/groupChat/{roomId}"
             // STOMP 구독자에게 실시간 전송
-            messagingTemplate.convertAndSend("/sub/groupChat/" + roomId, joinMessage);
+            messagingTemplate.convertAndSend("/sub/groupChat/" + room.getId(), joinMessage);
 
         } catch (DataIntegrityViolationException e) {
             // 이미 존재하면 무시 (중복 입장 방지)
@@ -165,6 +168,7 @@ public class ChatService {
         // ChatMessage 엔티티 생성
         ChatMessage entity = ChatMessage.builder()
                 .room(room)
+                .senderId(requestMessage.senderId())
                 .sender(requestMessage.sender())
                 .content(requestMessage.content())
                 .build();
@@ -174,7 +178,7 @@ public class ChatService {
 
         // 채팅방 구독 주소: "/sub/groupChat/{roomId}"
         // WebSocket 구독자에게 전달
-        messagingTemplate.convertAndSend("/sub/groupChat/" + roomId, requestMessage);
+        messagingTemplate.convertAndSend("/sub/groupChat/" + room.getId(), requestMessage);
     }
 
     /**

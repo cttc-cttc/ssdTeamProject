@@ -31,11 +31,15 @@ public class ChatMessage {
      */
     // 연결된 채팅방
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "room_id")
+    @JoinColumn(name = "room_id", nullable = false)
     @JsonIgnore
     private ChatRoom room;
 
-    // 메시지 작성자
+    // 메시지 작성자 id
+    @Column(nullable = false)
+    private Long senderId;
+
+    // 메시지 작성자 닉네임
     @Column(length = 20, nullable = false)
     private String sender;
 

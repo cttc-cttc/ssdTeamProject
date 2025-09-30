@@ -1,5 +1,6 @@
 package com.study.ssd.entity.chat;
 
+import com.study.ssd.entity.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,11 +21,18 @@ public class InquiryChatMessage {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "inquiry_room_id")
+    @JoinColumn(name = "inquiry_room_id", nullable = false)
     private InquiryChatRoom room; // 연결된 채팅방
 
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private SenderType senderType; // USER, ADMIN
+
+    @Column(nullable = false)
+    private Long senderId; // user.id or admin.id
+
     @Column(length = 20, nullable = false)
-    private String sender; // 메시지 작성자
+    private String sender; // 메시지 작성자 닉네임
 
     @Column(length = 1000, nullable = false)
     private String content; // 메시지 내용

@@ -12,14 +12,16 @@ import { useApiStore } from "@/components/common/api-store";
 interface InquiryRoomProps {
   roomId: string;
   roomName: string;
+  senderId: string;
   username: string;
-  type?: string;
+  type: "USER" | "ADMIN";
   onBack?: () => void;
 }
 
 export default function InquiryRoom({
   roomId,
   roomName,
+  senderId,
   username,
   type,
   onBack,
@@ -71,7 +73,9 @@ export default function InquiryRoom({
       destination: `/pub/inquiry/${roomId}/message`,
       body: JSON.stringify({
         sender: username,
+        senderId: parseInt(senderId ?? "0", 10),
         content: input,
+        senderType: type,
       }),
     });
     setInput("");
@@ -90,7 +94,7 @@ export default function InquiryRoom({
   return (
     <div className="flex flex-col gap-2">
       <h3 className="flex gap-4 items-center mb-2">
-        {type === "Admin" && (
+        {type === "ADMIN" && (
           <Button
             variant="outline"
             size="sm"
@@ -106,7 +110,12 @@ export default function InquiryRoom({
       </h3>
 
       {/* 채팅 메시지 랜더링 */}
-      <RenderMessages rootRef={rootRef} messages={messages} username={username} />
+      <RenderMessages
+        rootRef={rootRef}
+        messages={messages}
+        senderId={parseInt(senderId ?? "0", 10)}
+        senderType={type}
+      />
 
       <div className="flex flex-col gap-1">
         <Textarea

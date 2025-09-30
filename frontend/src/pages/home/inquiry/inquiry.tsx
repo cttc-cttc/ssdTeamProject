@@ -77,8 +77,9 @@ export default function Inquiry() {
             <InquiryRoom
               roomId={roomId}
               roomName={roomName}
+              senderId={adminPkID}
               username={adminName}
-              type={"Admin"}
+              type={"ADMIN"}
               onBack={onBack}
             />
           )}
@@ -87,7 +88,13 @@ export default function Inquiry() {
 
       {isUserLoggedIn && userNickname && (
         // 유저 → 본인 채팅방 바로 연결
-        <InquiryRoom roomId={roomId} roomName={roomName} username={userNickname} />
+        <InquiryRoom
+          roomId={roomId}
+          roomName={roomName}
+          senderId={userPkID}
+          username={userNickname}
+          type={"USER"}
+        />
       )}
     </div>
   );
