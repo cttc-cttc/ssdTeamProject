@@ -18,12 +18,13 @@ export default function GroupChat() {
   const { API_BASE } = useApiStore();
   const { id } = useParams();
   const { userNickname, userPkID } = useInfoStore();
-  const [studyOpener, setStudyOpener] = useState(null);
+  const [studyOpenerId, setStudyOpenerId] = useState(0);
   const [message, setMessage] = useState("");
   const [isExistRoom, setIsExistRoom] = useState(false);
   const [currentRoomId, setCurrentRoomId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const userPkIDNum = parseInt(userPkID ?? "0", 10);
 
   // 페이지에 새로 입장하거나 채팅방을 만들었을 때 실행
   useEffect(() => {
@@ -47,7 +48,7 @@ export default function GroupChat() {
       setLoading(true);
       try {
         const response = await axios.get(`${API_BASE}/api/posts/${id}`);
-        setStudyOpener(response.data.userNickname);
+        setStudyOpenerId(response.data.userPkId);
         setMessage("");
         checkChatRoom();
       } catch {
@@ -64,7 +65,7 @@ export default function GroupChat() {
   };
 
   const studyOpenerRender = () => {
-    if (studyOpener === userNickname) {
+    if (studyOpenerId === userPkIDNum) {
       return <CreateGroupChat onSelectRoom={onSelectRoom} postId={id} />;
     } else {
       return (
@@ -102,11 +103,10 @@ export default function GroupChat() {
             ) : (
               // 방 정보와 로그인 유저 정보가 있으면 바로 채팅방 로드
               currentRoomId &&
-              userPkID &&
               userNickname && (
                 <GroupChatRoom
                   roomId={currentRoomId}
-                  userId={parseInt(userPkID ?? "0", 10)}
+                  userId={userPkIDNum}
                   username={userNickname}
                 />
               )
