@@ -30,7 +30,7 @@ export default function PostDetail() {
   const { API_BASE } = useApiStore();
   const { id } = useParams();
   const postId = id ? Number(id) : null; // 파라미터 타입 변경
-  const { userPkID, userNickname } = useInfoStore();
+  const { userPkID } = useInfoStore();
   const userPkIdNum = userPkID ? Number(userPkID) : null;
 
   const navigate = useNavigate(); // 삭제 후 메인 화면으로 이동
@@ -183,7 +183,7 @@ export default function PostDetail() {
         <div className="flex justify-between items-center border-b border-gray-300 pb-2 mb-4">
           <span className="text-gray-600">작성자: {post.userNickname}</span>
           <div className="flex flex-wrap gap-2 items-center">
-            {userNickname === post.userNickname && (
+            {userPkIdNum === post.userPkId && (
               <span className="mt-1 flex gap-1">
                 <Button className="w-12 h-6" variant="yellow_btn" onClick={handleEdit}>
                   수정
