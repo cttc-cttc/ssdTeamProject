@@ -1,11 +1,11 @@
-# 팀 프로젝트 - 스터디 매칭 플랫폼
+# スタディー・マッチング・プラットフォーム
 
-Spring Boot와 React Vite를 이용한 웹개발 팁 프로젝트 입니다.
+Spring BootとReact Viteを利用したウェブ系チーム開発プロジェクトです。
 
 - 🧩 **Backend**: Spring Boot (Java) / IDE: IntelliJ Community
 - ⚛️ **Frontend**: React + Vite (TypeScript) / IDE: Visual Studio Code
 
-## 📁 프로젝트 구조
+## 📁 プロジェクトの仕組み
 ```plaintext
 ssdTeamProject/  
 ├── backend/           # Spring Boot (Java)
